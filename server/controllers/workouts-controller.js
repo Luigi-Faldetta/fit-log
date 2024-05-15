@@ -1,8 +1,8 @@
-const { db } = require('../models/workouts-model');
+const { Workout } = require('../models/workouts-model');
 
 exports.getWorkouts = async (req, res) => {
   try {
-    const workouts = await db.workouts;
+    const workouts = await Workout.findAll();
     res.json(workouts);
   } catch (error) {
     console.error('Failed to get events:', error);

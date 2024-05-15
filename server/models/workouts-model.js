@@ -1,3 +1,22 @@
-const db = { workouts: [] };
+const { sequelize, DataTypes } = require('./db');
 
-module.exports = { db };
+const Workout = sequelize.define('Workout', {
+  workout_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+});
+
+module.exports = {
+  Workout,
+};
