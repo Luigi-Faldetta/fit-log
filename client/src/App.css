@@ -17,10 +17,14 @@
 }
 
 .logo {
-  margin-top: 6rem;
-  margin-bottom: 2rem;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
   height: 6rem;
   max-width: 100%;
+}
+
+.logo-img {
+  height: 11rem;
 }
 
 .login-form {
@@ -30,12 +34,39 @@
 }
 
 .footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   background: #333;
   color: #fff;
   text-align: center;
-  padding: 1em 0;
+  /* padding: 1em 0; */
   position: fixed;
   bottom: 0;
   left: 0;
+  height: 4rem;
+}
+
+.footer-content {
+  margin-top: 0.2rem;
+  padding: 0.2rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  justify-content: space-evenly;
+}
+
+.footer-text {
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+}
+
+.rights {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 1rem;
+  margin-bottom: 0.8rem;
 }

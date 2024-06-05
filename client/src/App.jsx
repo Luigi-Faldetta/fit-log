@@ -7,18 +7,26 @@ function App() {
     <div className="app">
       <main className="app-container">
         <div className="logo">
-          <h1>Hello</h1>
+          <img className="logo-img" src="../public/logo.png" />
         </div>
-        <heade className="login-form">
+        <header className="login-form">
           <SignedOut>
             <SignIn />
           </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn>
-        </heade>
+        </header>
       </main>
-      <footer className="footer">Hi</footer>
+      <footer className="footer">
+        <div className="footer-content">
+          <span className="footer-text">About</span>
+          <span className="footer-text">Terms & Conditions</span>
+          <span className="footer-text">Privacy Policy</span>
+          <span className="footer-text">Legal</span>
+        </div>
+        <div className="rights">© Luigi Faldetta | All Rights Reserved</div>
+      </footer>
     </div>
   );
 }
