@@ -1,8 +1,18 @@
-import { useStat, useEffect } from 'react';
 import './App.css';
-import { SignedIn, SignedOut, SignIn, UserButton } from '@clerk/clerk-react';
+import {
+  SignedIn,
+  SignedOut,
+  SignIn,
+  UserButton,
+  useUser,
+} from '@clerk/clerk-react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import SignInPage from './pages/SignInPage';
+import DashboardPage from './pages/Dashboard';
 
 function App() {
+  const { isSignedIn } = useUser();
   return (
     <div className="app">
       <main className="app-container">
@@ -10,13 +20,25 @@ function App() {
           <img className="logo-img" src="../public/logo.png" />
         </div>
         <header className="login-form">
+          {isSignedIn ? <UserButton /> : null}
+        </header>
+        {/* <header className="login-form">
           <SignedOut>
             <SignIn />
           </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn>
-        </header>
+        </header> */}
+        <Routes>
+          <Route
+            path="/"
+            element={isSignedIn ? <Navigate to="/dashboard" /> : <SignInPage />}
+          />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
+        </Routes>
       </main>
       <footer className="footer">
         <div className="footer-content">
