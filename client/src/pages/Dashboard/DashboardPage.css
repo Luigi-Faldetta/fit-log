@@ -1,0 +1,11 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 2em;
+  overflow-y: auto;
+  height: calc(100% - 4rem);
+  max-width: 1200px;
+  box-sizing: border-box;
+}

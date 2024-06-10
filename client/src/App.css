@@ -1,10 +1,13 @@
 .app {
   width: 100vw;
   height: 100vh;
-  background-image: url('./assets/12-2.jpg');
+  /* background-image: url('./assets/12-2.jpg'); */
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat; */
+  background: url('./assets/12-2.jpg') no-repeat center center fixed;
+  background-size: cover;
+  /* overflow: hidden; */
 }
 
 .app-container {
@@ -14,11 +17,28 @@
   justify-content: center;
   flex: 1;
   position: relative;
+  width: 100%;
+  height: calc(100vh - 4rem);
+  /* overflow: hidden; */
+}
+
+.cl-avatarBox {
+  height: 3rem;
+  width: 3rem;
+  border: #bab5b5 solid 1px;
+  border-radius: 0%;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  transform-origin: center;
+}
+
+.cl-avatarBox:hover {
+  transform: scale(1.2);
 }
 
 .logo {
-  margin-top: 5rem;
-  margin-bottom: 3rem;
+  margin-top: 9rem;
+  margin-bottom: 8rem;
   height: 4rem;
   max-width: 100%;
 }
@@ -28,9 +48,14 @@
 }
 
 .login-form {
-  margin: 2rem;
+  position: fixed;
+  right: 3rem;
+  top: 2rem;
+  height: 3rem;
+  width: 3rem;
+  /* margin: 2rem;
   padding: 2rem;
-  max-width: 100%;
+  max-width: 100%; */
 }
 
 .footer {
@@ -47,6 +72,15 @@
   bottom: 0;
   left: 0;
   height: 4rem;
+}
+
+.footer-2 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 4rem;
+  width: 100%;
+  background-color: #333;
 }
 
 .footer-content {

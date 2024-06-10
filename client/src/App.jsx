@@ -11,15 +11,18 @@ import ProtectedRoute from './components/ProtectedRoute';
 import SignInPage from './pages/SignInPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
 import Layout from './components/Layout/Layout';
+import LabelBottomNavigation from './components/BottomNavigation';
 
 function App() {
   const { isSignedIn } = useUser();
   return (
     <div className="app">
       <main className="app-container">
-        <div className="logo">
-          <img className="logo-img" src="../public/logo.png" />
-        </div>
+        {!isSignedIn ? (
+          <div className="logo">
+            <img className="logo-img" src="../public/logo.png" />
+          </div>
+        ) : null}
         <header className="login-form">
           {isSignedIn ? <UserButton /> : null}
         </header>
@@ -35,7 +38,11 @@ function App() {
           </Route>
         </Routes>
       </main>
-      {isSignedIn ? null : (
+      {isSignedIn ? (
+        <footer className="footer-2">
+          <LabelBottomNavigation></LabelBottomNavigation>
+        </footer>
+      ) : (
         <footer className="footer">
           <div className="footer-content">
             <span className="footer-text">About</span>
