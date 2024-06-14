@@ -1,11 +1,12 @@
 .dashboard {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 2em;
-  overflow-y: auto;
-  height: calc(100% - 4rem);
+  overflow-y: scroll;
+  /* height: calc(100% - 4rem); */
+  height: 36rem;
   max-width: 1200px;
   box-sizing: border-box;
 }

@@ -1,12 +1,28 @@
-.navItem {
-  border: 1px solid #ccc;
+/* .navItem {
+  border: 1px solid;
   padding: 1em;
   margin: 1em;
   text-align: center;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 6px;
+  height: 13rem;
+  width: 16rem;
+} */
+
+.navItem {
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em;
+  text-align: center;
+  /* border-radius: 8px; */
+  overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  height: 16rem;
+  width: 16rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .navItem:hover {

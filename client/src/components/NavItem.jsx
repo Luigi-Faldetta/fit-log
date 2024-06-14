@@ -1,13 +1,12 @@
 import React from 'react';
 import './NavItem.css';
 
-function NavItem({ title, imageSrc, description }) {
+function NavItem({ title, imageSrc, onClick }) {
   return (
-    <div className="navItem">
+    <div className="navItem" onClick={onClick}>
       <img src={imageSrc} alt={title} className="navItem-image" />
       <div className="navItem-content">
         <h2>{title}</h2>
-        <p>{description}</p>
       </div>
     </div>
   );

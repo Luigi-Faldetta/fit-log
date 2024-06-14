@@ -12,6 +12,9 @@ import SignInPage from './pages/SignInPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
 import Layout from './components/Layout/Layout';
 import LabelBottomNavigation from './components/BottomNavigation';
+import Workouts from './pages/Workouts/WorkoutsPage';
+import Stats from './pages/Stats/StatsPage';
+import Profile from './pages/Profile/ProfilePage';
 
 function App() {
   const { isSignedIn } = useUser();
@@ -34,6 +37,9 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/workouts" element={<Workouts />} />
+              <Route path="/stats" element={<Stats />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
           </Route>
         </Routes>
