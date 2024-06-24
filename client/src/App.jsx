@@ -15,6 +15,7 @@ import LabelBottomNavigation from './components/BottomNavigation';
 import Workouts from './pages/Workouts/WorkoutsPage';
 import Stats from './pages/Stats/StatsPage';
 import Profile from './pages/Profile/ProfilePage';
+import WorkoutDetails from './pages/WorkoutDetails/WorkoutDetailsPage';
 
 function App() {
   const { isSignedIn } = useUser();
@@ -23,7 +24,7 @@ function App() {
       <main className="app-container">
         {!isSignedIn ? (
           <div className="logo">
-            <img className="logo-img" src="../public/logo.png" />
+            <img className="logo-img" src="/logo.png" />
           </div>
         ) : null}
         <header className="login-form">
@@ -38,6 +39,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/workouts" element={<Workouts />} />
+              <Route path="/workouts/:workoutId" element={<WorkoutDetails />} />
               <Route path="/stats" element={<Stats />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
