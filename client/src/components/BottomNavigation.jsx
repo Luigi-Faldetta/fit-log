@@ -7,12 +7,27 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Home from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { useNavigate } from 'react-router-dom';
 
 export default function LabelBottomNavigation() {
   const [value, setValue] = React.useState('');
 
+  const navigate = useNavigate();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    if (newValue === 'workouts') {
+      navigate('/workouts');
+    }
+    if (newValue === 'dashboard') {
+      navigate('/dashboard');
+    }
+    if (newValue === 'stats') {
+      navigate('/stats');
+    }
+    if (newValue === 'profile') {
+      navigate('/profile');
+    }
   };
 
   return (
@@ -28,7 +43,11 @@ export default function LabelBottomNavigation() {
       onChange={handleChange}
       className="bottom-navigation"
     >
-      <BottomNavigationAction label="Home" value="home" icon={<Home />} />
+      <BottomNavigationAction
+        label="Dashboard"
+        value="dashboard"
+        icon={<Home />}
+      />
       <BottomNavigationAction
         label="Workouts"
         value="workouts"
