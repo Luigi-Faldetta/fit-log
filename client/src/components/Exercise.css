@@ -1,0 +1,36 @@
+.exercise-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  color: #000;
+}
+
+.exercise-table th,
+.exercise-table td {
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.exercise-table th {
+  background-color: #f4f4f4;
+}
+
+.exercise {
+  background-color: #fff;
+}
+
+.exercise td a {
+  text-decoration: none;
+}
+
+.exercise td a:hover {
+  text-decoration: underline;
+}
+
+.edit-button {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  cursor: pointer;
+}

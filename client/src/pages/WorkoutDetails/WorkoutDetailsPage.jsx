@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import mockWorkouts from '../../mocks/workouts';
 import Exercise from '../../components/Exercise';
+import './WorkoutDetails.css';
 
 const WorkoutDetails = () => {
   const { workoutId } = useParams(); // Get workoutId from URL parameters
@@ -12,7 +13,7 @@ const WorkoutDetails = () => {
   }
 
   return (
-    <div>
+    <div className="workout-container">
       <h2>{workout.title}</h2>
       <table className="exercise-table">
         <thead>
