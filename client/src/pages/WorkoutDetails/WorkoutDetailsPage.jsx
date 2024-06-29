@@ -14,12 +14,22 @@ const WorkoutDetails = () => {
   return (
     <div>
       <h2>{workout.title}</h2>
-      <h3>Exercises:</h3>
-      <ul>
-        {workout &&
-          workout.exercises.map((exercise) => (
-            <li key={exercise.id}>
+      <table className="exercise-table">
+        <thead>
+          <tr>
+            <th>Exercise</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>KG</th>
+            <th>Video</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workout &&
+            workout.exercises.map((exercise) => (
               <Exercise
+                key={exercise.id}
                 name={exercise.name}
                 sets={exercise.sets}
                 reps={exercise.reps}
@@ -27,9 +37,15 @@ const WorkoutDetails = () => {
                 media={exercise.media}
                 notes={exercise.notes}
               />
-            </li>
-          ))}
-      </ul>
+            ))}
+        </tbody>
+      </table>
+      <button className="edit-button">
+        Edit{' '}
+        <span role="img" aria-label="edit">
+          ✏️
+        </span>
+      </button>
     </div>
   );
 };
