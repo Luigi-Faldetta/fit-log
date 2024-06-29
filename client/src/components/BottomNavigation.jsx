@@ -23,28 +23,25 @@ export default function LabelBottomNavigation() {
         '& .MuiBottomNavigationAction-root': {
           color: 'white', // Set the color of inactive icons and labels
         },
-        '& .Mui-selected': {
-          color: 'red', // Set the color of the selected icon and label
-        },
       }}
       value={value}
       onChange={handleChange}
       className="bottom-navigation"
     >
-      <BottomNavigationAction label="Recents" value="recents" icon={<Home />} />
+      <BottomNavigationAction label="Home" value="home" icon={<Home />} />
       <BottomNavigationAction
-        label="Favorites"
-        value="favorites"
+        label="Workouts"
+        value="workouts"
         icon={<DescriptionIcon />}
       />
       <BottomNavigationAction
-        label="Nearby"
-        value="nearby"
+        label="Stats"
+        value="stats"
         icon={<TrendingUpIcon />}
       />
       <BottomNavigationAction
-        label="Folder"
-        value="folder"
+        label="Profile"
+        value="profile"
         icon={<ManageAccountsIcon />}
       />
     </BottomNavigation>
