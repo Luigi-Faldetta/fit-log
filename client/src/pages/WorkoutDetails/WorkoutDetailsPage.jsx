@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import mockWorkouts from '../../mocks/workouts';
+import Exercise from '../../components/Exercise';
 
 const WorkoutDetails = () => {
   const { workoutId } = useParams(); // Get workoutId from URL parameters
@@ -12,16 +13,20 @@ const WorkoutDetails = () => {
 
   return (
     <div>
-      {console.log(workout)}
-      {/* <h2>{workout.title}</h2> */}
+      <h2>{workout.title}</h2>
       <h3>Exercises:</h3>
       <ul>
         {workout &&
           workout.exercises.map((exercise) => (
             <li key={exercise.id}>
-              <p>Name: {exercise.name}</p>
-              <p>Sets: {exercise.sets}</p>
-              <p>Reps: {exercise.reps}</p>
+              <Exercise
+                name={exercise.name}
+                sets={exercise.sets}
+                reps={exercise.reps}
+                kg={exercise.kg}
+                media={exercise.media}
+                notes={exercise.notes}
+              />
             </li>
           ))}
       </ul>
