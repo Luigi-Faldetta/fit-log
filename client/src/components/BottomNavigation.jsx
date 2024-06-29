@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -7,27 +7,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import Home from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
-export default function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('');
-
-  const navigate = useNavigate();
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    if (newValue === 'workouts') {
-      navigate('/workouts');
-    }
-    if (newValue === 'dashboard') {
-      navigate('/dashboard');
-    }
-    if (newValue === 'stats') {
-      navigate('/stats');
-    }
-    if (newValue === 'profile') {
-      navigate('/profile');
-    }
-  };
-
+export default function LabelBottomNavigation({ value, onChange }) {
   return (
     <BottomNavigation
       sx={{
@@ -50,7 +30,8 @@ export default function LabelBottomNavigation() {
         },
       }}
       value={value}
-      onChange={handleChange}
+      // onChange={handleChange}
+      onChange={(event, newValue) => onChange(newValue)}
       className="bottom-navigation"
     >
       <BottomNavigationAction

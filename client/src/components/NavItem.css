@@ -1,15 +1,3 @@
-/* .navItem {
-  border: 1px solid;
-  padding: 1em;
-  margin: 1em;
-  text-align: center;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px;
-  height: 13rem;
-  width: 16rem;
-} */
-
 .navItem {
   border: 1px solid #ccc;
   padding: 1em;
@@ -27,6 +15,7 @@
 
 .navItem:hover {
   transform: scale(1.05);
+  cursor: pointer;
 }
 
 .navItem-image {

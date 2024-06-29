@@ -1,5 +1,6 @@
 import React from 'react';
 import './Exercise.css';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 const Exercise = ({ name, sets, reps, kg, media, notes }) => {
   return (
@@ -10,7 +11,7 @@ const Exercise = ({ name, sets, reps, kg, media, notes }) => {
       <td>{kg}</td>
       <td>
         <a href={media} target="_blank" rel="noopener noreferrer">
-          ▶
+          <PlayCircleOutlineIcon></PlayCircleOutlineIcon>
         </a>
       </td>
       <td>{notes}</td>

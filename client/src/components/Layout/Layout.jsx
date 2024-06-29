@@ -7,9 +7,6 @@ function Layout() {
       <main className="layout-content">
         <Outlet />
       </main>
-      {/* <footer>
-        <LabelBottomNavigation></LabelBottomNavigation>
-      </footer> */}
     </div>
   );
 }

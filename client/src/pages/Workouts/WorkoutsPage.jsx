@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import mockWorkouts from '../../mocks/workouts';
+import './Workouts.css';
 
 const Workouts = () => {
   const navigate = useNavigate();

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import mockWorkouts from '../../mocks/workouts';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
+import EditIcon from '@mui/icons-material/Edit';
 
 const WorkoutDetails = () => {
   const { workoutId } = useParams(); // Get workoutId from URL parameters
@@ -44,7 +45,7 @@ const WorkoutDetails = () => {
       <button className="edit-button">
         Edit{' '}
         <span role="img" aria-label="edit">
-          ✏️
+          <EditIcon></EditIcon>
         </span>
       </button>
     </div>

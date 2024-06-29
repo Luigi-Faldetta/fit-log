@@ -1,12 +1,7 @@
 import './App.css';
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  UserButton,
-  useUser,
-} from '@clerk/clerk-react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { UserButton, useUser } from '@clerk/clerk-react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import SignInPage from './pages/SignInPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
@@ -19,6 +14,31 @@ import WorkoutDetails from './pages/WorkoutDetails/WorkoutDetailsPage';
 
 function App() {
   const { isSignedIn } = useUser();
+  const [selectedNav, setSelectedNav] = useState('dashboard');
+  const navigate = useNavigate();
+
+  const handleChange = (newValue) => {
+    setSelectedNav(newValue);
+
+    // Navigate to the respective page
+    switch (newValue) {
+      case 'dashboard':
+        navigate('/dashboard');
+        break;
+      case 'workouts':
+        navigate('/workouts');
+        break;
+      case 'stats':
+        navigate('/stats');
+        break;
+      case 'profile':
+        navigate('/profile');
+        break;
+      default:
+        navigate('/dashboard');
+    }
+  };
+
   return (
     <div className="app">
       <main className="app-container">
@@ -37,7 +57,10 @@ function App() {
           />
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route
+                path="/dashboard"
+                element={<DashboardPage setSelectedNav={handleChange} />}
+              />
               <Route path="/workouts" element={<Workouts />} />
               <Route path="/workouts/:workoutId" element={<WorkoutDetails />} />
               <Route path="/stats" element={<Stats />} />
@@ -48,7 +71,10 @@ function App() {
       </main>
       {isSignedIn ? (
         <footer className="footer-2">
-          <LabelBottomNavigation></LabelBottomNavigation>
+          <LabelBottomNavigation
+            value={selectedNav}
+            onChange={handleChange}
+          ></LabelBottomNavigation>
         </footer>
       ) : (
         <footer className="footer">
