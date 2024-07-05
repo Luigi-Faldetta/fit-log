@@ -1,4 +1,5 @@
 const { sequelize, DataTypes } = require('./db');
+const { Workout } = require('./workouts-model');
 
 const Exercise = sequelize.define('Exercise', {
   exercise_id: {
@@ -38,6 +39,14 @@ const Exercise = sequelize.define('Exercise', {
   media_URL: {
     type: DataTypes.TEXT,
     allowNull: true,
+  },
+  workout_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Workouts',
+      key: 'workout_id',
+    },
+    allowNull: false,
   },
 });
 
