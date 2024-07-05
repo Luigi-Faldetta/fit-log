@@ -1,21 +1,43 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import mockWorkouts from '../../mocks/workouts';
+// import mockWorkouts from '../../mocks/workouts';
+import { getExercises } from '../../services/apiService';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
 import EditIcon from '@mui/icons-material/Edit';
 
 const WorkoutDetails = () => {
   const { workoutId } = useParams(); // Get workoutId from URL parameters
-  const workout = mockWorkouts.find((w) => w.id.toString() === workoutId); // Find the workout based on workoutId
+  const [exercises, setExercises] = useState([]);
 
-  if (!workout) {
-    return <div>Workout not found</div>; // Handle case where workout is not found
+  useEffect(() => {
+    const fetchExercises = async () => {
+      try {
+        const data = await getExercises();
+        const workoutExercises = data.filter(
+          (exercise) => exercise.workout_id === parseInt(workoutId, 10)
+        );
+        setExercises(workoutExercises);
+      } catch (error) {
+        console.error('Failed to fetch exercises:', error);
+      }
+    };
+
+    fetchExercises();
+  }, [workoutId]);
+
+  if (exercises.length === 0) {
+    return <div>Loading...</div>; // Handle loading state
   }
+  // const workout = mockWorkouts.find((w) => w.id.toString() === workoutId); // Find the workout based on workoutId
+
+  // if (!workout) {
+  //   return <div>Workout not found</div>; // Handle case where workout is not found
+  // }
 
   return (
     <div className="workout-container">
-      <h2>{workout.title}</h2>
+      {/* <h2>{workout.title}</h2> */}
       <table className="exercise-table">
         <thead>
           <tr>
@@ -28,16 +50,16 @@ const WorkoutDetails = () => {
           </tr>
         </thead>
         <tbody>
-          {workout &&
-            workout.exercises.map((exercise) => (
+          {exercises &&
+            exercises.map((exercise) => (
               <Exercise
-                key={exercise.id}
+                key={exercise.exercise_id}
                 name={exercise.name}
                 sets={exercise.sets}
                 reps={exercise.reps}
-                kg={exercise.kg}
-                media={exercise.media}
-                notes={exercise.notes}
+                kg={exercise.weight}
+                media={exercise.media_URL}
+                notes={exercise.description}
               />
             ))}
         </tbody>
