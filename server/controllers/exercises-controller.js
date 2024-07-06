@@ -41,8 +41,6 @@ exports.createExercise = async (req, res) => {
   }
 };
 
-const { Exercise } = require('../models/exercises-model');
-
 exports.updateExercises = async (req, res) => {
   try {
     const exercises = req.body;
