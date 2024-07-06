@@ -7,5 +7,6 @@ router.get('/workouts', workouts.getWorkouts);
 router.post('/workouts', workouts.createWorkout);
 router.get('/exercises', exercises.getExercises);
 router.post('/exercises', exercises.createExercise);
+router.put('/exercises', exercises.updateExercises);
 
 module.exports = router;

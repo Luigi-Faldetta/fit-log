@@ -40,3 +40,24 @@ exports.createExercise = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+const { Exercise } = require('../models/exercises-model');
+
+exports.updateExercises = async (req, res) => {
+  try {
+    const exercises = req.body;
+    const updatedExercises = [];
+
+    for (const exercise of exercises) {
+      const updatedExercise = await Exercise.update(exercise, {
+        where: { exercise_id: exercise.exercise_id },
+      });
+      updatedExercises.push(updatedExercise);
+    }
+
+    res.status(200).json(updatedExercises);
+  } catch (error) {
+    console.error('Failed to update exercises:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
