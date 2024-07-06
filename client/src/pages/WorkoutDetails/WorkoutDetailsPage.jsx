@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import mockWorkouts from '../../mocks/workouts';
-import { getExercises } from '../../services/apiService';
+import { getExercises, updateExercises } from '../../services/apiService';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 const WorkoutDetails = () => {
   const { workoutId } = useParams(); // Get workoutId from URL parameters
   const [exercises, setExercises] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -26,6 +27,21 @@ const WorkoutDetails = () => {
     fetchExercises();
   }, [workoutId]);
 
+  const handleInputChange = (index, field, value) => {
+    const updatedExercises = [...exercises];
+    updatedExercises[index][field] = value;
+    setExercises(updatedExercises);
+  };
+
+  const handleSave = async () => {
+    try {
+      await updateExercises(exercises);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to update exercises:', error);
+    }
+  };
+
   if (exercises.length === 0) {
     return <div>Loading...</div>; // Handle loading state
   }
@@ -37,7 +53,6 @@ const WorkoutDetails = () => {
 
   return (
     <div className="workout-container">
-      {/* <h2>{workout.title}</h2> */}
       <table className="exercise-table">
         <thead>
           <tr>
@@ -51,7 +66,7 @@ const WorkoutDetails = () => {
         </thead>
         <tbody>
           {exercises &&
-            exercises.map((exercise) => (
+            exercises.map((exercise, index) => (
               <Exercise
                 key={exercise.exercise_id}
                 name={exercise.name}
@@ -60,16 +75,22 @@ const WorkoutDetails = () => {
                 kg={exercise.weight}
                 media={exercise.media_URL}
                 notes={exercise.description}
+                isEditing={isEditing}
+                onInputChange={handleInputChange}
+                index={index}
               />
             ))}
         </tbody>
       </table>
-      <button className="edit-button">
-        Edit{' '}
-        <span role="img" aria-label="edit">
-          <EditIcon></EditIcon>
-        </span>
-      </button>
+      {isEditing ? (
+        <button className="save-button" onClick={handleSave}>
+          Save
+        </button>
+      ) : (
+        <button className="edit-button" onClick={() => setIsEditing(true)}>
+          Edit <EditIcon />
+        </button>
+      )}
     </div>
   );
 };
