@@ -1,22 +1,39 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import mockWorkouts from '../../mocks/workouts';
+// import mockWorkouts from '../../mocks/workouts';
+import { getWorkouts } from '../../services/apiService';
 import './Workouts.css';
 
 const Workouts = () => {
+  const [workouts, setWorkouts] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+      try {
+        const data = await getWorkouts();
+        setWorkouts(data);
+      } catch (error) {
+        console.error('Failed to fetch workouts:', error);
+      }
+    };
+
+    fetchWorkouts();
+  }, []);
+
   const handleWorkoutClick = (workoutId) => {
     navigate(`/workouts/${workoutId}`);
   };
   return (
     <div className="workouts-container">
-      {mockWorkouts.map((workout) => (
+      {workouts.map((workout) => (
         <div
-          key={workout.id}
+          key={workout.workout_id}
           className="workout-card"
-          onClick={() => handleWorkoutClick(workout.id)}
+          onClick={() => handleWorkoutClick(workout.workout_id)}
         >
-          <h3>{workout.title}</h3>
+          <h3>{workout.name}</h3>
+          <p>{workout.description}</p>
         </div>
       ))}
     </div>

@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(router);
 
 (async () => {
-  await sequelize.sync();
+  await sequelize.sync({ alter: true });
   app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   });
