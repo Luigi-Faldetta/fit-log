@@ -29,3 +29,23 @@ export const getExercises = async () => {
     throw error;
   }
 };
+
+export const updateExercises = async (exercises) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/exercises`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(exercises),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update exercises');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating exercises:', error);
+    throw error;
+  }
+};
