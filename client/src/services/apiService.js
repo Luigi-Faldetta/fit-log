@@ -31,6 +31,7 @@ export const getExercises = async () => {
 };
 
 export const updateExercises = async (exercises) => {
+  console.log(exercises);
   try {
     const response = await fetch(`${API_BASE_URL}/exercises`, {
       method: 'PUT',
@@ -46,6 +47,26 @@ export const updateExercises = async (exercises) => {
     return data;
   } catch (error) {
     console.error('Error updating exercises:', error);
+    throw error;
+  }
+};
+
+export const postExercise = async (exercise) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/exercises`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(exercise),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to create exercise');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error creating exercise:', error);
     throw error;
   }
 };
