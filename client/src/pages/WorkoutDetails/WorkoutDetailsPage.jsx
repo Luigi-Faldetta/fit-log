@@ -45,11 +45,6 @@ const WorkoutDetails = () => {
   if (exercises.length === 0) {
     return <div>Loading...</div>; // Handle loading state
   }
-  // const workout = mockWorkouts.find((w) => w.id.toString() === workoutId); // Find the workout based on workoutId
-
-  // if (!workout) {
-  //   return <div>Workout not found</div>; // Handle case where workout is not found
-  // }
 
   return (
     <div className="workout-container">
@@ -72,9 +67,9 @@ const WorkoutDetails = () => {
                 name={exercise.name}
                 sets={exercise.sets}
                 reps={exercise.reps}
-                kg={exercise.weight}
-                media={exercise.media_URL}
-                notes={exercise.description}
+                weight={exercise.weight}
+                media_URL={exercise.media_URL}
+                description={exercise.description}
                 isEditing={isEditing}
                 onInputChange={handleInputChange}
                 index={index}

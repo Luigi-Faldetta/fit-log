@@ -6,9 +6,9 @@ const Exercise = ({
   name,
   sets,
   reps,
-  kg,
-  media,
-  notes,
+  weight,
+  media_URL,
+  description,
   isEditing,
   onInputChange,
   index,
@@ -41,22 +41,26 @@ const Exercise = ({
           <td>
             <input
               type="number"
-              value={kg}
-              onChange={(e) => onInputChange(index, 'kg', e.target.value)}
+              value={weight}
+              onChange={(e) => onInputChange(index, 'weight', e.target.value)}
             />
           </td>
           <td>
             <input
               type="text"
-              value={media}
-              onChange={(e) => onInputChange(index, 'media', e.target.value)}
+              value={media_URL}
+              onChange={(e) =>
+                onInputChange(index, 'media_URL', e.target.value)
+              }
             />
           </td>
           <td>
             <input
               type="text"
-              value={notes}
-              onChange={(e) => onInputChange(index, 'notes', e.target.value)}
+              value={description}
+              onChange={(e) =>
+                onInputChange(index, 'description', e.target.value)
+              }
             />
           </td>
         </>
@@ -65,13 +69,13 @@ const Exercise = ({
           <td>{name}</td>
           <td>{sets}</td>
           <td>{reps}</td>
-          <td>{kg}</td>
+          <td>{weight}</td>
           <td>
-            <a href={media} target="_blank" rel="noopener noreferrer">
+            <a href={media_URL} target="_blank" rel="noopener noreferrer">
               ▶
             </a>
           </td>
-          <td>{notes}</td>
+          <td>{description}</td>
         </>
       )}
     </tr>
