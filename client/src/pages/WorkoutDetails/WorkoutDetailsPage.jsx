@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import mockWorkouts from '../../mocks/workouts';
-import { getExercises, updateExercises } from '../../services/apiService';
+import {
+  getExercises,
+  updateExercises,
+  postExercise,
+} from '../../services/apiService';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
 import EditIcon from '@mui/icons-material/Edit';
@@ -31,6 +35,27 @@ const WorkoutDetails = () => {
     const updatedExercises = [...exercises];
     updatedExercises[index][field] = value;
     setExercises(updatedExercises);
+  };
+
+  const handleAddExercise = async () => {
+    const newExercise = {
+      exercise_id: Date.now(), // Temporary ID for the new exercise
+      name: '',
+      sets: 0,
+      reps: 0,
+      weight: 0,
+      media_URL: '',
+      description: '',
+      rest: 2,
+      muscle_group: 'core',
+      workout_id: parseInt(workoutId, 10),
+    };
+    try {
+      const createdExercise = await postExercise(newExercise);
+      setExercises([...exercises, createdExercise]);
+    } catch (error) {
+      console.error('Failed to create exercise:', error);
+    }
   };
 
   const handleSave = async () => {
@@ -78,9 +103,14 @@ const WorkoutDetails = () => {
         </tbody>
       </table>
       {isEditing ? (
-        <button className="save-button" onClick={handleSave}>
-          Save
-        </button>
+        <>
+          <button className="save-button" onClick={handleSave}>
+            Save
+          </button>
+          <button className="add-button" onClick={handleAddExercise}>
+            Add Exercise
+          </button>
+        </>
       ) : (
         <button className="edit-button" onClick={() => setIsEditing(true)}>
           Edit <EditIcon />

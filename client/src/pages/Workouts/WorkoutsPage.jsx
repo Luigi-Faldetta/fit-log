@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import mockWorkouts from '../../mocks/workouts';
 import { getWorkouts } from '../../services/apiService';
 import './Workouts.css';
 
@@ -25,18 +24,21 @@ const Workouts = () => {
     navigate(`/workouts/${workoutId}`);
   };
   return (
-    <div className="workouts-container">
-      {workouts.map((workout) => (
-        <div
-          key={workout.workout_id}
-          className="workout-card"
-          onClick={() => handleWorkoutClick(workout.workout_id)}
-        >
-          <h3>{workout.name}</h3>
-          <p>{workout.description}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="workouts-container">
+        {workouts.map((workout) => (
+          <div
+            key={workout.workout_id}
+            className="workout-card"
+            onClick={() => handleWorkoutClick(workout.workout_id)}
+          >
+            <h3>{workout.name}</h3>
+            <p>{workout.description}</p>
+          </div>
+        ))}
+      </div>
+      {/* <button>New workout</button> */}
+    </>
   );
 };
 

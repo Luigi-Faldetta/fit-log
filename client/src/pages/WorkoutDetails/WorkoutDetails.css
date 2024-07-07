@@ -4,3 +4,27 @@
   align-items: center;
   justify-content: center;
 }
+
+.save-button,
+.edit-button,
+.add-button {
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+.edit-button {
+  background-color: #008cba; /* Blue */
+  color: white;
+}
+
+.add-button {
+  background-color: #f0ad4e; /* Orange */
+  color: white;
+}
