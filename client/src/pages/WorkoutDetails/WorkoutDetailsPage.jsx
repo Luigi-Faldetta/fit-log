@@ -1,30 +1,55 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-// import mockWorkouts from '../../mocks/workouts';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   getExercises,
   updateExercises,
   postExercise,
+  postWorkout,
 } from '../../services/apiService';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
 import EditIcon from '@mui/icons-material/Edit';
+import generateRandomId from '../../utils/UtilityFunctions';
 
 const WorkoutDetails = () => {
-  const { workoutId } = useParams(); // Get workoutId from URL parameters
+  const navigate = useNavigate();
+  const { workoutId } = useParams();
+  console.log(workoutId);
+  if (workoutId) {
+    const bool = workoutId.startsWith('new');
+    console.log(bool);
+  }
+  const [workout, setWorkout] = useState({ name: '', description: '' });
   const [exercises, setExercises] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect triggered with workoutId:', workoutId); // Log when useEffect is triggered
     const fetchExercises = async () => {
-      try {
-        const data = await getExercises();
-        const workoutExercises = data.filter(
-          (exercise) => exercise.workout_id === parseInt(workoutId, 10)
-        );
-        setExercises(workoutExercises);
-      } catch (error) {
-        console.error('Failed to fetch exercises:', error);
+      if (workoutId.startsWith('new')) {
+        console.log('Creating a new workout');
+        setIsEditing(true);
+        const newExercise = {
+          exercise_id: generateRandomId(), // Temporary ID for the new exercise
+          name: '',
+          sets: 0,
+          reps: 0,
+          weight: 0,
+          media_URL: '',
+          description: '',
+          workout_id: null,
+        };
+        setExercises([newExercise]);
+      } else {
+        try {
+          const data = await getExercises();
+          const workoutExercises = data.filter(
+            (exercise) => exercise.workout_id === parseInt(workoutId, 10)
+          );
+          setExercises(workoutExercises);
+        } catch (error) {
+          console.error('Failed to fetch exercises:', error);
+        }
       }
     };
 
@@ -39,7 +64,7 @@ const WorkoutDetails = () => {
 
   const handleAddExercise = async () => {
     const newExercise = {
-      exercise_id: Date.now(), // Temporary ID for the new exercise
+      exercise_id: generateRandomId(), // Temporary ID for the new exercise
       name: '',
       sets: 0,
       reps: 0,
@@ -48,7 +73,7 @@ const WorkoutDetails = () => {
       description: '',
       rest: 2,
       muscle_group: 'core',
-      workout_id: parseInt(workoutId, 10),
+      workout_id: workoutId.startsWith('new') ? null : parseInt(workoutId, 10),
     };
     try {
       const createdExercise = await postExercise(newExercise);
@@ -59,20 +84,63 @@ const WorkoutDetails = () => {
   };
 
   const handleSave = async () => {
-    try {
-      await updateExercises(exercises);
-      setIsEditing(false);
-    } catch (error) {
-      console.error('Failed to update exercises:', error);
+    if (workoutId.startsWith('new')) {
+      try {
+        const createdWorkout = await postWorkout(workout);
+        const updatedExercises = exercises.map((exercise) => ({
+          ...exercise,
+          workout_id: createdWorkout.workout_id,
+        }));
+        console.log(updateExercises);
+        await updateExercises(updatedExercises);
+        navigate(`/workouts/${createdWorkout.workout_id}`);
+      } catch (error) {
+        console.error('Failed to create workout and exercises:', error);
+      }
+    } else {
+      try {
+        await updateExercises(exercises);
+        setIsEditing(false);
+      } catch (error) {
+        console.error('Failed to update exercises:', error);
+      }
     }
   };
 
-  if (exercises.length === 0) {
+  if (workoutId && !workoutId.startsWith('new') && exercises.length === 0) {
+    console.log('Loading state triggered');
     return <div>Loading...</div>; // Handle loading state
   }
 
   return (
     <div className="workout-container">
+      {isEditing ? (
+        <div className="workout-form">
+          <label>
+            Workout Name:
+            <input
+              type="text"
+              value={workout.name}
+              onChange={(e) => setWorkout({ ...workout, name: e.target.value })}
+            />
+          </label>
+          <label>
+            Description:
+            <input
+              type="text"
+              value={workout.description}
+              onChange={(e) =>
+                setWorkout({ ...workout, description: e.target.value })
+              }
+            />
+          </label>
+        </div>
+      ) : (
+        <>
+          <h2>{workout.name}</h2>
+          <p>{workout.description}</p>
+        </>
+      )}
       <table className="exercise-table">
         <thead>
           <tr>

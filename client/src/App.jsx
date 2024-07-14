@@ -62,6 +62,7 @@ function App() {
                 element={<DashboardPage setSelectedNav={handleChange} />}
               />
               <Route path="/workouts" element={<Workouts />} />
+              {/* <Route path="/workouts/new" element={<WorkoutDetails isNew />} /> */}
               <Route path="/workouts/:workoutId" element={<WorkoutDetails />} />
               <Route path="/stats" element={<Stats />} />
               <Route path="/profile" element={<Profile />} />

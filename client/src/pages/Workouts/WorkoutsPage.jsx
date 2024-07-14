@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getWorkouts } from '../../services/apiService';
 import './Workouts.css';
+import generateRandomId from '../../utils/UtilityFunctions';
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -20,11 +21,20 @@ const Workouts = () => {
     fetchWorkouts();
   }, []);
 
+  const handleAddWorkout = () => {
+    const tempWorkoutId = 'new-' + generateRandomId();
+    console.log(tempWorkoutId);
+    navigate(`/workouts/${tempWorkoutId}`);
+  };
+
   const handleWorkoutClick = (workoutId) => {
     navigate(`/workouts/${workoutId}`);
   };
   return (
     <>
+      <button className="add-workout-button" onClick={handleAddWorkout}>
+        Add Workout +
+      </button>
       <div className="workouts-container">
         {workouts.map((workout) => (
           <div
