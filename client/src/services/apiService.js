@@ -73,6 +73,7 @@ export const postExercise = async (exercise) => {
 
 export const postWorkout = async (workout) => {
   try {
+    console.log(workout);
     const response = await fetch(`${API_BASE_URL}/workouts`, {
       method: 'POST',
       headers: {
@@ -87,6 +88,28 @@ export const postWorkout = async (workout) => {
     return data;
   } catch (error) {
     console.error('Error creating workout:', error);
+    throw error;
+  }
+};
+
+// src/services/apiService.js
+
+export const updateWorkout = async (workoutId, workout) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/workouts/${workoutId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(workout),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update workout');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating workout:', error);
     throw error;
   }
 };
