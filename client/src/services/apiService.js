@@ -16,6 +16,20 @@ export const getWorkouts = async () => {
   }
 };
 
+export const getWorkout = async (workoutId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/workouts/${workoutId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch workout');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching workout:', error);
+    throw error;
+  }
+};
+
 export const getExercises = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/exercises`);
