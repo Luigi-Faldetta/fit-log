@@ -30,6 +30,20 @@ export const getWorkout = async (workoutId) => {
   }
 };
 
+export const deleteWorkout = async (workoutId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/workouts/${workoutId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete workout');
+    }
+  } catch (error) {
+    console.error('Error deleting workout:', error);
+    throw error;
+  }
+};
+
 export const getExercises = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/exercises`);
