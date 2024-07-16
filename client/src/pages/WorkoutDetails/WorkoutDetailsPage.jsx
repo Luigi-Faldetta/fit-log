@@ -8,6 +8,7 @@ import {
   getWorkout,
   updateWorkout,
   deleteWorkout,
+  deleteExercise,
 } from '../../services/apiService';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
@@ -161,6 +162,22 @@ const WorkoutDetails = () => {
     return <div>Loading...</div>;
   }
 
+  const handleDeleteExercise = async (index) => {
+    const exerciseToDelete = exercises[index];
+    if (exerciseToDelete.exercise_id) {
+      try {
+        await deleteExercise(exerciseToDelete.exercise_id);
+        const updatedExercises = exercises.filter((exercise, i) => i !== index);
+        setExercises(updatedExercises);
+      } catch (error) {
+        console.error('Failed to delete exercise:', error);
+      }
+    } else {
+      const updatedExercises = exercises.filter((exercise, i) => i !== index);
+      setExercises(updatedExercises);
+    }
+  };
+
   return (
     <div className="workout-container">
       {isEditing ? (
@@ -214,6 +231,7 @@ const WorkoutDetails = () => {
                 description={exercise.description}
                 isEditing={isEditing}
                 onInputChange={handleInputChange}
+                onDelete={handleDeleteExercise}
                 index={index}
               />
             ))}

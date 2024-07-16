@@ -12,6 +12,7 @@ const Exercise = ({
   isEditing,
   onInputChange,
   index,
+  onDelete,
 }) => {
   return (
     <tr className="exercise">
@@ -62,6 +63,9 @@ const Exercise = ({
                 onInputChange(index, 'description', e.target.value)
               }
             />
+          </td>
+          <td>
+            <button onClick={() => onDelete(index)}>❌</button>
           </td>
         </>
       ) : (

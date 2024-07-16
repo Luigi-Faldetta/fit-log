@@ -12,6 +12,6 @@ router.put('/workouts/:workoutId', workouts.updateWorkout);
 router.get('/exercises', exercises.getExercises);
 router.post('/exercises', exercises.createExercise);
 router.put('/exercises', exercises.updateExercises);
-router.delete('/exercises/:exerciseId', exercisesController.deleteExercise); // New route to delete an exercise by ID
+router.delete('/exercises/:exerciseId', exercises.deleteExercise); // New route to delete an exercise by ID
 
 module.exports = router;
