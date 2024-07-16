@@ -10,12 +10,18 @@ exports.getWorkouts = async (req, res) => {
   }
 };
 
-exports.getWorkouts = async (req, res) => {
+exports.getWorkout = async (req, res) => {
   try {
-    const workouts = await Workout.findAll();
-    res.json(workouts);
+    const { workoutId } = req.params;
+    const workout = await Workout.findByPk(workoutId);
+
+    if (!workout) {
+      return res.status(404).json({ error: 'Workout not found' });
+    }
+
+    res.json(workout);
   } catch (error) {
-    console.error('Failed to get workouts:', error);
+    console.error('Failed to get workout:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
