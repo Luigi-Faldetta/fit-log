@@ -7,6 +7,7 @@ import {
   postWorkout,
   getWorkout,
   updateWorkout,
+  deleteWorkout,
 } from '../../services/apiService';
 import Exercise from '../../components/Exercise';
 import './WorkoutDetails.css';
@@ -146,6 +147,15 @@ const WorkoutDetails = () => {
     setIsEditing(false);
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteWorkout(realWorkoutId || workoutId);
+      navigate('/workouts');
+    } catch (error) {
+      console.error('Failed to delete workout:', error);
+    }
+  };
+
   if (isLoading) {
     console.log('Loading state triggered');
     return <div>Loading...</div>;
@@ -231,6 +241,9 @@ const WorkoutDetails = () => {
           Edit <EditIcon />
         </button>
       )}
+      <button className="delete-button" onClick={handleDelete}>
+        Delete Workout
+      </button>
     </div>
   );
 };
