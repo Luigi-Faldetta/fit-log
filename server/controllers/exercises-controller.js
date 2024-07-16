@@ -59,3 +59,20 @@ exports.updateExercises = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+exports.deleteExercise = async (req, res) => {
+  try {
+    const { exerciseId } = req.params;
+    const exercise = await Exercise.findByPk(exerciseId);
+
+    if (!exercise) {
+      return res.status(404).json({ error: 'Exercise not found' });
+    }
+
+    await exercise.destroy();
+    res.status(204).send();
+  } catch (error) {
+    console.error('Failed to delete exercise:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
