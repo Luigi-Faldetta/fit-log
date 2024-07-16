@@ -1,4 +1,5 @@
 const { Workout } = require('../models/workouts-model');
+const { Exercise } = require('../models/exercises-model');
 
 exports.getWorkouts = async (req, res) => {
   try {
@@ -66,6 +67,9 @@ exports.deleteWorkout = async (req, res) => {
     if (!workout) {
       return res.status(404).json({ error: 'Workout not found' });
     }
+
+    // Delete all exercises associated with the workout
+    await Exercise.destroy({ where: { workout_id: workoutId } });
 
     await workout.destroy();
     res.status(204).send();
