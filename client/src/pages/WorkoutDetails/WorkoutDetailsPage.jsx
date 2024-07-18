@@ -23,12 +23,17 @@ const WorkoutDetails = () => {
   const isNewWorkout = workoutId?.startsWith('new');
   console.log('Is new workout:', isNewWorkout);
 
-  const [workout, setWorkout] = useState({ name: '', description: '' });
+  const [workout, setWorkout] = useState({
+    id: null,
+    name: '',
+    description: '',
+  });
   const [exercises, setExercises] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [realWorkoutId, setRealWorkoutId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [addAfterSave, setAddAfterSave] = useState(false);
 
   useEffect(() => {
     console.log('useEffect triggered with workoutId:', workoutId);
@@ -55,6 +60,7 @@ const WorkoutDetails = () => {
           const workoutData = await getWorkout(workoutId);
           console.log('Fetched workout data:', workoutData);
           setWorkout({
+            id: workoutData.workout_id,
             name: workoutData.name,
             description: workoutData.description,
           });
@@ -72,9 +78,16 @@ const WorkoutDetails = () => {
       }
     };
 
-    // getExercises();
     fetchExercises();
   }, [workoutId, isNewWorkout]);
+
+  useEffect(() => {
+    if (realWorkoutId && addAfterSave) {
+      console.log('REAL WORKOUT ID SET:', realWorkoutId);
+      handleAddExercise();
+      setAddAfterSave(false);
+    }
+  }, [realWorkoutId]);
 
   const handleInputChange = (index, field, value) => {
     const updatedExercises = [...exercises];
@@ -83,8 +96,11 @@ const WorkoutDetails = () => {
   };
 
   const handleAddExercise = async () => {
-    if (!realWorkoutId) {
-      console.error('Cannot add exercise: realWorkoutId is null');
+    console.log('Attempting to add exercise...');
+    if (isNewWorkout && !realWorkoutId) {
+      console.log('Saving new workout before adding exercise');
+      setAddAfterSave(true);
+      await handleSave(true);
       return;
     }
     const newExercise = {
@@ -109,46 +125,50 @@ const WorkoutDetails = () => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (stayInEditMode = false) => {
     setIsSaving(true);
-    if (isNewWorkout) {
+    if (isNewWorkout && !realWorkoutId) {
       try {
         const createdWorkout = await postWorkout(workout);
+        console.log('HERE', createdWorkout.workout_id);
         setRealWorkoutId(createdWorkout.workout_id);
+        setWorkout({ ...workout, id: createdWorkout.workout_id });
 
         const updatedExercises = exercises.map((exercise) => ({
           ...exercise,
           workout_id: createdWorkout.workout_id,
         }));
 
-        const initialExercise = updatedExercises[0];
-        if (initialExercise.workout_id && initialExercise.exercise_id) {
-          await postExercise(initialExercise);
-        }
+        setExercises(updatedExercises); // Ensure exercises have the correct workout_id
 
-        await updateExercises(updatedExercises);
-        console.log(
-          'Workout created, navigating to:',
-          createdWorkout.workout_id
+        // Save all exercises after updating their workout_id
+        await Promise.all(
+          updatedExercises.map((exercise) => postExercise(exercise))
         );
-        navigate(`/workouts/${createdWorkout.workout_id}`);
+
+        if (!stayInEditMode) {
+          setIsEditing(false);
+          navigate(`/workouts/${createdWorkout.workout_id}`);
+        }
       } catch (error) {
         console.error('Failed to create workout and exercises:', error);
       }
     } else {
       try {
-        await updateWorkout(workoutId, workout);
+        const idToUpdate = realWorkoutId || workout.id; // Ensure we use the correct ID for the update
+        await updateWorkout(idToUpdate, workout);
         await updateExercises(exercises);
-        setIsEditing(false);
+        if (!stayInEditMode) {
+          setIsEditing(false);
+        }
       } catch (error) {
         console.error('Failed to update exercises:', error);
       }
     }
     setIsSaving(false);
-    setIsEditing(false);
   };
 
-  const handleDelete = async () => {
+  const handleDeleteWorkout = async () => {
     try {
       await deleteWorkout(realWorkoutId || workoutId);
       navigate('/workouts');
@@ -241,7 +261,7 @@ const WorkoutDetails = () => {
         <>
           <button
             className="save-button"
-            onClick={handleSave}
+            onClick={() => handleSave()}
             disabled={isSaving}
           >
             {isSaving ? 'Saving...' : 'Save'}
@@ -249,7 +269,7 @@ const WorkoutDetails = () => {
           <button
             className="add-button"
             onClick={handleAddExercise}
-            disabled={isSaving || !realWorkoutId}
+            disabled={isSaving}
           >
             Add Exercise
           </button>
@@ -259,7 +279,7 @@ const WorkoutDetails = () => {
           Edit <EditIcon />
         </button>
       )}
-      <button className="delete-button" onClick={handleDelete}>
+      <button className="delete-button" onClick={handleDeleteWorkout}>
         Delete Workout
       </button>
     </div>
