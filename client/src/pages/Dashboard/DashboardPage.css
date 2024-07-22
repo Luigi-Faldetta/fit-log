@@ -9,3 +9,9 @@
   max-width: 1200px;
   box-sizing: border-box;
 }
+
+.welcome-message {
+  font-size: large;
+  font-weight: 600;
+  text-align: center;
+}
