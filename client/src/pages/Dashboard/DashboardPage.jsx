@@ -33,19 +33,19 @@ export default function DashboardPage({ setSelectedNav }) {
       <div className="dashboard">
         <NavItem
           title="Workouts"
-          imageSrc="path/to/first-image.jpg"
+          imageSrc="./workouts-img.webp"
           description="Let's get started"
           onClick={() => handleClick('/workouts', 'workouts')}
         />
         <NavItem
-          title="Stats"
-          imageSrc="path/to/second-image.jpg"
+          title="AI Workout Generator"
+          imageSrc="./ai-image.png"
           description="See where you stand"
           onClick={() => handleClick('/stats', 'stats')}
         />
         <NavItem
           title="Profile"
-          imageSrc="path/to/third-image.jpg"
+          imageSrc="./profile-img.jpg"
           description="Your info"
           onClick={() => handleClick('/profile', 'profile')}
         />

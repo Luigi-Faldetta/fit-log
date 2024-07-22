@@ -8,6 +8,7 @@ function NavItem({ title, imageSrc, onClick }) {
       <div className="navItem-content">
         <h2>{title}</h2>
       </div>
+      <div className="navItem-overlay"></div>
     </div>
   );
 }
