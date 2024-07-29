@@ -5,13 +5,22 @@
   justify-content: space-around;
   padding: 2em;
   overflow-y: scroll;
-  height: 36rem;
+  height: 38rem;
   max-width: 1200px;
   box-sizing: border-box;
+  scrollbar-width: none;
 }
 
 .welcome-message {
   font-size: large;
   font-weight: 600;
   text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
