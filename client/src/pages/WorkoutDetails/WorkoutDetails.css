@@ -3,15 +3,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
+/* Ensure buttons are responsive */
 .save-button,
 .edit-button,
-.add-button {
+.add-button,
+.delete-button {
   margin: 10px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
+  width: 90%;
+  max-width: 300px; /* Ensure buttons don't stretch too wide on larger screens */
 }
 
 .save-button {
@@ -27,4 +34,68 @@
 .add-button {
   background-color: #f0ad4e; /* Orange */
   color: white;
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+/* Responsive form fields */
+.input-field {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Modal Styles */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.ReactModal__Content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 4px;
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Default style: Horizontal layout for larger screens */
+.workout-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .workout-form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workout-form label {
+    width: 100%; /* Make labels take full width */
+    margin-bottom: 10px;
+  }
+
+  .workout-form input {
+    width: 100%; /* Make inputs take full width */
+  }
 }

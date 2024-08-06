@@ -51,6 +51,7 @@ export const getExercises = async () => {
       throw new Error('Failed to fetch exercises');
     }
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error fetching exercises:', error);
@@ -92,6 +93,7 @@ export const postExercise = async (exercise) => {
       throw new Error('Failed to create exercise');
     }
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error creating exercise:', error);
