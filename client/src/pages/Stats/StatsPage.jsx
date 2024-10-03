@@ -7,6 +7,7 @@ const Stats = () => {
   const [experienceLevel, setExperienceLevel] = useState('');
   const [goal, setGoal] = useState('');
   const [duration, setDuration] = useState('');
+  const [request, setRequest] = useState('');
   const [workout, setWorkout] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -25,6 +26,7 @@ const Stats = () => {
             experienceLevel,
             goal,
             duration,
+            request,
           }),
         }
       );
@@ -47,25 +49,6 @@ const Stats = () => {
       console.error('Error generating workout:', error);
     }
   };
-
-  // const parseWorkoutText = (text) => {
-  //   // Assuming the response is structured in a way we can parse into exercises
-  //   // You'll need to adapt this based on the format of the response
-  //   const exercises = text.split('\n').map((line) => {
-  //     const parts = line.split(':'); // Split the exercise name and details
-  //     return {
-  //       name: parts[0],
-  //       sets: 3, // Placeholder values
-  //       reps: 10,
-  //       kg: 0,
-  //       rest: 60,
-  //       notes: parts[1] || 'No details provided',
-  //       muscle_group: 'general', // Default or extracted from the OpenAI response
-  //       video: '', // Add if applicable
-  //     };
-  //   });
-  //   return exercises;
-  // };
 
   const parseWorkoutText = (text) => {
     // Initialize workout object
@@ -99,39 +82,6 @@ const Stats = () => {
       } else {
         isExerciseSection = true;
       }
-
-      // if (line.includes('Cool down')) {
-      //   isExerciseSection = false; // Stop at cool down
-      //   console.log('Stopping at Cool-down section...');
-      //   return;
-      // }
-
-      // Log each line and whether we are in the exercise section
-      console.log(
-        `Processing line: "${line}", isExerciseSection: ${isExerciseSection}`
-      );
-
-      //   // Process exercises when in the exercise section
-      //   if (isExerciseSection && line.startsWith('-')) {
-      //     // Extract the exercise name (everything after the dash) and default values for sets, reps, etc.
-      //     const exerciseName = line.substring(2).trim();
-
-      //     console.log('Extracted exerciseName:', exerciseName);
-
-      //     // Create exercise object and add it to the workout
-      //     const exercise = {
-      //       name: exerciseName,
-      //       sets: 3, // Default value for sets
-      //       reps: 12, // Default value for reps
-      //       kg: 0, // Default value for weight
-      //       video: 'N/A', // Default value for video
-      //       notes: '', // Leave notes empty for now
-      //     };
-
-      //     console.log('Adding exercise to workout:', exercise);
-      //     workout.exercises.push(exercise); // Add exercise to the exercises array
-      //   }
-      // });
 
       // Process exercises when in the exercise section
       if (isExerciseSection) {
@@ -191,9 +141,6 @@ const Stats = () => {
         }
       }
     });
-
-    // Log final workout object to verify its structure
-    console.log('Final workout object:', workout);
 
     // Make sure the exercises array is still an array before returning
     if (!Array.isArray(workout.exercises)) {
@@ -296,6 +243,18 @@ const Stats = () => {
             type="number"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Extra requests:
+          <textarea
+            value={request}
+            onChange={(e) => setRequest(e.target.value)}
+            rows={4} // Optional: Adjust the number of rows as needed
+            cols={30} // Optional: Adjust the width as needed
           />
         </label>
       </div>

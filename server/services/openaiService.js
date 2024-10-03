@@ -13,6 +13,7 @@ const generateWorkout = async (
   experienceLevel,
   goal,
   duration,
+  request,
   retries = 5,
   delay = 2000
 ) => {
@@ -29,7 +30,7 @@ const generateWorkout = async (
         {
           role: 'user',
           content: `
-            Generate a workout plan for a ${age}-year-old with ${experienceLevel} experience, aiming for ${goal}, with a duration of ${duration} minutes.
+            Generate a workout plan for a ${age}-year-old with ${experienceLevel} experience, aiming for ${goal}, with a duration of ${duration} minutes and keeping in mind this request: ${request}.
 
         Please format the response with clear separators as follows:
 

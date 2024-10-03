@@ -38,7 +38,6 @@ const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
             </tr>
           </thead>
           <tbody>
-            {console.log(workout.exercises.exercises)}
             {workout.exercises &&
               workout.exercises.exercises.map((exercise, index) => (
                 <tr key={index}>
