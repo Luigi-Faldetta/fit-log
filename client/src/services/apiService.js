@@ -23,6 +23,7 @@ export const getWorkout = async (workoutId) => {
       throw new Error('Failed to fetch workout');
     }
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error fetching workout:', error);

@@ -369,7 +369,7 @@ const WorkoutDetails = () => {
                 {isEditing && !isMobile && (
                   <td>
                     <button
-                      className="delete-button"
+                      className="delete-exercise-button"
                       onClick={() => handleDeleteExercise(exercise.exercise_id)}
                     >
                       &#x2715;

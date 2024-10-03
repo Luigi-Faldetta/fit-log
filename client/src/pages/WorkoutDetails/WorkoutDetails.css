@@ -99,3 +99,13 @@
     width: 100%; /* Make inputs take full width */
   }
 }
+
+.delete-exercise-button {
+  background-color: darkred;
+  font-size: large;
+}
+
+.delete-exercise-button:hover {
+  background-color: #dc3545;
+  cursor: pointer;
+}
