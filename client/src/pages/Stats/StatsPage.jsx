@@ -211,132 +211,6 @@ const Stats = () => {
     return workout;
   };
 
-  // const parseWorkoutText = (text) => {
-  //   // Initialize workout object
-  //   const workout = {
-  //     name: 'AI Generated Workout',
-  //     description: 'Workout generated for your goals.',
-  //     exercises: [], // Ensure exercises is an array
-  //   };
-
-  //   // Split lines, trim whitespace, and filter out empty lines
-  //   const lines = text
-  //     .split('\n')
-  //     .map((line) => line.trim())
-  //     .filter((line) => line !== '');
-
-  //   lines.forEach((line) => {
-  //     // Convert line to lower case for case-insensitive matching
-  //     const lowerLine = line.toLowerCase();
-
-  //     // Exclude lines that start with 'warm up' or 'cool down'
-  //     if (
-  //       lowerLine.includes('warm up') ||
-  //       lowerLine.includes('warm-up') ||
-  //       lowerLine.includes('cool down') ||
-  //       lowerLine.includes('cool-down') ||
-  //       lowerLine.includes('training') ||
-  //       lowerLine.includes('workout') ||
-  //       lowerLine.includes('cardio') ||
-  //       lowerLine.includes('stretching') ||
-  //       lowerLine.includes('circuit')
-  //     ) {
-  //       return; // Skip this line
-  //     }
-  //     // Process lines that start with a dash or a number
-  //     const exerciseLineMatch = line.match(/^(-|\d+\.?)\s*(.*)/);
-  //     if (exerciseLineMatch) {
-  //       // Extract the exercise line without the dash or number
-  //       const exerciseLine = exerciseLineMatch[2].trim();
-
-  //       // Split the exercise line into name and details
-  //       const [exerciseNamePart, detailsPart] = exerciseLine
-  //         .split(':')
-  //         .map((part) => part.trim());
-
-  //       const exerciseName = exerciseNamePart;
-  //       let sets = 0;
-  //       let reps = '';
-  //       let kg = '';
-  //       let duration = ''; // New field for duration value
-  //       let durationUnit = ''; // New field for duration unit
-
-  //       if (detailsPart) {
-  //         // Extract sets and reps, including ranges
-  //         const setsRepsMatch = detailsPart.match(
-  //           /(\d+)\s*sets(?:\s*of\s*(\d+(?:-\d+)?)\s*(?:reps|repetitions))?/i
-  //         );
-
-  //         if (setsRepsMatch) {
-  //           sets = parseInt(setsRepsMatch[1], 10);
-  //           reps = setsRepsMatch[2] ? setsRepsMatch[2] : '';
-  //         }
-
-  //         // Extract kg (weight)
-  //         const kgMatch = detailsPart.match(/(\d+)\s*(kg)/i);
-  //         if (kgMatch) {
-  //           kg = parseInt(kgMatch[1], 10);
-  //         }
-
-  //         //When reps are not relevant it should default to N/A
-  //         //Extract time properly so that it shows in notes
-
-  //         // Handle time-based exercises (e.g., "30-60 seconds" or "1-2 minutes")
-  //         const timeMatch = detailsPart.match(
-  //           /(\d+)(?:-(\d+))?\s*(second|seconds|minute|minutes)/i
-  //         );
-  //         if (timeMatch) {
-  //           let timeValue1 = parseInt(timeMatch[1], 10);
-  //           let timeValue2 = timeMatch[2] ? parseInt(timeMatch[2], 10) : null;
-  //           const unit = timeMatch[3].toLowerCase();
-
-  //           // Store duration and unit
-  //           duration = timeValue2
-  //             ? `${timeValue1}-${timeValue2}`
-  //             : `${timeValue1}`;
-  //           durationUnit = unit;
-
-  //           // If you prefer to convert everything to seconds, uncomment the following:
-  //           /*
-  //           // Convert minutes to seconds if necessary
-  //           if (unit === 'minute' || unit === 'minutes') {
-  //             timeValue1 *= 60;
-  //             if (timeValue2) {
-  //               timeValue2 *= 60;
-  //             }
-  //             durationUnit = 'seconds'; // Update unit to seconds
-  //           }
-
-  //           // Construct the duration string
-  //           duration = timeValue2
-  //             ? `${timeValue1}-${timeValue2}`
-  //             : `${timeValue1}`;
-  //           */
-  //         }
-  //       }
-
-  //       // Create exercise object and add it to the workout
-  //       const exercise = {
-  //         name: exerciseName,
-  //         sets: sets,
-  //         reps: reps,
-  //         kg: kg,
-  //         duration: duration, // e.g., '30-60' or '60'
-  //         durationUnit: durationUnit, // e.g., 'seconds' or 'minutes'
-  //         video: 'N/A', // Default value for video
-  //         notes: '', // Leave notes empty for now
-  //       };
-
-  //       workout.exercises.push(exercise); // Add exercise to the exercises array
-  //     }
-  //   });
-
-  //   // Log final workout object to verify its structure
-  //   console.log('Final workout object:', workout);
-
-  //   return workout;
-  // };
-
   const saveWorkout = async () => {
     try {
       // Step 1: Post the AI-generated workout
@@ -388,6 +262,7 @@ const Stats = () => {
       <div>
         <label>
           Age:
+          <br />
           <input
             type="number"
             value={age}
@@ -399,6 +274,7 @@ const Stats = () => {
       <div>
         <label>
           Experience Level:
+          <br />
           <select
             value={experienceLevel}
             onChange={(e) => setExperienceLevel(e.target.value)}
@@ -414,6 +290,7 @@ const Stats = () => {
       <div>
         <label>
           Goal:
+          <br />
           <input
             type="text"
             value={goal}
@@ -426,6 +303,7 @@ const Stats = () => {
       <div>
         <label>
           Duration (in minutes):
+          <br />
           <input
             type="number"
             value={duration}
@@ -437,6 +315,7 @@ const Stats = () => {
       <div>
         <label>
           Extra requests:
+          <br />
           <textarea
             value={request}
             onChange={(e) => setRequest(e.target.value)}
