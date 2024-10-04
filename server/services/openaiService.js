@@ -30,15 +30,11 @@ const generateWorkout = async (
         {
           role: 'user',
           content: `
-            Generate a workout plan for a ${age}-year-old with ${experienceLevel} experience, aiming for ${goal}, with a duration of ${duration} minutes and keeping in mind this request: ${request}.
+            Generate a workout plan for a ${age}-year-old with ${experienceLevel} experience, aiming for ${goal}, with a duration of ${duration} minutes and keeping in mind this request: ${request}. Please also include kg when possible.
 
-        Please format the response with clear separators as follows:
+        Every single exercise should start with a number, do not include any number or anything other that a number, and should have the following fields:
 
-        Workout Name: [name of the workout]
-        Description: [description of the workout]
-
-        Exercises:
-        - name: [exercise name]
+          name: [exercise name]
           sets: [number of sets]
           reps: [number of reps]
           kg: [weight in kg]
@@ -47,11 +43,11 @@ const generateWorkout = async (
           notes: [exercise notes]
           video: [URL of a video demonstrating the exercise]
 
-        Please provide no more than 8 exercises, and ensure the response is structured exactly as requested.
+        Please provide no more than 3 exercises max, and ensure the response is structured exactly as requested. Remember, all exercises should start with a number.
           `,
         },
       ],
-      max_tokens: 150,
+      max_tokens: 1500,
     });
 
     // Return the generated workout
