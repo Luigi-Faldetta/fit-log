@@ -41,7 +41,9 @@ export default function DashboardPage({ setSelectedNav }) {
           title="AI Workout Generator"
           imageSrc="./ai-image.png"
           description="See where you stand"
-          onClick={() => handleClick('/stats', 'stats')}
+          onClick={() =>
+            handleClick('/aiWorkoutGenerator', 'aiWorkoutGenerator')
+          }
         />
         <NavItem
           title="Profile"

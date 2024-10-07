@@ -8,7 +8,7 @@ import DashboardPage from './pages/Dashboard/DashboardPage';
 import Layout from './components/Layout/Layout';
 import LabelBottomNavigation from './components/BottomNavigation';
 import Workouts from './pages/Workouts/WorkoutsPage';
-import Stats from './pages/Stats/StatsPage';
+import AIWorkoutGenerator from './pages/AIWorkoutGenerator/AIWorkoutGeneratorPage';
 import Profile from './pages/Profile/ProfilePage';
 import WorkoutDetails from './pages/WorkoutDetails/WorkoutDetailsPage';
 
@@ -28,8 +28,8 @@ function App() {
       case 'workouts':
         navigate('/workouts');
         break;
-      case 'stats':
-        navigate('/stats');
+      case 'AIWorkoutGenerator':
+        navigate('/AIWorkoutGenerator');
         break;
       case 'profile':
         navigate('/profile');
@@ -64,7 +64,10 @@ function App() {
               <Route path="/workouts" element={<Workouts />} />
               {/* <Route path="/workouts/new" element={<WorkoutDetails isNew />} /> */}
               <Route path="/workouts/:workoutId" element={<WorkoutDetails />} />
-              <Route path="/stats" element={<Stats />} />
+              <Route
+                path="/AIWorkoutGenerator"
+                element={<AIWorkoutGenerator />}
+              />
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Route>

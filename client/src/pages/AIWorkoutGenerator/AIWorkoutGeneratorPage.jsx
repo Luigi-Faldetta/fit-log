@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import WorkoutModal from '../../components/WorkoutModal';
 import { postWorkout, postExercise } from '../../services/apiService';
 
-const Stats = () => {
+const AIWorkoutGenerator = () => {
   const [age, setAge] = useState('');
   const [experienceLevel, setExperienceLevel] = useState('');
   const [goal, setGoal] = useState('');
@@ -340,4 +340,4 @@ const Stats = () => {
   );
 };
 
-export default Stats;
+export default AIWorkoutGenerator;

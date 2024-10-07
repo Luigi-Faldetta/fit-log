@@ -12,7 +12,8 @@
 .save-button,
 .edit-button,
 .add-button,
-.delete-button {
+.delete-button,
+.next-button {
   margin: 10px;
   padding: 10px;
   font-size: 16px;
@@ -33,6 +34,11 @@
 
 .add-button {
   background-color: #f0ad4e; /* Orange */
+  color: white;
+}
+
+.next-button {
+  background-color: #f0ad4e;
   color: white;
 }
 

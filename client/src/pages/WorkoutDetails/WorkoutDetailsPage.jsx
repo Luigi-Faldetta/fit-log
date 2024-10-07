@@ -6,6 +6,7 @@ import {
   postExercise,
   postWorkout,
   getWorkout,
+  getWorkouts,
   updateWorkout,
   deleteWorkout,
   deleteExercise,
@@ -29,6 +30,7 @@ const WorkoutDetails = () => {
     description: '',
   });
   const [exercises, setExercises] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [realWorkoutId, setRealWorkoutId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -60,12 +62,19 @@ const WorkoutDetails = () => {
         setIsLoading(false);
       } else {
         try {
+          //fetch all workouts
+          const allWorkouts = await getWorkouts();
+          setWorkouts(allWorkouts);
+
+          //fetch current workout
           const workoutData = await getWorkout(workoutId);
           setWorkout({
             id: workoutData.workout_id,
             name: workoutData.name,
             description: workoutData.description,
           });
+
+          //fetch exercises for the current workout
           const data = await getExercises();
           const workoutExercises = data.filter(
             (exercise) => exercise.workout_id === parseInt(workoutId, 10)
@@ -89,6 +98,22 @@ const WorkoutDetails = () => {
       setAddAfterSave(false);
     }
   }, [realWorkoutId]);
+
+  // Find the index of the current workout
+  const currentIndex = workouts.findIndex(
+    (w) => w.workout_id === (realWorkoutId || parseInt(workoutId, 10))
+  );
+
+  // Determine if there is a next workout
+  const hasNext = currentIndex >= 0 && currentIndex < workouts.length - 1;
+
+  // Function to navigate to the next workout
+  const goToNextWorkout = () => {
+    if (hasNext) {
+      const nextWorkoutId = workouts[currentIndex + 1].workout_id;
+      navigate(`/workouts/${nextWorkoutId}`);
+    }
+  };
 
   const handleInputChange = (index, field, value) => {
     const updatedExercises = [...exercises];
@@ -405,9 +430,16 @@ const WorkoutDetails = () => {
           </button>
         </>
       ) : (
-        <button className="edit-button" onClick={() => setIsEditing(true)}>
-          Edit <EditIcon />
-        </button>
+        <>
+          <button className="edit-button" onClick={() => setIsEditing(true)}>
+            Edit <EditIcon />
+          </button>
+          {hasNext && (
+            <button className="next-button" onClick={goToNextWorkout}>
+              Next Workout
+            </button>
+          )}
+        </>
       )}
       <button className="delete-button" onClick={handleDeleteWorkout}>
         Delete Workout
