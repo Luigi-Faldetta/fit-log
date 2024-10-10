@@ -10,16 +10,23 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const WeightChart = () => {
-  const [weightData, setWeightData] = useState([
-    { date: '2024-09-12', weight: 85 },
-    { date: '2024-09-22', weight: 76 },
-    { date: '2024-10-01', weight: 67 },
-    { date: '2024-10-09', weight: 76.5 },
-  ]);
-
+const WeightChart = ({ data }) => {
   const [newWeight, setNewWeight] = useState('');
   const [selectedRange, setSelectedRange] = useState('lastMonth');
+  // Determine the min and max values for weight
+  const weightValues = data.map((entry) => entry.weight);
+  const minWeight = Math.min(...weightValues);
+  const maxWeight = Math.max(...weightValues);
+
+  // Round down min to the nearest multiple of 5, and round up max to the nearest multiple of 5
+  const roundedMin = Math.floor(minWeight / 5) * 5;
+  const roundedMax = Math.ceil(maxWeight / 5) * 5;
+
+  // Generate ticks with an increment of 5 between roundedMin and roundedMax
+  const ticks = [];
+  for (let i = roundedMin; i <= roundedMax; i += 5) {
+    ticks.push(i);
+  }
 
   // Function to add new weight
   const addWeight = () => {
@@ -31,7 +38,7 @@ const WeightChart = () => {
     };
 
     if (!isNaN(newEntry.weight)) {
-      setWeightData((prevData) => [...prevData, newEntry]);
+      setData((prevData) => [...prevData, newEntry]);
       setNewWeight('');
     }
   };
@@ -39,7 +46,7 @@ const WeightChart = () => {
   // Filter data for selected range
   const filterData = () => {
     const today = new Date();
-    const filteredData = weightData.filter((entry) => {
+    const filteredData = data.filter((entry) => {
       const entryDate = new Date(entry.date);
       switch (selectedRange) {
         case 'lastWeek':
@@ -74,7 +81,7 @@ const WeightChart = () => {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
-            <YAxis />
+            <YAxis domain={[roundedMin, roundedMax]} ticks={ticks} />
             <Tooltip />
             <Legend />
             <Line

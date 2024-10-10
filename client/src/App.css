@@ -7,6 +7,7 @@
   /* background-repeat: no-repeat; */
   background: url('./assets/12-2.jpg') no-repeat center center fixed;
   background-size: cover;
+  overflow: hidden;
   /* overflow: hidden; */
 }
 
@@ -19,6 +20,7 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 4rem);
+  overflow-y: auto;
   /* overflow: hidden; */
 }
 
@@ -72,6 +74,7 @@
   bottom: 0;
   left: 0;
   height: 4rem;
+  margin-top: 2rem;
 }
 
 .footer-2 {
@@ -81,6 +84,8 @@
   height: 4rem;
   width: 100%;
   background-color: #333;
+  margin-top: 2rem;
+  /* padding-top: 1rem; */
 }
 
 .footer-content {

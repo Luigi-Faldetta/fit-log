@@ -1,0 +1,11 @@
+.profile-container {
+  overflow-y: scroll;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  /* height: 38rem; */
+  height: calc(100vh - 6rem);
+  max-width: 1200px;
+  padding-top: 2rem;
+  padding-bottom: 8rem;
+  /* margin-bottom: 8em; */
+}
