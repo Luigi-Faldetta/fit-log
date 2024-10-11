@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getWeightData, postWeightData } from '../services/apiService';
 import {
   LineChart,
   Line,
@@ -10,17 +11,35 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const WeightChart = ({ data }) => {
+const WeightChart = () => {
   const [newWeight, setNewWeight] = useState('');
+  const [weightData, setWeightData] = useState([]);
   const [selectedRange, setSelectedRange] = useState('lastMonth');
+
   // Determine the min and max values for weight
-  const weightValues = data.map((entry) => entry.weight);
+  const weightValues = weightData.map((entry) => entry.weight);
   const minWeight = Math.min(...weightValues);
   const maxWeight = Math.max(...weightValues);
 
   // Round down min to the nearest multiple of 5, and round up max to the nearest multiple of 5
   const roundedMin = Math.floor(minWeight / 5) * 5;
   const roundedMax = Math.ceil(maxWeight / 5) * 5;
+
+  // Fetch weight data from the server
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getWeightData();
+        setWeightData(data);
+      } catch (error) {
+        console.error('Failed to fetch weight data:', error);
+      }
+    };
+
+    console.log(weightData);
+
+    fetchData();
+  }, []);
 
   // Generate ticks with an increment of 5 between roundedMin and roundedMax
   const ticks = [];
@@ -29,7 +48,7 @@ const WeightChart = ({ data }) => {
   }
 
   // Function to add new weight
-  const addWeight = () => {
+  const addWeight = async () => {
     if (newWeight.trim() === '') return; // Prevent adding empty entries
 
     const newEntry = {
@@ -38,7 +57,8 @@ const WeightChart = ({ data }) => {
     };
 
     if (!isNaN(newEntry.weight)) {
-      setData((prevData) => [...prevData, newEntry]);
+      const savedEntry = await postWeightData(newEntry);
+      setWeightData((prevData) => [...prevData, savedEntry]);
       setNewWeight('');
     }
   };
@@ -46,7 +66,7 @@ const WeightChart = ({ data }) => {
   // Filter data for selected range
   const filterData = () => {
     const today = new Date();
-    const filteredData = data.filter((entry) => {
+    const filteredData = weightData.filter((entry) => {
       const entryDate = new Date(entry.date);
       switch (selectedRange) {
         case 'lastWeek':
@@ -72,7 +92,7 @@ const WeightChart = ({ data }) => {
   const filteredData = filterData();
 
   return (
-    <div>
+    <div style={{ marginBottom: '4rem' }}>
       <div style={{ width: '36em', margin: '0 auto', height: 400 }}>
         <ResponsiveContainer>
           <LineChart

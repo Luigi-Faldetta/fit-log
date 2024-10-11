@@ -158,3 +158,110 @@ export const updateWorkout = async (workoutId, workout) => {
     throw error;
   }
 };
+
+// Weight endpoints
+export const getWeightData = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/weight`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch weight data');
+    }
+    const data = await response.json();
+    console.log('getting', data);
+
+    const formattedData = data.map((entry) => ({
+      date: entry.date.split('T')[0], // Extract the date in YYYY-MM-DD format
+      weight: entry.value, // Use `value` as `weight`
+    }));
+
+    return formattedData;
+  } catch (error) {
+    console.error('Error fetching weight data:', error);
+    throw error;
+  }
+};
+
+export const postWeightData = async (weightData) => {
+  try {
+    // The backend is expecting `value` for the weight field
+    const requestBody = {
+      date: weightData.date,
+      value: weightData.weight, // Rename `weight` to `value` to match the backend schema
+    };
+
+    const response = await fetch(`${API_BASE_URL}/weight`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to post weight data');
+    }
+
+    const data = await response.json();
+    // Format the response data to match the expected format
+    return {
+      date: data.date.split('T')[0],
+      weight: data.value,
+    };
+  } catch (error) {
+    console.error('Error posting weight data:', error);
+    throw error;
+  }
+};
+
+// Body Fat endpoints
+export const getBodyFatData = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/bodyfat`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch body fat data');
+    }
+    const data = await response.json();
+
+    // Map the response to match the expected format
+    const formattedData = data.map((entry) => ({
+      date: entry.date.split('T')[0], // Extract date in 'YYYY-MM-DD' format
+      bodyFat: entry.value, // Use `value` as `bodyFat`
+    }));
+
+    return formattedData;
+  } catch (error) {
+    console.error('Error fetching body fat data:', error);
+    throw error;
+  }
+};
+
+export const postBodyFatData = async (bodyFatData) => {
+  try {
+    const requestBody = {
+      date: bodyFatData.date,
+      value: bodyFatData.bodyFat, // Rename `bodyFat` to `value` to match backend schema
+    };
+
+    const response = await fetch(`${API_BASE_URL}/bodyfat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to post body fat data');
+    }
+
+    const data = await response.json();
+    // Format the response data to match the expected format
+    return {
+      date: data.date.split('T')[0],
+      bodyFat: data.value,
+    };
+  } catch (error) {
+    console.error('Error posting body fat data:', error);
+    throw error;
+  }
+};

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getBodyFatData, postBodyFatData } from '../services/apiService';
 import {
   LineChart,
   Line,
@@ -10,12 +11,13 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const BodyFatChart = ({ data }) => {
-  const [bodyFatData, setBodyFatData] = useState(data);
+const BodyFatChart = () => {
+  const [bodyFatData, setBodyFatData] = useState([]);
   const [newBodyFat, setNewBodyFat] = useState('');
+  const [selectedRange, setSelectedRange] = useState('lastMonth');
 
   // Determine the min and max values for body fat percentage
-  const bodyFatValues = data.map((entry) => entry.bodyFat);
+  const bodyFatValues = bodyFatData.map((entry) => entry.bodyFat);
   const minBodyFat = Math.min(...bodyFatValues);
   const maxBodyFat = Math.max(...bodyFatValues);
 
@@ -23,13 +25,27 @@ const BodyFatChart = ({ data }) => {
   const roundedMin = Math.floor(minBodyFat / 5) * 5;
   const roundedMax = Math.ceil(maxBodyFat / 5) * 5;
 
+  // Fetch body fat data from the server
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getBodyFatData();
+        setBodyFatData(data);
+      } catch (error) {
+        console.error('Failed to fetch body fat data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   // Generate ticks with an increment of 5 between roundedMin and roundedMax
   const ticks = [];
   for (let i = roundedMin; i <= roundedMax; i += 5) {
     ticks.push(i);
   }
 
-  const addBodyFat = () => {
+  const addBodyFat = async () => {
     if (newBodyFat.trim() === '') return; // Prevent adding empty entries
 
     const newEntry = {
@@ -38,50 +54,100 @@ const BodyFatChart = ({ data }) => {
     };
 
     if (!isNaN(newEntry.bodyFat)) {
-      setBodyFatData((prevData) => [...prevData, newEntry]);
-      setNewBodyFat('');
+      try {
+        const savedEntry = await postBodyFatData(newEntry);
+        setBodyFatData((prevData) => [...prevData, newEntry]);
+        setNewBodyFat('');
+      } catch (error) {
+        console.error('Failed to save body fat data:', error);
+      }
     }
   };
 
+  // Filter data for selected range
+  const filterData = () => {
+    const today = new Date();
+    const filteredData = bodyFatData.filter((entry) => {
+      const entryDate = new Date(entry.date);
+      switch (selectedRange) {
+        case 'lastWeek':
+          return entryDate >= new Date(today.setDate(today.getDate() - 7));
+        case 'lastMonth':
+          return entryDate >= new Date(today.setMonth(today.getMonth() - 1));
+        case 'last3Months':
+          return entryDate >= new Date(today.setMonth(today.getMonth() - 3));
+        case 'last6Months':
+          return entryDate >= new Date(today.setMonth(today.getMonth() - 6));
+        case 'lastYear':
+          return (
+            entryDate >= new Date(today.setFullYear(today.getFullYear() - 1))
+          );
+        case 'all':
+        default:
+          return true; // Return all data
+      }
+    });
+    return filteredData;
+  };
+
+  const filteredData = filterData();
+
   return (
-    <div
-      style={{
-        width: '36em',
-        margin: '0 auto',
-        height: 400,
-        marginBottom: '8rem',
-      }}
-    >
-      <ResponsiveContainer>
-        <LineChart
-          data={bodyFatData}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis domain={[roundedMin, roundedMax]} ticks={ticks} />{' '}
-          {/* Custom Y-axis with rounded values */}
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="bodyFat"
-            stroke="#ff7300"
-            activeDot={{ r: 8 }}
-            dot={{ r: 4 }} // Set dot size
-            name="Body Fat (%)"
+    <div style={{ marginBottom: '4rem' }}>
+      <h3>Body Fat Percentage Chart</h3>
+      <div
+        style={{
+          width: '36em',
+          margin: '0 auto',
+          height: 400,
+          marginBottom: '8rem',
+        }}
+      >
+        <ResponsiveContainer>
+          <LineChart
+            data={bodyFatData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis domain={[roundedMin, roundedMax]} ticks={ticks} />{' '}
+            {/* Custom Y-axis with rounded values */}
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="bodyFat"
+              stroke="#ff7300"
+              activeDot={{ r: 8 }}
+              dot={{ r: 4 }} // Set dot size
+              name="Body Fat (%)"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        <div className="body-fat-form">
+          <h3>Log Your Body Fat Percentage</h3>
+          <input
+            type="number"
+            value={newBodyFat}
+            onChange={(e) => setNewBodyFat(e.target.value)}
+            placeholder="Enter your body fat percentage (%)"
           />
-        </LineChart>
-      </ResponsiveContainer>
-      <div className="body-fat-form">
-        <h3>Log Your Body Fat Percentage</h3>
-        <input
-          type="number"
-          value={newBodyFat}
-          onChange={(e) => setNewBodyFat(e.target.value)}
-          placeholder="Enter your body fat (%)"
-        />
-        <button onClick={addBodyFat}>Add Body Fat</button>
+          <button onClick={addBodyFat}>Add Body Fat</button>
+        </div>
+      </div>
+      <div className="time-range-selector">
+        <h3>Select Time Range:</h3>
+        <select
+          value={selectedRange}
+          onChange={(e) => setSelectedRange(e.target.value)}
+        >
+          <option value="lastWeek">Last Week</option>
+          <option value="lastMonth">Last Month</option>
+          <option value="last3Months">Last 3 Months</option>
+          <option value="last6Months">Last 6 Months</option>
+          <option value="lastYear">Last Year</option>
+          <option value="all">All Time</option>
+        </select>
       </div>
     </div>
   );
