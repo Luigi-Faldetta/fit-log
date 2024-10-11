@@ -49,7 +49,7 @@ export default function LabelBottomNavigation({ value, onChange }) {
       <BottomNavigationAction
         showLabel={false}
         label="AIWorkoutGenerator"
-        value="aiWorkoutGenerator"
+        value="AIWorkoutGenerator"
         icon={<TrendingUpIcon />}
       />
       <BottomNavigationAction
