@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getWeightData, postWeightData } from '../services/apiService';
+import './WeightChart.css';
 import {
   LineChart,
   Line,
@@ -93,15 +94,26 @@ const WeightChart = () => {
 
   return (
     <div style={{ marginBottom: '4rem' }}>
-      <div style={{ width: '36em', margin: '0 auto', height: 400 }}>
+      <div
+        style={{
+          width: '36em',
+          margin: '0 auto',
+          height: 400,
+          maxWidth: '90vw',
+        }}
+      >
         <ResponsiveContainer>
           <LineChart
             data={filteredData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis domain={[roundedMin, roundedMax]} ticks={ticks} />
+            <XAxis dataKey="date" tick={{ fill: 'white' }} />
+            <YAxis
+              domain={[roundedMin, roundedMax]}
+              ticks={ticks}
+              tick={{ fill: 'white' }}
+            />
             <Tooltip />
             <Legend />
             <Line
@@ -114,30 +126,31 @@ const WeightChart = () => {
           </LineChart>
         </ResponsiveContainer>
       </div>
-
-      <div className="weight-form">
-        <h3>Log Your Weight</h3>
-        <input
-          type="number"
-          value={newWeight}
-          onChange={(e) => setNewWeight(e.target.value)}
-          placeholder="Enter your weight (kg)"
-        />
-        <button onClick={addWeight}>Add Weight</button>
-      </div>
-      <div className="time-range-selector">
-        <h3>Select Time Range:</h3>
-        <select
-          value={selectedRange}
-          onChange={(e) => setSelectedRange(e.target.value)}
-        >
-          <option value="lastWeek">Last Week</option>
-          <option value="lastMonth">Last Month</option>
-          <option value="last3Months">Last 3 Months</option>
-          <option value="last6Months">Last 6 Months</option>
-          <option value="lastYear">Last Year</option>
-          <option value="all">All Time</option>
-        </select>
+      <div className="log">
+        <div className="weight-form">
+          <h4>Log Your Weight</h4>
+          <input
+            type="number"
+            value={newWeight}
+            onChange={(e) => setNewWeight(e.target.value)}
+            placeholder="Enter your weight (kg)"
+          />
+          <button onClick={addWeight}>Add Weight</button>
+        </div>
+        <div className="time-range-selector">
+          <h4>Select Time Range:</h4>
+          <select
+            value={selectedRange}
+            onChange={(e) => setSelectedRange(e.target.value)}
+          >
+            <option value="lastWeek">Last Week</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="last3Months">Last 3 Months</option>
+            <option value="last6Months">Last 6 Months</option>
+            <option value="lastYear">Last Year</option>
+            <option value="all">All Time</option>
+          </select>
+        </div>
       </div>
     </div>
   );

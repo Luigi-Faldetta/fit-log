@@ -1,11 +1,30 @@
-.profile-container {
+/* .profile-container {
   overflow-y: scroll;
   box-sizing: border-box;
   scrollbar-width: none;
-  /* height: 38rem; */
   height: calc(100vh - 6rem);
   max-width: 1200px;
   padding-top: 2rem;
   padding-bottom: 8rem;
-  /* margin-bottom: 8em; */
+} */
+
+.profile-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px; /* Limit the maximum width for larger screens */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 1em;
+}
+
+/* Style the headings */
+.profile-container h2,
+.profile-container h3 {
+  text-align: center;
+}
+
+/* Adjust the chart container for responsiveness */
+.weight-chart,
+.body-fat-chart {
+  width: 100%;
+  margin: 1.5em auto;
 }

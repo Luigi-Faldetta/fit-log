@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getBodyFatData, postBodyFatData } from '../services/apiService';
+import './BodyFatChart.css';
 import {
   LineChart,
   Line,
@@ -94,13 +95,13 @@ const BodyFatChart = () => {
 
   return (
     <div style={{ marginBottom: '4rem' }}>
-      <h3>Body Fat Percentage Chart</h3>
       <div
         style={{
           width: '36em',
           margin: '0 auto',
           height: 400,
-          marginBottom: '8rem',
+          //   marginBottom: '8rem',
+          maxWidth: '90vw',
         }}
       >
         <ResponsiveContainer>
@@ -109,8 +110,12 @@ const BodyFatChart = () => {
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis domain={[roundedMin, roundedMax]} ticks={ticks} />{' '}
+            <XAxis dataKey="date" tick={{ fill: 'white' }} />
+            <YAxis
+              domain={[roundedMin, roundedMax]}
+              ticks={ticks}
+              tick={{ fill: 'white' }}
+            />
             {/* Custom Y-axis with rounded values */}
             <Tooltip />
             <Legend />
@@ -124,8 +129,10 @@ const BodyFatChart = () => {
             />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+      <div className="log">
         <div className="body-fat-form">
-          <h3>Log Your Body Fat Percentage</h3>
+          <h4>Log Your Body Fat Percentage</h4>
           <input
             type="number"
             value={newBodyFat}
@@ -134,20 +141,20 @@ const BodyFatChart = () => {
           />
           <button onClick={addBodyFat}>Add Body Fat</button>
         </div>
-      </div>
-      <div className="time-range-selector">
-        <h3>Select Time Range:</h3>
-        <select
-          value={selectedRange}
-          onChange={(e) => setSelectedRange(e.target.value)}
-        >
-          <option value="lastWeek">Last Week</option>
-          <option value="lastMonth">Last Month</option>
-          <option value="last3Months">Last 3 Months</option>
-          <option value="last6Months">Last 6 Months</option>
-          <option value="lastYear">Last Year</option>
-          <option value="all">All Time</option>
-        </select>
+        <div className="time-range-selector">
+          <h4>Select Time Range:</h4>
+          <select
+            value={selectedRange}
+            onChange={(e) => setSelectedRange(e.target.value)}
+          >
+            <option value="lastWeek">Last Week</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="last3Months">Last 3 Months</option>
+            <option value="last6Months">Last 6 Months</option>
+            <option value="lastYear">Last Year</option>
+            <option value="all">All Time</option>
+          </select>
+        </div>
       </div>
     </div>
   );

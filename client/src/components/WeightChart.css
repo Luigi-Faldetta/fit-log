@@ -1,0 +1,18 @@
+/* Media query for very small screens (mobile) - below 575px */
+@media (max-width: 575px) {
+  /* Reduce the width of any inputs/buttons for smaller screens */
+  .weight-form,
+  .weight-form input,
+  .weight-form button,
+  .time-range-selector select {
+    width: 90%;
+    margin-bottom: 0.5em;
+    font-size: 1em;
+  }
+
+  .log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
