@@ -127,6 +127,7 @@ const BodyFatChart = () => {
               type="monotone"
               dataKey="bodyFat"
               stroke="#ff7300"
+              strokeWidth={2}
               activeDot={{ r: 8 }}
               dot={{ r: 4 }} // Set dot size
               name="Body Fat (%)"

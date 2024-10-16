@@ -124,6 +124,7 @@ const WeightChart = () => {
               type="monotone"
               dataKey="weight"
               stroke="#8884d8"
+              strokeWidth={2}
               activeDot={{ r: 8 }}
               dot={{ r: 4 }} // Set dot size
             />
