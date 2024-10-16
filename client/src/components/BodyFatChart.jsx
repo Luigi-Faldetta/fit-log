@@ -109,7 +109,11 @@ const BodyFatChart = () => {
             data={bodyFatData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid
+              stroke="#ffffff"
+              strokeWidth={1.5}
+              strokeDasharray="3 3"
+            />
             <XAxis dataKey="date" tick={{ fill: 'white' }} />
             <YAxis
               domain={[roundedMin, roundedMax]}

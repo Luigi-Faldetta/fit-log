@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import WorkoutModal from '../../components/WorkoutModal';
 import { postWorkout, postExercise } from '../../services/apiService';
+import './AiWorkoutGenerator.css';
 
 const AIWorkoutGenerator = () => {
   const [age, setAge] = useState('');
@@ -255,15 +256,16 @@ const AIWorkoutGenerator = () => {
   };
 
   return (
-    <div>
-      <h2>AI Workout Generator</h2>
+    <div className="ai-workout-generator-container">
+      <h2 className="form-title">AI Workout Generator</h2>
 
       {/* Form for user input */}
-      <div>
+      <div className="form-group">
         <label>
           Age:
           <br />
           <input
+            className="form-input"
             type="number"
             value={age}
             onChange={(e) => setAge(e.target.value)}
@@ -271,11 +273,12 @@ const AIWorkoutGenerator = () => {
         </label>
       </div>
 
-      <div>
+      <div className="form-group">
         <label>
           Experience Level:
           <br />
           <select
+            className="form-input"
             value={experienceLevel}
             onChange={(e) => setExperienceLevel(e.target.value)}
           >
@@ -287,11 +290,12 @@ const AIWorkoutGenerator = () => {
         </label>
       </div>
 
-      <div>
+      <div className="form-group">
         <label>
           Goal:
           <br />
           <input
+            className="form-input"
             type="text"
             value={goal}
             onChange={(e) => setGoal(e.target.value)}
@@ -300,11 +304,12 @@ const AIWorkoutGenerator = () => {
         </label>
       </div>
 
-      <div>
+      <div className="form-group">
         <label>
           Duration (in minutes):
           <br />
           <input
+            className="form-input"
             type="number"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
@@ -312,11 +317,12 @@ const AIWorkoutGenerator = () => {
         </label>
       </div>
 
-      <div>
+      <div className="form-group">
         <label>
           Extra requests:
           <br />
           <textarea
+            className="form-input"
             value={request}
             onChange={(e) => setRequest(e.target.value)}
             rows={4} // Optional: Adjust the number of rows as needed
@@ -325,7 +331,9 @@ const AIWorkoutGenerator = () => {
         </label>
       </div>
 
-      <button onClick={generateWorkout}>Generate Workout</button>
+      <button className="generate-button" onClick={generateWorkout}>
+        Generate Workout
+      </button>
 
       {/* Show modal when workout is generated */}
       {showModal && (

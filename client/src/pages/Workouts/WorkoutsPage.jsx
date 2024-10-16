@@ -47,7 +47,6 @@ const Workouts = () => {
           </div>
         ))}
       </div>
-      {/* <button>New workout</button> */}
     </>
   );
 };

@@ -1,3 +1,8 @@
+/* 
+.workouts-container {
+  width: 80vw;
+}
+
 .workout-card:hover {
   cursor: pointer;
 }
@@ -21,6 +26,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 8rem;
 }
 
 .add-workout-button:hover {
@@ -29,7 +35,6 @@
 
 .workout-card {
   text-align: center;
-  /* background-color: #fff; */
   min-width: 12rem;
   border-radius: 10px;
   padding: 20px;
@@ -44,5 +49,55 @@
 
 .workouts-container {
   margin-top: 4rem;
-  border: 1px #333 inset;
+  border: 1.5px #333 inset;
+} */
+
+/* Bold, High-Contrast Design */
+body {
+  background-color: #282c34; /* Dark background for contrast */
+  color: #ffffff;
+}
+
+.workouts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem; /* Space between workout cards */
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 4rem auto;
+}
+
+.workout-card {
+  background-color: #44475a; /* Darker card color */
+  color: #ffffff; /* White text */
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  width: 18rem; /* Set a fixed width */
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Strong shadow */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.workout-card:hover {
+  transform: translateY(-10px) scale(1.05); /* Pop up and scale */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+}
+
+.add-workout-button {
+  position: relative;
+  margin: 2rem auto;
+  display: block;
+  padding: 12px 25px;
+  font-size: 18px;
+  background-color: #f39c12; /* Bright orange button */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-workout-button:hover {
+  background-color: #e67e22; /* Darker orange on hover */
 }

@@ -1,0 +1,74 @@
+/* AI Workout Generator Container */
+.ai-workout-generator-container {
+  background-color: #333; /* Dark background for contrast */
+  padding: 2rem;
+  border-radius: 15px;
+  border: 3px solid #f39c12; /* Accent border color */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  max-width: 600px;
+  margin: 3rem auto; /* Center align */
+  color: #ffffff; /* White text */
+}
+
+/* Form Title */
+.form-title {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 1rem;
+  color: #f39c12; /* Accent color for the title */
+}
+
+/* Form Group - Wraps each label and input */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Label Styles */
+label {
+  font-weight: bold;
+  font-size: 1.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Input and Textarea Styling */
+.form-input {
+  width: 90%;
+  padding: 10px;
+  border: 2px solid #555; /* Border matches dark theme */
+  border-radius: 5px;
+  background-color: #44475a; /* Darker background */
+  color: #ffffff; /* White text */
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #f39c12; /* Bright color on focus */
+}
+
+/* Generate Button Styling */
+.generate-button {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #f39c12; /* Bright orange button */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-top: 1.5rem;
+}
+
+.generate-button:hover {
+  background-color: #e67e22; /* Darker orange on hover */
+  transform: translateY(-2px);
+}
+
+.generate-button:active {
+  transform: translateY(0); /* Reset transform on active press */
+}
