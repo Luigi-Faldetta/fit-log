@@ -1,0 +1,21 @@
+{
+  "short_name": "FitLog",
+  "name": "AI Workout & Fitness Tracker App",
+  "icons": [
+    {
+      "src": "./logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#333333",
+  "theme_color": "#007bff",
+  "display": "standalone",
+  "orientation": "portrait"
+}
