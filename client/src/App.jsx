@@ -11,33 +11,14 @@ import Workouts from './pages/Workouts/WorkoutsPage';
 import AIWorkoutGenerator from './pages/AIWorkoutGenerator/AIWorkoutGeneratorPage';
 import Profile from './pages/Profile/ProfilePage';
 import WorkoutDetails from './pages/WorkoutDetails/WorkoutDetailsPage';
+import useNavigation from './utils/useNavigation';
 
 function App() {
   const { isSignedIn } = useUser();
   const [selectedNav, setSelectedNav] = useState('dashboard');
   const navigate = useNavigate();
 
-  const handleChange = (newValue) => {
-    setSelectedNav(newValue);
-
-    // Navigate to the respective page
-    switch (newValue) {
-      case 'dashboard':
-        navigate('/dashboard');
-        break;
-      case 'workouts':
-        navigate('/workouts');
-        break;
-      case 'AIWorkoutGenerator':
-        navigate('/AIWorkoutGenerator');
-        break;
-      case 'profile':
-        navigate('/profile');
-        break;
-      default:
-        navigate('/dashboard');
-    }
-  };
+  const handleChange = useNavigation(setSelectedNav);
 
   return (
     <div className="app">
