@@ -1,0 +1,21 @@
+.logo {
+  /* margin-top: 2rem; */
+  margin-bottom: 8rem;
+  height: 4rem;
+  max-width: 100%;
+}
+
+.logo-img {
+  height: 11rem;
+}
+
+.login-form {
+  position: fixed;
+  right: 3rem;
+  top: 2rem;
+  height: 3rem;
+  width: 3rem;
+  /* margin: 2rem;
+    padding: 2rem;
+    max-width: 100%; */
+}

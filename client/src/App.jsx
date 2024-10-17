@@ -14,6 +14,7 @@ import WorkoutDetails from './pages/WorkoutDetails/WorkoutDetailsPage';
 import useNavigation from './utils/useNavigation';
 import SignedInFooter from './components/SignedInFooter';
 import SignedOutFooter from './components/SignedOutFooter';
+import Header from './components/Header';
 
 function App() {
   const { isSignedIn } = useUser();
@@ -25,14 +26,7 @@ function App() {
   return (
     <div className="app">
       <main className="app-container">
-        {!isSignedIn ? (
-          <div className="logo">
-            <img className="logo-img" src="/logo.png" />
-          </div>
-        ) : null}
-        <header className="login-form">
-          {isSignedIn ? <UserButton /> : null}
-        </header>
+        <Header />
         <Routes>
           <Route
             path="/"
