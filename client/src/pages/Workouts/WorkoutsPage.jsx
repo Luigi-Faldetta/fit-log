@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getWorkouts } from '../../services/apiService';
-import './Workouts.css';
+import WorkoutsList from '../../components/WorkoutsList';
 import generateRandomId from '../../utils/UtilityFunctions';
+import './Workouts.css';
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +18,9 @@ const Workouts = () => {
         setWorkouts(data);
       } catch (error) {
         console.error('Failed to fetch workouts:', error);
+        setError('Failed to load workouts. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -23,7 +29,6 @@ const Workouts = () => {
 
   const handleAddWorkout = () => {
     const tempWorkoutId = 'new-' + generateRandomId();
-    console.log(tempWorkoutId);
     navigate(`/workouts/${tempWorkoutId}`);
   };
 
@@ -36,16 +41,16 @@ const Workouts = () => {
         Add Workout +
       </button>
       <div className="workouts-container">
-        {workouts.map((workout) => (
-          <div
-            key={workout.workout_id}
-            className="workout-card"
-            onClick={() => handleWorkoutClick(workout.workout_id)}
-          >
-            <h3>{workout.name}</h3>
-            <p>{workout.description}</p>
-          </div>
-        ))}
+        {loading ? (
+          <div className="loading">Loading workouts...</div>
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : (
+          <WorkoutsList
+            workouts={workouts}
+            onWorkoutClick={handleWorkoutClick}
+          />
+        )}
       </div>
     </>
   );
