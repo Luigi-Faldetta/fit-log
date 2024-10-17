@@ -1,4 +1,5 @@
 import LabelBottomNavigation from './BottomNavigation';
+import './SignedInFooter.css';
 
 const SignedInFooter = ({ value, onChange }) => (
   <footer className="footer-2">

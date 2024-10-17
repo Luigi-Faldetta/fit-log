@@ -2,7 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import { UserButton, useUser } from '@clerk/clerk-react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 import SignInPage from './pages/SignInPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
 import Layout from './components/Layout/Layout';
@@ -15,6 +15,7 @@ import useNavigation from './utils/useNavigation';
 import SignedInFooter from './components/SignedInFooter';
 import SignedOutFooter from './components/SignedOutFooter';
 import Header from './components/Header';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   const { isSignedIn } = useUser();
@@ -27,28 +28,7 @@ function App() {
     <div className="app">
       <main className="app-container">
         <Header />
-        <Routes>
-          <Route
-            path="/"
-            element={isSignedIn ? <Navigate to="/dashboard" /> : <SignInPage />}
-          />
-          <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
-              <Route
-                path="/dashboard"
-                element={<DashboardPage setSelectedNav={handleChange} />}
-              />
-              <Route path="/workouts" element={<Workouts />} />
-              {/* <Route path="/workouts/new" element={<WorkoutDetails isNew />} /> */}
-              <Route path="/workouts/:workoutId" element={<WorkoutDetails />} />
-              <Route
-                path="/AIWorkoutGenerator"
-                element={<AIWorkoutGenerator />}
-              />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-          </Route>
-        </Routes>
+        <AppRoutes isSignedIn={isSignedIn} handleChange={handleChange} />
       </main>
       {isSignedIn ? (
         <SignedInFooter value={selectedNav} onChange={handleChange} />

@@ -1,3 +1,5 @@
+import './SignedOutFooter.css';
+
 const SignedOutFooter = () => (
   <footer className="footer">
     <div className="footer-content">

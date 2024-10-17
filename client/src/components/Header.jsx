@@ -1,3 +1,4 @@
+import './Header.css';
 import { UserButton, useUser } from '@clerk/clerk-react';
 
 const Header = () => {
