@@ -1,0 +1,37 @@
+/* Form Title */
+.form-title {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 1rem;
+  color: #f39c12; /* Accent color for the title */
+}
+
+/* Form Group - Wraps each label and input */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Label Styles */
+label {
+  font-weight: bold;
+  font-size: 1.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Input and Textarea Styling */
+.form-input {
+  width: 90%;
+  padding: 10px;
+  border: 2px solid #555; /* Border matches dark theme */
+  border-radius: 5px;
+  background-color: #44475a; /* Darker background */
+  color: #ffffff; /* White text */
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #f39c12; /* Bright color on focus */
+}
