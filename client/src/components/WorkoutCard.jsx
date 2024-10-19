@@ -1,5 +1,5 @@
 import React from 'react';
-import './WorkoutCard.css';
+// import './WorkoutCard.css';
 
 const WorkoutCard = ({ workout, onClick }) => {
   return (

@@ -1,0 +1,28 @@
+.exercise-table {
+  width: 90%;
+  max-width: 800px;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.exercise-table th,
+.exercise-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.exercise-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.delete-exercise-button {
+  background-color: darkred;
+  font-size: large;
+  color: white;
+}
+
+.delete-exercise-button:hover {
+  background-color: #dc3545;
+  cursor: pointer;
+}

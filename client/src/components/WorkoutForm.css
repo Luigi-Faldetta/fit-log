@@ -1,0 +1,18 @@
+.workout-form {
+  width: 90%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.workout-form label {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.workout-form input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}

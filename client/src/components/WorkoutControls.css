@@ -1,0 +1,49 @@
+.workout-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.save-button,
+.edit-button,
+.add-button,
+.delete-button,
+.prev-button,
+.next-button {
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 90%;
+  max-width: 300px;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-button {
+  background-color: #008cba;
+  color: white;
+}
+
+.add-button {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.prev-button,
+.next-button {
+  background-color: #f0ad4e;
+  color: white;
+}
