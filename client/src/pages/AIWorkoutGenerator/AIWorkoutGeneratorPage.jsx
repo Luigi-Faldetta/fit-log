@@ -1,10 +1,10 @@
 // AIWorkoutGeneratorPage.jsx
 import React, { useState } from 'react';
-import WorkoutModal from '../../components/WorkoutModal';
-import AIWorkoutForm from '../../components/AIWorkoutForm';
-import WorkoutGeneratorControls from '../../components/WorkoutGeneratorControls';
+import WorkoutModal from '../../components/WorkoutModal/WorkoutModal';
+import AIWorkoutForm from '../../components/AIWorkoutForm/AIWorkoutForm';
+import WorkoutGeneratorControls from '../../components/WorkoutGeneratorControls/WorkoutGeneratorControls';
 import { postWorkout, postExercise } from '../../services/apiService';
-import './AIWorkoutGenerator.css';
+import './AIWorkoutGeneratorPage.css';
 
 const AIWorkoutGenerator = () => {
   const [age, setAge] = useState('');

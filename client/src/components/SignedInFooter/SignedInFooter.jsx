@@ -1,4 +1,4 @@
-import LabelBottomNavigation from './BottomNavigation';
+import LabelBottomNavigation from '../BottomNavigation/BottomNavigation';
 import './SignedInFooter.css';
 
 const SignedInFooter = ({ value, onChange }) => (

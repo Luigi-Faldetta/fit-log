@@ -1,6 +1,5 @@
 import React from 'react';
 import './Exercise.css';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 const Exercise = ({
   name,

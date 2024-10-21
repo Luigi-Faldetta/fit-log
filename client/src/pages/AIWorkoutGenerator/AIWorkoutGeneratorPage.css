@@ -6,6 +6,9 @@
   border: 3px solid #f39c12; /* Accent border color */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   max-width: 600px;
-  margin: 3rem auto; /* Center align */
+  margin-bottom: 3rem; /* Center align */
+  margin-top: 6rem;
+  margin-left: auto;
+  margin-right: auto;
   color: #ffffff; /* White text */
 }

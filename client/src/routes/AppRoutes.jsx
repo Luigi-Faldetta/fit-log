@@ -6,7 +6,7 @@ import Workouts from '../pages/Workouts/WorkoutsPage';
 import AIWorkoutGenerator from '../pages/AIWorkoutGenerator/AIWorkoutGeneratorPage';
 import Profile from '../pages/Profile/ProfilePage';
 import WorkoutDetails from '../pages/WorkoutDetails/WorkoutDetailsPage';
-import SignInPage from '../pages/SignInPage';
+import SignInPage from '../pages/SignIn/SignInPage';
 
 const AppRoutes = ({ isSignedIn, handleChange }) => (
   <Routes>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getWeightData, postWeightData } from '../services/apiService';
+import { getWeightData, postWeightData } from '../../services/apiService';
 import './WeightChart.css';
 import {
   LineChart,

@@ -2,9 +2,9 @@ import './App.css';
 import { useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 import useNavigation from './utils/useNavigation';
-import SignedInFooter from './components/SignedInFooter';
-import SignedOutFooter from './components/SignedOutFooter';
-import Header from './components/Header';
+import SignedInFooter from './components/SignedInFooter/SignedInFooter';
+import SignedOutFooter from './components/SignedOutFooter/SignedOutFooter';
+import Header from './components/Header/Header';
 import AppRoutes from './routes/AppRoutes';
 
 function App() {

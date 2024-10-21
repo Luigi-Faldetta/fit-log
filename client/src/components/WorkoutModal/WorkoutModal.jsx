@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './WorkoutModal.css'; // You'll style this later
+import './WorkoutModal.css';
 
 const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);

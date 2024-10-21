@@ -1,5 +1,5 @@
 import React from 'react';
-import WorkoutCard from './WorkoutCard';
+import WorkoutCard from '../WorkoutCard/WorkoutCard';
 
 const WorkoutsList = ({ workouts, onWorkoutClick }) => {
   return (

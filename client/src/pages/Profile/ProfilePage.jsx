@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import WeightChart from '../../components/WeightChart';
-import BodyFatChart from '../../components/BodyFatChart';
+import WeightChart from '../../components/WeightChart/WeightChart';
+import BodyFatChart from '../../components/BodyFatChart/BodyFatChart';
 import './ProfilePage.css';
 
 const Profile = () => {

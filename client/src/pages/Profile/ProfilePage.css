@@ -1,18 +1,8 @@
-/* .profile-container {
-  overflow-y: scroll;
-  box-sizing: border-box;
-  scrollbar-width: none;
-  height: calc(100vh - 6rem);
-  max-width: 1200px;
-  padding-top: 2rem;
-  padding-bottom: 8rem;
-} */
-
 .profile-container {
   box-sizing: border-box;
   width: 100%;
   max-width: 1200px; /* Limit the maximum width for larger screens */
-  margin: 0 auto; /* Center the container horizontally */
+  margin-top: 4rem;
   padding: 1em;
 }
 

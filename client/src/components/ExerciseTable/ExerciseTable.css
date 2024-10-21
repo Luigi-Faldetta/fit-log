@@ -3,6 +3,9 @@
   max-width: 800px;
   margin-bottom: 20px;
   border-collapse: collapse;
+  color: black;
+  background-color: white;
+  font-weight: 400;
 }
 
 .exercise-table th,

@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Home from '@mui/icons-material/Home';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export default function LabelBottomNavigation({ value, onChange }) {
   return (
@@ -50,13 +48,13 @@ export default function LabelBottomNavigation({ value, onChange }) {
         showLabel={false}
         label="AIWorkoutGenerator"
         value="AIWorkoutGenerator"
-        icon={<TrendingUpIcon />}
+        icon={<SmartToyIcon />}
       />
       <BottomNavigationAction
         showLabel={false}
         label="Profile"
         value="profile"
-        icon={<ManageAccountsIcon />}
+        icon={<TrendingUpIcon />}
       />
     </BottomNavigation>
   );

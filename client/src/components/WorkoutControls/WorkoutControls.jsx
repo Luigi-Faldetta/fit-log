@@ -1,4 +1,3 @@
-// WorkoutControls.jsx
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import './WorkoutControls.css';

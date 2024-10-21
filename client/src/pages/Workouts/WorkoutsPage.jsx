@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getWorkouts } from '../../services/apiService';
-import WorkoutsList from '../../components/WorkoutsList';
+import WorkoutsList from '../../components/WorkoutsList/WorkoutsList';
 import generateRandomId from '../../utils/UtilityFunctions';
-import './Workouts.css';
+import './WorkoutsPage.css';
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);

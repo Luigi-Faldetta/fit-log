@@ -9,13 +9,13 @@ import {
   updateWorkout,
   deleteWorkout,
 } from '../../services/apiService';
-import WorkoutForm from '../../components/WorkoutForm';
-import ExerciseTable from '../../components/ExerciseTable';
-import WorkoutControls from '../../components/WorkoutControls';
-import ExerciseModal from '../../components/ExerciseModal';
+import WorkoutForm from '../../components/WorkoutForm/WorkoutForm';
+import ExerciseTable from '../../components/ExerciseTable/ExerciseTable';
+import WorkoutControls from '../../components/WorkoutControls/WorkoutControls';
+import ExerciseModal from '../../components/ExerciseModal/ExerciseModal';
 import useWindowSize from '../../utils/useWindowSize';
 import generateRandomId from '../../utils/UtilityFunctions';
-import './WorkoutDetails.css';
+import './WorkoutDetailsPage.css';
 
 const WorkoutDetails = () => {
   const navigate = useNavigate();

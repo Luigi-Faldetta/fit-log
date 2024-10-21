@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
-import NavItem from '../../components/NavItem';
+import NavItem from '../../components/NavItem/NavItem';
 import useWelcomeMessage from '../../utils/useWelcomeMessage';
 import navigationData from '../../utils/NavigationData';
 import './DashboardPage.css';
