@@ -7,6 +7,7 @@ import {
   getWorkout,
   getWorkouts,
   updateWorkout,
+  updateExercises,
   deleteWorkout,
 } from '../../services/apiService';
 import WorkoutForm from '../../components/WorkoutForm/WorkoutForm';
@@ -119,15 +120,35 @@ const WorkoutDetails = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
+      let createdWorkout;
       if (isNewWorkout) {
-        const createdWorkout = await postWorkout(workout);
+        // Save the new workout
+        createdWorkout = await postWorkout(workout);
         setRealWorkoutId(createdWorkout.workout_id);
         setWorkout({ ...workout, id: createdWorkout.workout_id });
-        setIsEditing(false);
-        navigate(`/workouts/${createdWorkout.workout_id}`);
+
+        // Update exercises with the new workout ID
+        const updatedExercises = exercises.map((exercise) => ({
+          ...exercise,
+          workout_id: createdWorkout.workout_id,
+        }));
+        setExercises(updatedExercises);
+
+        // Post each exercise to the backend
+        await Promise.all(
+          updatedExercises.map((exercise) => postExercise(exercise))
+        );
       } else {
+        // Update the existing workout
         await updateWorkout(realWorkoutId || workout.id, workout);
-        setIsEditing(false);
+
+        // For an existing workout, update exercises
+        await updateExercises(exercises);
+      }
+
+      setIsEditing(false);
+      if (isNewWorkout) {
+        navigate(`/workouts/${createdWorkout.workout_id}`);
       }
     } catch (error) {
       console.error('Failed to save workout:', error);
