@@ -1,6 +1,5 @@
 .exercise-table {
   width: 90%;
-  max-width: 800px;
   margin-bottom: 20px;
   border-collapse: collapse;
   color: black;
@@ -28,4 +27,25 @@
 .delete-exercise-button:hover {
   background-color: #dc3545;
   cursor: pointer;
+}
+
+/* Media query for small screens (mobile devices) */
+@media (max-width: 768px) {
+  .exercise-table {
+    font-size: 0.9em; /* Reduce font size to make content fit better */
+  }
+
+  .exercise-table th,
+  .exercise-table td {
+    padding: 4px; /* Reduce padding to allow more content on screen */
+  }
+
+  .exercise-table th {
+    font-size: 0.95em; /* Make header text slightly smaller */
+  }
+
+  .delete-exercise-button {
+    font-size: medium; /* Adjust button size for mobile */
+    padding: 4px 8px; /* Reduce button padding */
+  }
 }
