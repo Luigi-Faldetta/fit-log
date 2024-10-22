@@ -1,5 +1,6 @@
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
+import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import './ExerciseTable.css';
 
 const ExerciseTable = ({
@@ -105,7 +106,13 @@ const ExerciseTable = ({
                   }
                 />
               ) : (
-                exercise.media_URL
+                <a
+                  href={exercise.media_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SlowMotionVideoIcon className="video-icon" />
+                </a>
               )}
             </td>
             <td>

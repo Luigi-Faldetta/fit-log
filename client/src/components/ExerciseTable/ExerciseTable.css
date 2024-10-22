@@ -29,6 +29,25 @@
   cursor: pointer;
 }
 
+.video-icon {
+  color: #007bff; /* Icon color */
+  font-size: 1.5em; /* Adjust the size as needed */
+  cursor: pointer;
+  transition: color 0.3s;
+
+  /* Centering the icon */
+  /* display: inline-block; */
+  margin: auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  vertical-align: middle;
+}
+
+.video-icon:hover {
+  color: #0056b3; /* Darker color on hover */
+}
+
 /* Media query for small screens (mobile devices) */
 @media (max-width: 768px) {
   .exercise-table {
