@@ -187,10 +187,25 @@ const WorkoutDetails = () => {
           onRequestClose={() => setIsModalOpen(false)}
           exercise={selectedExercise}
           onSave={(exercise) => {
+            setExercises((prevExercises) => {
+              const existingIndex = prevExercises.findIndex(
+                (ex) => ex.exercise_id === exercise.exercise_id
+              );
+              if (existingIndex !== -1) {
+                // Update existing exercise
+                return prevExercises.map((ex, index) =>
+                  index === existingIndex ? exercise : ex
+                );
+              } else {
+                // Add new exercise
+                return [...prevExercises, exercise];
+              }
+            });
+            setIsModalOpen(false);
+          }}
+          onDelete={(exerciseId) => {
             setExercises((prevExercises) =>
-              prevExercises.map((ex) =>
-                ex.exercise_id === exercise.exercise_id ? exercise : ex
-              )
+              prevExercises.filter((ex) => ex.exercise_id !== exerciseId)
             );
             setIsModalOpen(false);
           }}

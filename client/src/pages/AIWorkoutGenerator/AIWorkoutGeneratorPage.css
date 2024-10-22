@@ -1,14 +1,17 @@
-/* AI Workout Generator Container */
 .ai-workout-generator-container {
-  background-color: #333; /* Dark background for contrast */
-  padding: 2rem;
+  background-color: #333;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
   border-radius: 15px;
-  border: 3px solid #f39c12; /* Accent border color */
+  border: 3px solid #f39c12;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  max-width: 600px;
-  margin-bottom: 3rem; /* Center align */
+  max-width: 400px;
+  max-height: 80%;
+  margin-bottom: 3rem;
   margin-top: 6rem;
   margin-left: auto;
   margin-right: auto;
-  color: #ffffff; /* White text */
+  color: #ffffff;
 }

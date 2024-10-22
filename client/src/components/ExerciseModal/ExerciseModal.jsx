@@ -1,7 +1,9 @@
+// ExerciseModal.jsx
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import './ExerciseModal.css'; // Import CSS for styling
 
-Modal.setAppElement('#root'); // Ensures the modal is attached to the correct root element for accessibility
+Modal.setAppElement('#root');
 
 const ExerciseModal = ({
   isOpen,
@@ -23,7 +25,6 @@ const ExerciseModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(exerciseData);
     onSave(exerciseData);
     onRequestClose();
   };
@@ -54,7 +55,7 @@ const ExerciseModal = ({
       }}
     >
       <h2>Edit Exercise</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="exercise-form">
         <div className="form-group">
           <label htmlFor="name">Exercise Name:</label>
           <input
@@ -63,7 +64,7 @@ const ExerciseModal = ({
             name="name"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.name}
+            value={exerciseData.name || ''}
           />
         </div>
         <div className="form-group">
@@ -74,7 +75,7 @@ const ExerciseModal = ({
             name="sets"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.sets}
+            value={exerciseData.sets || 0}
           />
         </div>
         <div className="form-group">
@@ -85,7 +86,7 @@ const ExerciseModal = ({
             name="reps"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.reps}
+            value={exerciseData.reps || 0}
           />
         </div>
         <div className="form-group">
@@ -96,7 +97,7 @@ const ExerciseModal = ({
             name="weight"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.weight}
+            value={exerciseData.weight || 0}
           />
         </div>
         <div className="form-group">
@@ -107,7 +108,7 @@ const ExerciseModal = ({
             name="media_URL"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.media_URL}
+            value={exerciseData.media_URL || ''}
           />
         </div>
         <div className="form-group">
@@ -118,15 +119,21 @@ const ExerciseModal = ({
             name="description"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.description}
+            value={exerciseData.description || ''}
           />
         </div>
-        <button type="submit" className="save-button" onClick={handleSubmit}>
+        <button type="submit" className="save-button">
           Save
         </button>
-        <button type="button" className="delete-button" onClick={handleDelete}>
-          Delete
-        </button>
+        {onDelete && (
+          <button
+            type="button"
+            className="delete-button"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        )}
       </form>
     </Modal>
   );
