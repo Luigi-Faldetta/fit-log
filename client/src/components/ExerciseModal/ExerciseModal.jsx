@@ -1,4 +1,3 @@
-// ExerciseModal.jsx
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './ExerciseModal.css'; // Import CSS for styling
@@ -39,22 +38,9 @@ const ExerciseModal = ({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Edit Exercise"
-      style={{
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-      }}
+      className="exercise-modal"
+      overlayClassName="exercise-modal-overlay"
     >
-      <h2>Edit Exercise</h2>
       <form onSubmit={handleSubmit} className="exercise-form">
         <div className="form-group">
           <label htmlFor="name">Exercise Name:</label>
@@ -90,7 +76,7 @@ const ExerciseModal = ({
           />
         </div>
         <div className="form-group">
-          <label htmlFor="kg">KG:</label>
+          <label htmlFor="weight">KG:</label>
           <input
             type="number"
             id="weight"
@@ -101,7 +87,7 @@ const ExerciseModal = ({
           />
         </div>
         <div className="form-group">
-          <label htmlFor="video">Video:</label>
+          <label htmlFor="media_URL">Video:</label>
           <input
             type="text"
             id="media_URL"
@@ -112,7 +98,7 @@ const ExerciseModal = ({
           />
         </div>
         <div className="form-group">
-          <label htmlFor="notes">Notes:</label>
+          <label htmlFor="description">Notes:</label>
           <input
             type="text"
             id="description"
@@ -122,18 +108,20 @@ const ExerciseModal = ({
             value={exerciseData.description || ''}
           />
         </div>
-        <button type="submit" className="save-button">
-          Save
-        </button>
-        {onDelete && (
-          <button
-            type="button"
-            className="delete-button"
-            onClick={handleDelete}
-          >
-            Delete
+        <div className="modal-buttons">
+          <button type="submit" className="save-button">
+            Save
           </button>
-        )}
+          {onDelete && (
+            <button
+              type="button"
+              className="delete-button"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </form>
     </Modal>
   );
