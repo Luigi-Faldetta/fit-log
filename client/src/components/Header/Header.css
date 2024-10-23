@@ -9,7 +9,7 @@
 }
 
 .login-form {
-  position: fixed;
+  position: absolute;
   right: 3rem;
   top: 2rem;
   height: 3rem;

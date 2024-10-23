@@ -1,4 +1,3 @@
-// import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import NavItem from '../../components/NavItem/NavItem';

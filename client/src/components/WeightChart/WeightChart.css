@@ -20,6 +20,12 @@
   color: #f39c12; /* Accent color for titles */
 }
 
+.weight-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Styling for Input Fields */
 .weight-form input {
   width: calc(100% - 24px); /* Ensure it doesn’t extend outside */
