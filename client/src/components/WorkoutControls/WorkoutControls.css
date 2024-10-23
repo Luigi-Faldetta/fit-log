@@ -20,6 +20,8 @@
   cursor: pointer;
   width: 90%;
   max-width: 300px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .save-button {

@@ -1,5 +1,4 @@
 import React from 'react';
-import EditIcon from '@mui/icons-material/Edit';
 import './WorkoutControls.css';
 
 const WorkoutControls = ({
@@ -32,7 +31,7 @@ const WorkoutControls = ({
       ) : (
         <>
           <button className="edit-button" onClick={onEdit}>
-            Edit <EditIcon />
+            Edit
           </button>
         </>
       )}
