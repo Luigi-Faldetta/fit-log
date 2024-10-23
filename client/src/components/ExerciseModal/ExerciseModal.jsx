@@ -50,7 +50,7 @@ const ExerciseModal = ({
             name="name"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.name || ''}
+            value={exerciseData.name}
           />
         </div>
         <div className="form-group">
@@ -61,7 +61,7 @@ const ExerciseModal = ({
             name="sets"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.sets || 0}
+            value={exerciseData.sets}
           />
         </div>
         <div className="form-group">
@@ -72,7 +72,7 @@ const ExerciseModal = ({
             name="reps"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.reps || 0}
+            value={exerciseData.reps}
           />
         </div>
         <div className="form-group">
@@ -83,7 +83,7 @@ const ExerciseModal = ({
             name="weight"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.weight || 0}
+            value={exerciseData.weight}
           />
         </div>
         <div className="form-group">
@@ -94,7 +94,7 @@ const ExerciseModal = ({
             name="media_URL"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.media_URL || ''}
+            value={exerciseData.media_URL}
           />
         </div>
         <div className="form-group">
@@ -105,7 +105,7 @@ const ExerciseModal = ({
             name="description"
             className="input-field"
             onChange={handleChange}
-            value={exerciseData.description || ''}
+            value={exerciseData.description}
           />
         </div>
         <div className="modal-buttons">

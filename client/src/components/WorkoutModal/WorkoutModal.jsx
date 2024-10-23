@@ -56,7 +56,7 @@ const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
           <button className="regenerate-button" onClick={onRegenerate}>
             Regenerate Workout
           </button>
-          <button className="save-button" onClick={handleSave}>
+          <button className="save-workout-button" onClick={handleSave}>
             Save Workout
           </button>
         </div>
