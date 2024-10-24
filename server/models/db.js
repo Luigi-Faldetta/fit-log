@@ -1,25 +1,16 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(
-  process.env.DATABASE_URL || 'workouts_db',
-  'postgres',
-  'ffjjkl',
-  {
-    host: process.env.DATABASE_URL ? undefined : 'localhost',
-    dialect: 'postgres',
-    define: {
-      noPrimaryKey: true,
-    },
-    logging: false,
-    dialectOptions: {
-      ssl:
-        process.env.NODE_ENV === 'production'
-          ? { require: true, rejectUnauthorized: false }
-          : false,
-    },
-  }
-);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  define: {
+    noPrimaryKey: true,
+  },
+  logging: false,
+  dialectOptions: {
+    ssl: { require: true, rejectUnauthorized: false },
+  },
+});
 
 module.exports = {
   sequelize,
