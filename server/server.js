@@ -8,7 +8,7 @@ const { sequelize } = require('./models/db');
 const router = require('./router');
 
 const corsOptions = {
-  origin: 'https://fit-log-7bap-il7wnf6gm-luigifaldettas-projects.vercel.app/',
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
