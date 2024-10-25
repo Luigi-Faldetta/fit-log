@@ -20,22 +20,19 @@ const AIWorkoutGenerator = () => {
   // Function to generate a workout based on user input
   const generateWorkout = async () => {
     try {
-      const response = await fetch(
-        `http://${VITE_API_BASE_URL}/ai/generate-workout`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            age,
-            experienceLevel,
-            goal,
-            duration,
-            request,
-          }),
-        }
-      );
+      const response = await fetch(`${VITE_API_BASE_URL}/ai/generate-workout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          age,
+          experienceLevel,
+          goal,
+          duration,
+          request,
+        }),
+      });
 
       const data = await response.json();
 
