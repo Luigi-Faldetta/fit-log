@@ -15,7 +15,7 @@ const AIWorkoutGenerator = () => {
   const [workout, setWorkout] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // Function to generate a workout based on user input
   const generateWorkout = async () => {
