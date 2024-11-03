@@ -28,6 +28,7 @@ body {
 .workout-card:hover {
   transform: translateY(-10px) scale(1.05); /* Pop up and scale */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+  cursor: pointer;
 }
 
 .add-workout-button {
