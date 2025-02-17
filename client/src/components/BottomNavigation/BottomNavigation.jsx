@@ -37,24 +37,28 @@ export default function LabelBottomNavigation({ value, onChange }) {
         label="Dashboard"
         value="dashboard"
         icon={<Home />}
+        data-testid="dashboard-action"
       />
       <BottomNavigationAction
         showLabel={false}
         label="Workouts"
         value="workouts"
         icon={<DescriptionIcon />}
+        data-testid="workouts-action"
       />
       <BottomNavigationAction
         showLabel={false}
         label="AIWorkoutGenerator"
         value="AIWorkoutGenerator"
         icon={<SmartToyIcon />}
+        data-testid="aiworkoutgenerator-action"
       />
       <BottomNavigationAction
         showLabel={false}
         label="Profile"
         value="profile"
         icon={<TrendingUpIcon />}
+        data-testid="profile-action"
       />
     </BottomNavigation>
   );
