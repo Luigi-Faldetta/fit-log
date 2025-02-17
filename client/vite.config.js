@@ -7,7 +7,6 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
-    root: 'client/src',
     plugins: [
       react(),
       isProduction &&
