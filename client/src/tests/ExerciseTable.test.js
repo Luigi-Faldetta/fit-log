@@ -60,6 +60,8 @@ describe('<ExerciseTable />', () => {
       />
     );
 
+    //test commit
+
     // For each exercise, the text values should be rendered.
     sampleExercises.forEach((ex) => {
       expect(screen.getByText(ex.name)).toBeInTheDocument();
