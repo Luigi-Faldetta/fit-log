@@ -60,7 +60,7 @@ describe('<ExerciseTable />', () => {
       />
     );
 
-    //test commit
+    //test
 
     // For each exercise, the text values should be rendered.
     sampleExercises.forEach((ex) => {
