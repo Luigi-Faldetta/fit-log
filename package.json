@@ -1,11 +1,15 @@
 {
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite preview"
   },
   "dependencies": {
     "color-convert": "^3.0.1",
     "diff": "^7.0.0",
     "react-router-dom": "^6.24.1",
+    "vite": "^6.1.0",
     "workbox-core": "^7.1.0",
     "workbox-precaching": "^7.1.0",
     "workbox-routing": "^7.1.0",
