@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './ExerciseModal.css'; // Import CSS for styling
 
-Modal.setAppElement('#root');
+if (process.env.NODE_ENV !== 'test') {
+  Modal.setAppElement('#root');
+}
 
 const ExerciseModal = ({
   isOpen,
