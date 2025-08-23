@@ -6,15 +6,22 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   define: {
     noPrimaryKey: true,
   },
-  logging: false,
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
   dialectOptions: {
-    ssl: { require: true, rejectUnauthorized: false },
+    ssl: process.env.NODE_ENV === 'production' ? { require: true, rejectUnauthorized: false } : false,
+    keepAlive: true,
+    statement_timeout: 60000,
+    query_timeout: 60000,
+    connectionTimeoutMillis: 60000,
+    idleTimeoutMillis: 60000,
   },
   pool: {
-    max: 5,
+    max: 3,
     min: 0,
-    acquire: 30000,
-    idle: 10000,
+    acquire: 60000,
+    idle: 30000,
+    evict: 10000,
+    handleDisconnects: true,
   },
   retry: {
     match: [
@@ -22,11 +29,11 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       /EHOSTUNREACH/,
       /ECONNRESET/,
       /ECONNREFUSED/,
-      /ETIMEDOUT/,
       /ESOCKETTIMEDOUT/,
       /EHOSTUNREACH/,
       /EPIPE/,
       /EAI_AGAIN/,
+      /Connection terminated unexpectedly/,
       /SequelizeConnectionError/,
       /SequelizeConnectionRefusedError/,
       /SequelizeHostNotFoundError/,
@@ -34,7 +41,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       /SequelizeInvalidConnectionError/,
       /SequelizeConnectionTimedOutError/,
     ],
-    max: 3,
+    max: 5,
   },
 });
 
