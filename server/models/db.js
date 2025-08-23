@@ -1,7 +1,17 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+// Check for DATABASE_URL and provide helpful error
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+  console.error('❌ DATABASE_URL environment variable is not set!');
+  console.log('Available environment variables:', Object.keys(process.env).filter(key => key.includes('DATABASE') || key.includes('POSTGRES')));
+  throw new Error('DATABASE_URL environment variable is required but not found');
+}
+
+console.log('✓ DATABASE_URL found, length:', databaseUrl.length);
+
+const sequelize = new Sequelize(databaseUrl, {
   dialect: 'postgres',
   define: {
     noPrimaryKey: true,
