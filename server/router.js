@@ -6,6 +6,23 @@ const ai = require('./controllers/ai-controller.js');
 const weight = require('./controllers/weight-controller.js');
 const bodyfat = require('./controllers/bodyfat-controller.js');
 
+// Health check endpoint
+router.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    message: 'Server is running' 
+  });
+});
+
+// Test endpoint that doesn't require database
+router.get('/test', (req, res) => {
+  res.json({ 
+    message: 'Test endpoint working',
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 router.get('/workouts', workouts.getWorkouts);
 router.get('/workouts/:workoutId', workouts.getWorkout); // New route to get a single workout by ID
 router.post('/workouts', workouts.createWorkout);

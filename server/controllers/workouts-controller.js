@@ -3,23 +3,32 @@ const { Exercise } = require('../models/exercises-model');
 
 exports.getWorkouts = async (req, res) => {
   try {
-    console.log('Fetching workouts...');
+    console.log('=== WORKOUTS ENDPOINT CALLED ===');
+    console.log('Time:', new Date().toISOString());
     
-    // Test database connection
+    // Test database connection first
     const { sequelize } = require('../models/db');
+    console.log('Testing database connection...');
     await sequelize.authenticate();
-    console.log('Database connection verified');
+    console.log('✓ Database connection verified');
     
+    console.log('Attempting to query Workout model...');
     const workouts = await Workout.findAll();
-    console.log('Found workouts:', workouts.length);
+    console.log('✓ Query successful. Found workouts:', workouts.length);
+    console.log('Workouts data:', JSON.stringify(workouts, null, 2));
+    
     res.json(workouts);
   } catch (error) {
-    console.error('Failed to get workouts:', error);
-    console.error('Error details:', error.message);
+    console.error('❌ WORKOUTS ENDPOINT ERROR:');
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    console.error('Full error:', error);
     console.error('Stack trace:', error.stack);
+    
     res.status(500).json({ 
       error: 'Internal Server Error', 
       message: error.message,
+      name: error.name,
       details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }

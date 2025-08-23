@@ -4,16 +4,49 @@ const API_BASE_URL = (
   import.meta.env.VITE_API_BASE_URL || 'http://localhost'
 ).replace(/\/$/, '');
 
+// Health check function
+export const checkHealth = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    if (!response.ok) {
+      throw new Error(`Health check failed: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Health check error:', error);
+    throw error;
+  }
+};
+
 export const getWorkouts = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/workouts`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch workouts');
+    console.log('=== CLIENT: Fetching workouts ===');
+    console.log('API_BASE_URL:', API_BASE_URL);
+    console.log('Full URL:', `${API_BASE_URL}/workouts`);
+    
+    // First test health
+    try {
+      const health = await checkHealth();
+      console.log('✓ Health check passed:', health);
+    } catch (healthError) {
+      console.warn('❌ Health check failed:', healthError);
     }
+    
+    const response = await fetch(`${API_BASE_URL}/workouts`);
+    console.log('Response status:', response.status);
+    console.log('Response headers:', Object.fromEntries(response.headers));
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Error response body:', errorText);
+      throw new Error(`Failed to fetch workouts: ${response.status} ${response.statusText}`);
+    }
+    
     const data = await response.json();
+    console.log('✓ Workouts data received:', data);
     return data;
   } catch (error) {
-    console.error('Error fetching workouts:', error);
+    console.error('❌ CLIENT ERROR fetching workouts:', error);
     throw error;
   }
 };
