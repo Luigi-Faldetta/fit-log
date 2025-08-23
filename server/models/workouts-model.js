@@ -15,6 +15,9 @@ const Workout = sequelize.define('Workout', {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+}, {
+  tableName: 'Workouts',
+  timestamps: true,
 });
 
 module.exports = {

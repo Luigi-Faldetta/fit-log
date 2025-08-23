@@ -3,11 +3,25 @@ const { Exercise } = require('../models/exercises-model');
 
 exports.getWorkouts = async (req, res) => {
   try {
+    console.log('Fetching workouts...');
+    
+    // Test database connection
+    const { sequelize } = require('../models/db');
+    await sequelize.authenticate();
+    console.log('Database connection verified');
+    
     const workouts = await Workout.findAll();
+    console.log('Found workouts:', workouts.length);
     res.json(workouts);
   } catch (error) {
-    console.error('Failed to get events:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Failed to get workouts:', error);
+    console.error('Error details:', error.message);
+    console.error('Stack trace:', error.stack);
+    res.status(500).json({ 
+      error: 'Internal Server Error', 
+      message: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 };
 

@@ -1,4 +1,4 @@
-const { sequelize } = require('../db');
+const { sequelize } = require('./db');
 const { Workout } = require('./workouts-model');
 const { Exercise } = require('./exercises-model');
 const { Weight } = require('./weight-model');
