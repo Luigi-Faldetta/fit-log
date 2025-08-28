@@ -55,16 +55,7 @@ const sequelize = new Sequelize(databaseUrl, {
   },
 });
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log(
-      'Connection to the database has been established successfully.'
-    );
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-})();
+// Remove automatic authentication on module load - let the server handle it
 
 module.exports = {
   sequelize,
