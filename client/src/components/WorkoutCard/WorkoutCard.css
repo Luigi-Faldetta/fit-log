@@ -1,0 +1,55 @@
+/* Workout Card Styles */
+.workout-card {
+  cursor: pointer;
+  background: var(--color-bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.workout-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 0 20px rgba(139, 92, 246, 0.6),
+    0 0 40px rgba(99, 102, 241, 0.4),
+    0 20px 60px rgba(139, 92, 246, 0.3),
+    inset 0 0 20px rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.6) !important;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%) !important;
+}
+
+/* AI Badge */
+.workout-card__ai-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, var(--color-accent-purple) 0%, #a855f7 100%);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Stats Section */
+.workout-card__stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.workout-card__stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.workout-card__stat svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
