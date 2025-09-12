@@ -175,10 +175,10 @@ const WorkoutDetails = () => {
       {isEditing ? (
         <WorkoutForm workout={workout} onUpdate={handleWorkoutUpdate} />
       ) : (
-        <>
-          <h2>{workout.name}</h2>
-          <p>{workout.description}</p>
-        </>
+        <div className="workout-header">
+          <h2 className="workout-title">{workout.name}</h2>
+          <p className="workout-description">{workout.description}</p>
+        </div>
       )}
 
       <ExerciseTable
