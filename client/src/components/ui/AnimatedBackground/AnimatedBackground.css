@@ -1,0 +1,265 @@
+/* Animated Background Base */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--gradient-bg);
+}
+
+/* Grid Variant */
+.animated-bg--grid {
+  background: var(--gradient-bg);
+}
+
+.animated-bg__grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.3) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+}
+
+.animated-bg__gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.1) 0%,
+    rgba(139, 92, 246, 0.05) 25%,
+    transparent 50%
+  );
+  animation: gradientPulse 8s ease-in-out infinite alternate;
+}
+
+/* Dots Variant */
+.animated-bg--dots {
+  background: var(--gradient-bg);
+}
+
+.animated-bg__dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.4) 1px, transparent 1px);
+  background-size: 30px 30px;
+  animation: dotsFloat 15s ease-in-out infinite;
+}
+
+/* Particles Variant */
+.animated-bg--particles {
+  background: var(--gradient-bg);
+}
+
+.animated-bg__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+/* Waves Variant */
+.animated-bg--waves {
+  background: var(--gradient-bg);
+}
+
+.animated-bg__waves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+  border-radius: 50%;
+}
+
+.wave-1 {
+  top: -50%;
+  left: -50%;
+  animation: waveRotate 20s linear infinite;
+}
+
+.wave-2 {
+  top: -50%;
+  left: -50%;
+  animation: waveRotate 25s linear infinite reverse;
+  opacity: 0.5;
+}
+
+.wave-3 {
+  top: -50%;
+  left: -50%;
+  animation: waveRotate 30s linear infinite;
+  opacity: 0.3;
+}
+
+/* Intensity Variants */
+.animated-bg--low .animated-bg__grid {
+  opacity: 0.05;
+  background-size: 80px 80px;
+}
+
+.animated-bg--medium .animated-bg__grid {
+  opacity: 0.1;
+  background-size: 50px 50px;
+}
+
+.animated-bg--high .animated-bg__grid {
+  opacity: 0.15;
+  background-size: 30px 30px;
+}
+
+.animated-bg--low .animated-bg__dots {
+  opacity: 0.1;
+  background-size: 50px 50px;
+}
+
+.animated-bg--medium .animated-bg__dots {
+  opacity: 0.2;
+  background-size: 30px 30px;
+}
+
+.animated-bg--high .animated-bg__dots {
+  opacity: 0.3;
+  background-size: 20px 20px;
+}
+
+/* Animations */
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+@keyframes gradientPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes dotsFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+@keyframes waveRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Static variant (no animation) */
+.animated-bg:not(.animated-bg--animated) .animated-bg__grid {
+  animation: none;
+}
+
+.animated-bg:not(.animated-bg--animated) .animated-bg__gradient {
+  animation: none;
+}
+
+.animated-bg:not(.animated-bg--animated) .animated-bg__dots {
+  animation: none;
+}
+
+.animated-bg:not(.animated-bg--animated) .wave {
+  animation: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .animated-bg__grid {
+    background-size: 40px 40px;
+  }
+  
+  .animated-bg--low .animated-bg__grid {
+    background-size: 60px 60px;
+  }
+  
+  .animated-bg--high .animated-bg__grid {
+    background-size: 25px 25px;
+  }
+  
+  .animated-bg__dots {
+    background-size: 25px 25px;
+  }
+  
+  .animated-bg--low .animated-bg__dots {
+    background-size: 40px 40px;
+  }
+  
+  .animated-bg--high .animated-bg__dots {
+    background-size: 15px 15px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animated-bg__grid,
+  .animated-bg__gradient,
+  .animated-bg__dots,
+  .wave {
+    animation: none;
+  }
+  
+  .animated-bg__canvas {
+    display: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .animated-bg__grid {
+    opacity: 0.05;
+  }
+  
+  .animated-bg__dots {
+    opacity: 0.1;
+  }
+  
+  .animated-bg__gradient {
+    opacity: 0.2;
+  }
+}
+

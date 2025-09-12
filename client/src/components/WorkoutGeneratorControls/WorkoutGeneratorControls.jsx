@@ -1,13 +1,18 @@
 // WorkoutGeneratorControls.jsx
 import React from 'react';
-import './WorkoutGeneratorControls.css';
+import Button from '../ui/Button/Button';
 
 const WorkoutGeneratorControls = ({ onGenerateWorkout }) => {
   return (
-    <div className="workout-generator-controls">
-      <button className="generate-button" onClick={onGenerateWorkout}>
+    <div style={{ width: '100%', maxWidth: '600px', padding: '0 1rem' }}>
+      <Button 
+        variant="primary" 
+        size="lg" 
+        onClick={onGenerateWorkout}
+        style={{ width: '100%' }}
+      >
         Generate Workout
-      </button>
+      </Button>
     </div>
   );
 };
