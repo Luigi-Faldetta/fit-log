@@ -91,7 +91,7 @@ const WorkoutControls = ({
       )}
       {hasPrevious && (
         <Button 
-          variant="ghost"
+          variant="secondary"
           onClick={onPreviousWorkout}
           icon={<ChevronLeftIcon />}
         >
@@ -100,7 +100,7 @@ const WorkoutControls = ({
       )}
       {hasNext && (
         <Button 
-          variant="ghost"
+          variant="secondary"
           onClick={onNextWorkout}
           icon={<ChevronRightIcon />}
           iconPosition="right"

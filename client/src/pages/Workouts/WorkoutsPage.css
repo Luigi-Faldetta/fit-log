@@ -31,29 +31,22 @@ body {
   cursor: pointer;
 }
 
+/* Add Workout Button Container */
+.add-workout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-8);
+}
+
 .add-workout-button {
-  position: relative;
-  /* margin: 2rem auto; */
-  margin-top: 7rem;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  padding: 12px 25px;
-  font-size: 1.2em;
-  font-weight: bold;
-  background-color: #f39c12; /* Bright orange button */
-  color: #ffffff;
-  border: none;
-  transition: background-color 0.3s, transform 0.3s;
-  border-radius: 8px;
-  cursor: pointer;
+  min-width: 200px;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+  transition: all var(--duration-normal) var(--ease-out);
 }
 
 .add-workout-button:hover {
-  background-color: #e67e22; /* Darker orange on hover */
   transform: translateY(-2px);
-}
-
-.add-workout-button:active {
-  transform: translateY(0); /* Reset transform on active press */
+  box-shadow: 0 6px 30px rgba(99, 102, 241, 0.4);
 }

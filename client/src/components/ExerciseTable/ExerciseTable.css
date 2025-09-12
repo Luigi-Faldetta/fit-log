@@ -1,70 +1,217 @@
+/* Exercise Table Container */
 .exercise-table {
-  width: 90%;
-  margin-bottom: 20px;
-  border-collapse: collapse;
-  color: black;
-  background-color: white;
-  font-weight: 400;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto var(--space-8) auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(26, 26, 46, 0.85);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-.exercise-table th,
-.exercise-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
+/* Table Headers */
 .exercise-table th {
-  background-color: #f2f2f2;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+  color: white;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: var(--space-3) var(--space-4);
   text-align: left;
+  border-bottom: 2px solid var(--color-border);
 }
 
-.delete-exercise-button {
-  background-color: darkred;
-  font-size: large;
+/* Table Cells */
+.exercise-table td {
+  color: var(--color-text-primary);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+/* Row Hover Effect */
+.exercise-table tbody tr {
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.exercise-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.exercise-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Input Fields in Edit Mode */
+.exercise-table input[type="text"],
+.exercise-table input[type="number"] {
+  width: 100%;
+  padding: var(--space-2);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   color: white;
+  font-size: var(--text-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.exercise-table input[type="text"]:focus,
+.exercise-table input[type="number"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: var(--color-bg-tertiary);
+}
+
+/* Number inputs specific styling */
+.exercise-table input[type="number"] {
+  text-align: center;
+  max-width: 80px;
+}
+
+/* Delete Button */
+.delete-exercise-button {
+  background: linear-gradient(135deg, var(--color-accent-red) 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  min-width: 40px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .delete-exercise-button:hover {
-  background-color: #dc3545;
-  cursor: pointer;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.video-icon {
-  color: #007bff; /* Icon color */
-  font-size: 1.5em; /* Adjust the size as needed */
-  cursor: pointer;
-  transition: color 0.3s;
+.delete-exercise-button:active {
+  transform: scale(0.98);
+}
 
-  /* Centering the icon */
-  /* display: inline-block; */
-  margin: auto;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  vertical-align: middle;
+/* Edit Button for Mobile */
+.exercise-table button {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exercise-table button:hover {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-light) 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Video Icon Styling */
+.video-icon {
+  color: var(--color-primary);
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  display: block;
+  margin: 0 auto;
 }
 
 .video-icon:hover {
-  color: #0056b3; /* Darker color on hover */
+  color: var(--color-primary-light);
+  transform: scale(1.1);
 }
 
-/* Media query for small screens (mobile devices) */
+/* Empty link styling */
+.exercise-table a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .exercise-table {
-    font-size: 0.9em; /* Reduce font size to make content fit better */
+    font-size: var(--text-sm);
+    border-radius: var(--radius-md);
   }
 
   .exercise-table th,
   .exercise-table td {
-    padding: 4px; /* Reduce padding to allow more content on screen */
+    padding: var(--space-2);
   }
 
   .exercise-table th {
-    font-size: 0.95em; /* Make header text slightly smaller */
+    font-size: 0.7rem;
+    letter-spacing: 0.3px;
+  }
+
+  .exercise-table input[type="text"],
+  .exercise-table input[type="number"] {
+    padding: var(--space-1);
+    font-size: var(--text-xs);
+  }
+
+  .exercise-table input[type="number"] {
+    max-width: 60px;
   }
 
   .delete-exercise-button {
-    font-size: medium; /* Adjust button size for mobile */
-    padding: 4px 8px; /* Reduce button padding */
+    padding: var(--space-1) var(--space-2);
+    min-width: 32px;
+    height: 32px;
+    font-size: var(--text-base);
+  }
+
+  .video-icon {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .exercise-table {
+    font-size: 0.75rem;
+  }
+
+  .exercise-table th {
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.65rem;
+  }
+
+  .exercise-table td {
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .exercise-table input[type="number"] {
+    max-width: 50px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .exercise-table tbody tr,
+  .exercise-table input,
+  .delete-exercise-button,
+  .video-icon {
+    transition: none;
+  }
+  
+  .delete-exercise-button:hover,
+  .exercise-table button:hover {
+    transform: none;
   }
 }
