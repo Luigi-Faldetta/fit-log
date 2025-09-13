@@ -11,12 +11,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  flex: 1;
-  position: relative;
+  justify-content: flex-start;
   width: 100%;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 5.2rem); /* Fine-tuned to prevent any overlap */
   overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .cl-avatarBox {
