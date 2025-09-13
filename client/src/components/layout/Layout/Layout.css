@@ -1,0 +1,171 @@
+/* Layout Base Styles */
+.layout {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--gradient-bg);
+}
+
+.layout__container {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  padding-bottom: calc(
+    64px + var(--space-4)
+  ); /* Account for bottom navigation */
+}
+
+.layout__content-inner {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Content Area Styling */
+.layout__content-inner > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.layout__content-inner > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.layout__content-inner > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.layout__content-inner > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.layout__content-inner > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.layout__content-inner > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1280px) {
+  .layout__content-inner {
+    max-width: 1024px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout__content-inner {
+    max-width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout__content {
+    padding: var(--space-3);
+    padding-bottom: calc(64px + var(--space-3));
+  }
+
+  .layout__content-inner {
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .layout__content {
+    padding: var(--space-2);
+    padding-bottom: calc(64px + var(--space-2));
+  }
+
+  .layout__content-inner {
+    gap: var(--space-3);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .layout__content-inner > * {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .layout {
+    background: white;
+    color: black;
+  }
+
+  .layout__content {
+    padding: 0;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .layout {
+    background: #000000;
+    color: #ffffff;
+  }
+}
+
+/* Dark mode specific adjustments */
+@media (prefers-color-scheme: dark) {
+  .layout {
+    background: var(--gradient-bg);
+  }
+}
+
+/* Focus management for accessibility */
+.layout:focus-within {
+  outline: none;
+}
+
+/* Smooth scrolling */
+.layout__content {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for content area */
+.layout__content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.layout__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.layout__content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.layout__content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}

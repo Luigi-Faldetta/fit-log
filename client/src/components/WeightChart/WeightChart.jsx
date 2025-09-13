@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getWeightData, postWeightData } from '../../services/apiService';
+import React, { useState } from 'react';
+import { useProfileData } from '../../contexts/ProfileDataContext';
 import './WeightChart.css';
 import {
   LineChart,
@@ -13,8 +13,8 @@ import {
 } from 'recharts';
 
 const WeightChart = () => {
+  const { weightData, addWeight: addWeightToContext } = useProfileData();
   const [newWeight, setNewWeight] = useState('');
-  const [weightData, setWeightData] = useState([]);
   const [selectedRange, setSelectedRange] = useState('lastMonth');
 
   // Determine the min and max values for weight
@@ -26,21 +26,6 @@ const WeightChart = () => {
   const roundedMin = Math.floor(minWeight / 5) * 5;
   const roundedMax = Math.ceil(maxWeight / 5) * 5;
 
-  // Fetch weight data from the server
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getWeightData();
-        setWeightData(data);
-      } catch (error) {
-        console.error('Failed to fetch weight data:', error);
-      }
-    };
-
-    console.log(weightData);
-
-    fetchData();
-  }, []);
 
   // Generate ticks with an increment of 5 between roundedMin and roundedMax
   const ticks = [];
@@ -58,9 +43,12 @@ const WeightChart = () => {
     };
 
     if (!isNaN(newEntry.weight)) {
-      const savedEntry = await postWeightData(newEntry);
-      setWeightData((prevData) => [...prevData, savedEntry]);
-      setNewWeight('');
+      try {
+        await addWeightToContext(newEntry);
+        setNewWeight('');
+      } catch (error) {
+        console.error('Failed to save weight data:', error);
+      }
     }
   };
 

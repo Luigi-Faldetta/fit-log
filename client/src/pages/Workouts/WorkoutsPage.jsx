@@ -1,32 +1,13 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getWorkouts } from '../../services/apiService';
+import { useWorkouts } from '../../contexts/WorkoutsContext';
 import WorkoutsList from '../../components/WorkoutsList/WorkoutsList';
 import Button from '../../components/ui/Button/Button';
 import generateRandomId from '../../utils/UtilityFunctions';
 import './WorkoutsPage.css';
 
 const Workouts = () => {
-  const [workouts, setWorkouts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { workouts, loading, error } = useWorkouts();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchWorkouts = async () => {
-      try {
-        const data = await getWorkouts();
-        setWorkouts(data);
-      } catch (error) {
-        console.error('Failed to fetch workouts:', error);
-        setError('Failed to load workouts. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWorkouts();
-  }, []);
 
   const handleAddWorkout = () => {
     const tempWorkoutId = 'new-' + generateRandomId();

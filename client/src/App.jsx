@@ -6,6 +6,8 @@ import SignedInFooter from './components/SignedInFooter/SignedInFooter';
 import SignedOutFooter from './components/SignedOutFooter/SignedOutFooter';
 import Header from './components/Header/Header';
 import AppRoutes from './routes/AppRoutes';
+import { WorkoutsProvider } from './contexts/WorkoutsContext';
+import { ProfileDataProvider } from './contexts/ProfileDataContext';
 
 function App() {
   const { isSignedIn } = useUser();
@@ -14,17 +16,21 @@ function App() {
   const handleChange = useNavigation(setSelectedNav);
 
   return (
-    <div className="app">
-      <main className="app-container">
-        <Header />
-        <AppRoutes isSignedIn={isSignedIn} handleChange={handleChange} />
-      </main>
-      {isSignedIn ? (
-        <SignedInFooter value={selectedNav} onChange={handleChange} />
-      ) : (
-        <SignedOutFooter />
-      )}
-    </div>
+    <WorkoutsProvider>
+      <ProfileDataProvider>
+        <div className="app">
+          <main className="app-container">
+            <Header />
+            <AppRoutes isSignedIn={isSignedIn} handleChange={handleChange} />
+          </main>
+          {isSignedIn ? (
+            <SignedInFooter value={selectedNav} onChange={handleChange} />
+          ) : (
+            <SignedOutFooter />
+          )}
+        </div>
+      </ProfileDataProvider>
+    </WorkoutsProvider>
   );
 }
 

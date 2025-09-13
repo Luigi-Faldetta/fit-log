@@ -1,12 +1,12 @@
 // WorkoutDetailsPage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useWorkouts } from '../../contexts/WorkoutsContext';
 import {
   getExercises,
   postExercise,
   postWorkout,
   getWorkout,
-  getWorkouts,
   updateWorkout,
   updateExercises,
   deleteWorkout,
@@ -26,13 +26,15 @@ const WorkoutDetails = () => {
   const size = useWindowSize();
   const isMobile = size.width <= 768;
 
+  // Get workouts from context instead of fetching
+  const { workouts: contextWorkouts, addWorkoutToCache, updateWorkoutInCache, removeWorkoutFromCache } = useWorkouts();
+
   const [workout, setWorkout] = useState({
     id: null,
     name: '',
     description: '',
   });
   const [exercises, setExercises] = useState([]);
-  const [workouts, setWorkouts] = useState([]);
   const [realWorkoutId, setRealWorkoutId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(isNewWorkout);
@@ -47,8 +49,7 @@ const WorkoutDetails = () => {
         setIsLoading(false);
       } else {
         try {
-          const allWorkouts = await getWorkouts();
-          setWorkouts(allWorkouts);
+          // No need to fetch workouts - use from context
           const workoutData = await getWorkout(workoutId);
           setWorkout({
             id: workoutData.workout_id,
@@ -71,23 +72,23 @@ const WorkoutDetails = () => {
     fetchExercises();
   }, [workoutId, isNewWorkout]);
 
-  const currentIndex = workouts.findIndex(
+  const currentIndex = contextWorkouts.findIndex(
     (w) => w.workout_id === (realWorkoutId || parseInt(workoutId, 10))
   );
 
   const hasPrevious = currentIndex > 0;
-  const hasNext = currentIndex >= 0 && currentIndex < workouts.length - 1;
+  const hasNext = currentIndex >= 0 && currentIndex < contextWorkouts.length - 1;
 
   const goToPreviousWorkout = () => {
     if (hasPrevious) {
-      const previousWorkoutId = workouts[currentIndex - 1].workout_id;
+      const previousWorkoutId = contextWorkouts[currentIndex - 1].workout_id;
       navigate(`/workouts/${previousWorkoutId}`);
     }
   };
 
   const goToNextWorkout = () => {
     if (hasNext) {
-      const nextWorkoutId = workouts[currentIndex + 1].workout_id;
+      const nextWorkoutId = contextWorkouts[currentIndex + 1].workout_id;
       navigate(`/workouts/${nextWorkoutId}`);
     }
   };
@@ -128,6 +129,9 @@ const WorkoutDetails = () => {
         setRealWorkoutId(createdWorkout.workout_id);
         setWorkout({ ...workout, id: createdWorkout.workout_id });
 
+        // Add the new workout to the cache
+        addWorkoutToCache(createdWorkout);
+
         // Update exercises with the new workout ID
         const updatedExercises = exercises.map((exercise) => ({
           ...exercise,
@@ -141,7 +145,10 @@ const WorkoutDetails = () => {
         );
       } else {
         // Update the existing workout
-        await updateWorkout(realWorkoutId || workout.id, workout);
+        const updatedWorkout = await updateWorkout(realWorkoutId || workout.id, workout);
+
+        // Update the workout in the cache
+        updateWorkoutInCache(realWorkoutId || workout.id, updatedWorkout || workout);
 
         // For an existing workout, update exercises
         await updateExercises(exercises);
@@ -159,7 +166,12 @@ const WorkoutDetails = () => {
 
   const handleDeleteWorkout = async () => {
     try {
-      await deleteWorkout(realWorkoutId || workoutId);
+      const workoutToDelete = realWorkoutId || workoutId;
+      await deleteWorkout(workoutToDelete);
+
+      // Remove the workout from the cache
+      removeWorkoutFromCache(workoutToDelete);
+
       navigate('/workouts');
     } catch (error) {
       console.error('Failed to delete workout:', error);

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getBodyFatData, postBodyFatData } from '../../services/apiService';
+import React, { useState } from 'react';
+import { useProfileData } from '../../contexts/ProfileDataContext';
 import './BodyFatChart.css';
 import {
   LineChart,
@@ -13,7 +13,7 @@ import {
 } from 'recharts';
 
 const BodyFatChart = () => {
-  const [bodyFatData, setBodyFatData] = useState([]);
+  const { bodyFatData, addBodyFat: addBodyFatToContext } = useProfileData();
   const [newBodyFat, setNewBodyFat] = useState('');
   const [selectedRange, setSelectedRange] = useState('lastMonth');
 
@@ -26,19 +26,6 @@ const BodyFatChart = () => {
   const roundedMin = Math.floor(minBodyFat / 5) * 5;
   const roundedMax = Math.ceil(maxBodyFat / 5) * 5;
 
-  // Fetch body fat data from the server
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getBodyFatData();
-        setBodyFatData(data);
-      } catch (error) {
-        console.error('Failed to fetch body fat data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   // Generate ticks with an increment of 5 between roundedMin and roundedMax
   const ticks = [];
@@ -56,8 +43,7 @@ const BodyFatChart = () => {
 
     if (!isNaN(newEntry.bodyFat)) {
       try {
-        const savedEntry = await postBodyFatData(newEntry);
-        setBodyFatData((prevData) => [...prevData, newEntry]);
+        await addBodyFatToContext(newEntry);
         setNewBodyFat('');
       } catch (error) {
         console.error('Failed to save body fat data:', error);
