@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { weightDataService, bodyfatDataService } from '../services/profileDataService';
 import { transformWeightData, transformBodyFatData } from '../utils/dataTransformers';
 
@@ -138,7 +138,7 @@ export const ProfileDataProvider = ({ children }) => {
     }
   }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     weightData,
     bodyFatData,
     loading,
@@ -147,7 +147,16 @@ export const ProfileDataProvider = ({ children }) => {
     refreshProfileData,
     addWeight,
     addBodyFat
-  };
+  }), [
+    weightData,
+    bodyFatData,
+    loading,
+    error,
+    isInitialized,
+    refreshProfileData,
+    addWeight,
+    addBodyFat
+  ]);
 
   return (
     <ProfileDataContext.Provider value={value}>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { workoutDataService } from '../services/workoutDataService';
 
 /**
@@ -124,7 +124,7 @@ export const WorkoutsProvider = ({ children }) => {
     }
   }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     workouts,
     loading,
     error,
@@ -133,7 +133,16 @@ export const WorkoutsProvider = ({ children }) => {
     addWorkoutToCache,
     updateWorkoutInCache,
     removeWorkoutFromCache
-  };
+  }), [
+    workouts,
+    loading,
+    error,
+    isInitialized,
+    refreshWorkouts,
+    addWorkoutToCache,
+    updateWorkoutInCache,
+    removeWorkoutFromCache
+  ]);
 
   return (
     <WorkoutsContext.Provider value={value}>
