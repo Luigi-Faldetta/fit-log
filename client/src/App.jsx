@@ -8,6 +8,8 @@ import Header from './components/Header/Header';
 import AppRoutes from './routes/AppRoutes';
 import { WorkoutsProvider } from './contexts/WorkoutsContext';
 import { ProfileDataProvider } from './contexts/ProfileDataContext';
+import OfflineIndicator from './components/OfflineIndicator/OfflineIndicator';
+import ServiceWorkerUpdate from './components/ServiceWorkerUpdate/ServiceWorkerUpdate';
 
 function App() {
   const { isSignedIn } = useUser();
@@ -19,6 +21,8 @@ function App() {
     <WorkoutsProvider>
       <ProfileDataProvider>
         <div className="app">
+          <OfflineIndicator />
+          <ServiceWorkerUpdate />
           <main className="app-container">
             <Header />
             <AppRoutes isSignedIn={isSignedIn} handleChange={handleChange} />

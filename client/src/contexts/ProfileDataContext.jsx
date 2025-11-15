@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getWeightData, getBodyFatData, postWeightData, postBodyFatData } from '../services/apiService';
+import { weightOfflineAPI, bodyfatOfflineAPI } from '../services/offlineApiService';
+import { weightDB, bodyfatDB } from '../services/dbService';
 
 const ProfileDataContext = createContext();
 
@@ -28,10 +29,33 @@ export const ProfileDataProvider = ({ children }) => {
         setLoading(true);
         setError(null);
 
-        // Fetch both weight and body fat data in parallel
+        // Try to load from IndexedDB first for instant display
+        const [cachedWeight, cachedBodyFat] = await Promise.all([
+          weightDB.getAll(),
+          bodyfatDB.getAll()
+        ]);
+
+        if (cachedWeight.length > 0 || cachedBodyFat.length > 0) {
+          console.log('Loading profile data from IndexedDB cache');
+          if (cachedWeight.length > 0) {
+            setWeightData(cachedWeight.map(entry => ({
+              date: entry.date?.split('T')[0] || entry.date,
+              weight: entry.value || entry.weight,
+            })));
+          }
+          if (cachedBodyFat.length > 0) {
+            setBodyFatData(cachedBodyFat.map(entry => ({
+              date: entry.date?.split('T')[0] || entry.date,
+              bodyFat: entry.value || entry.bodyFat,
+            })));
+          }
+          setLoading(false);
+        }
+
+        // Fetch both weight and body fat data in parallel (offline-first)
         const [weight, bodyFat] = await Promise.all([
-          getWeightData(),
-          getBodyFatData()
+          weightOfflineAPI.getAll(),
+          bodyfatOfflineAPI.getAll()
         ]);
 
         setWeightData(weight);
@@ -39,7 +63,35 @@ export const ProfileDataProvider = ({ children }) => {
         setIsInitialized(true);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
-        setError('Failed to load profile data. Please try again later.');
+
+        // Try to use cached data as fallback
+        try {
+          const [cachedWeight, cachedBodyFat] = await Promise.all([
+            weightDB.getAll(),
+            bodyfatDB.getAll()
+          ]);
+
+          if (cachedWeight.length > 0 || cachedBodyFat.length > 0) {
+            console.log('Using cached profile data due to fetch error');
+            if (cachedWeight.length > 0) {
+              setWeightData(cachedWeight.map(entry => ({
+                date: entry.date?.split('T')[0] || entry.date,
+                weight: entry.value || entry.weight,
+              })));
+            }
+            if (cachedBodyFat.length > 0) {
+              setBodyFatData(cachedBodyFat.map(entry => ({
+                date: entry.date?.split('T')[0] || entry.date,
+                bodyFat: entry.value || entry.bodyFat,
+              })));
+            }
+            setError('Using cached data. Unable to fetch latest profile data.');
+          } else {
+            setError('Failed to load profile data. Please try again later.');
+          }
+        } catch (dbError) {
+          setError('Failed to load profile data. Please try again later.');
+        }
       } finally {
         setLoading(false);
       }
@@ -55,8 +107,8 @@ export const ProfileDataProvider = ({ children }) => {
       setError(null);
 
       const [weight, bodyFat] = await Promise.all([
-        getWeightData(),
-        getBodyFatData()
+        weightOfflineAPI.getAll(),
+        bodyfatOfflineAPI.getAll()
       ]);
 
       setWeightData(weight);
@@ -65,6 +117,33 @@ export const ProfileDataProvider = ({ children }) => {
       return { weight, bodyFat };
     } catch (error) {
       console.error('Failed to refresh profile data:', error);
+
+      // Fallback to cached data
+      try {
+        const [cachedWeight, cachedBodyFat] = await Promise.all([
+          weightDB.getAll(),
+          bodyfatDB.getAll()
+        ]);
+
+        if (cachedWeight.length > 0 || cachedBodyFat.length > 0) {
+          const weight = cachedWeight.map(entry => ({
+            date: entry.date?.split('T')[0] || entry.date,
+            weight: entry.value || entry.weight,
+          }));
+          const bodyFat = cachedBodyFat.map(entry => ({
+            date: entry.date?.split('T')[0] || entry.date,
+            bodyFat: entry.value || entry.bodyFat,
+          }));
+
+          setWeightData(weight);
+          setBodyFatData(bodyFat);
+          setError('Using cached data. Unable to fetch latest profile data.');
+          return { weight, bodyFat };
+        }
+      } catch (dbError) {
+        console.error('Failed to read from cache:', dbError);
+      }
+
       setError('Failed to refresh profile data. Please try again later.');
       throw error;
     } finally {
@@ -75,7 +154,7 @@ export const ProfileDataProvider = ({ children }) => {
   // Function to add weight data
   const addWeight = async (newEntry) => {
     try {
-      const savedEntry = await postWeightData(newEntry);
+      const savedEntry = await weightOfflineAPI.create(newEntry);
       setWeightData(prev => [...prev, savedEntry]);
       return savedEntry;
     } catch (error) {
@@ -87,7 +166,7 @@ export const ProfileDataProvider = ({ children }) => {
   // Function to add body fat data
   const addBodyFat = async (newEntry) => {
     try {
-      const savedEntry = await postBodyFatData(newEntry);
+      const savedEntry = await bodyfatOfflineAPI.create(newEntry);
       setBodyFatData(prev => [...prev, savedEntry]);
       return savedEntry;
     } catch (error) {
