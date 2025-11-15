@@ -1,39 +1,52 @@
-const { Weight } = require('../models/weight-model');
+/**
+ * Weight Controller
+ *
+ * Follows Single Responsibility Principle:
+ * - Responsible ONLY for HTTP request/response handling
+ * - Delegates business logic to profileService
+ * - No database access
+ * - No business logic
+ */
 
-exports.getWeightData = async (req, res) => {
+const profileService = require('../services/profileService');
+
+/**
+ * Get all weight entries
+ * @route GET /api/weight
+ */
+exports.getWeightData = async (req, res, next) => {
   try {
-    const weightData = await Weight.findAll();
+    const weightData = await profileService.getAllWeight();
     res.json(weightData);
   } catch (error) {
-    console.error('Failed to get weight data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.createWeightEntry = async (req, res) => {
+/**
+ * Create weight entry
+ * @route POST /api/weight
+ */
+exports.createWeightEntry = async (req, res, next) => {
   try {
     const { value, date } = req.body;
-    const newWeightEntry = await Weight.create({ value, date });
-    res.status(201).json(newWeightEntry);
+    const newEntry = await profileService.createWeight({ value, date });
+    res.status(201).json(newEntry);
   } catch (error) {
-    console.error('Failed to create weight entry:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.deleteWeightEntry = async (req, res) => {
+/**
+ * Delete weight entry
+ * @route DELETE /api/weight/:weightId
+ */
+exports.deleteWeightEntry = async (req, res, next) => {
   try {
     const { weightId } = req.params;
-    const weightEntry = await Weight.findByPk(weightId);
-
-    if (!weightEntry) {
-      return res.status(404).json({ error: 'Weight entry not found' });
-    }
-
-    await weightEntry.destroy();
+    await profileService.deleteWeight(weightId);
     res.status(204).send();
   } catch (error) {
-    console.error('Failed to delete weight entry:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };

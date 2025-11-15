@@ -1,39 +1,52 @@
-const { BodyFat } = require('../models/bodyfat-model');
+/**
+ * Body Fat Controller
+ *
+ * Follows Single Responsibility Principle:
+ * - Responsible ONLY for HTTP request/response handling
+ * - Delegates business logic to profileService
+ * - No database access
+ * - No business logic
+ */
 
-exports.getBodyFatData = async (req, res) => {
+const profileService = require('../services/profileService');
+
+/**
+ * Get all body fat entries
+ * @route GET /api/bodyfat
+ */
+exports.getBodyFatData = async (req, res, next) => {
   try {
-    const bodyFatData = await BodyFat.findAll();
+    const bodyFatData = await profileService.getAllBodyFat();
     res.json(bodyFatData);
   } catch (error) {
-    console.error('Failed to get body fat data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.createBodyFatEntry = async (req, res) => {
+/**
+ * Create body fat entry
+ * @route POST /api/bodyfat
+ */
+exports.createBodyFatEntry = async (req, res, next) => {
   try {
     const { value, date } = req.body;
-    const newBodyFatEntry = await BodyFat.create({ value, date });
-    res.status(201).json(newBodyFatEntry);
+    const newEntry = await profileService.createBodyFat({ value, date });
+    res.status(201).json(newEntry);
   } catch (error) {
-    console.error('Failed to create body fat entry:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.deleteBodyFatEntry = async (req, res) => {
+/**
+ * Delete body fat entry
+ * @route DELETE /api/bodyfat/:bodyFatId
+ */
+exports.deleteBodyFatEntry = async (req, res, next) => {
   try {
     const { bodyFatId } = req.params;
-    const bodyFatEntry = await BodyFat.findByPk(bodyFatId);
-
-    if (!bodyFatEntry) {
-      return res.status(404).json({ error: 'Body fat entry not found' });
-    }
-
-    await bodyFatEntry.destroy();
+    await profileService.deleteBodyFat(bodyFatId);
     res.status(204).send();
   } catch (error) {
-    console.error('Failed to delete body fat entry:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };

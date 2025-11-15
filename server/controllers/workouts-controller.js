@@ -1,103 +1,81 @@
-const { Workout } = require('../models/workouts-model');
-const { Exercise } = require('../models/exercises-model');
+/**
+ * Workouts Controller
+ *
+ * Follows Single Responsibility Principle:
+ * - Responsible ONLY for HTTP request/response handling
+ * - Delegates business logic to workoutService
+ * - No database access
+ * - No business logic
+ */
 
-exports.getWorkouts = async (req, res) => {
+const workoutService = require('../services/workoutService');
+
+/**
+ * Get all workouts
+ * @route GET /api/workouts
+ */
+exports.getWorkouts = async (req, res, next) => {
   try {
-    console.log('=== WORKOUTS ENDPOINT CALLED ===');
-    console.log('Time:', new Date().toISOString());
-    
-    // Test database connection first
-    const { sequelize } = require('../models/db');
-    console.log('Testing database connection...');
-    await sequelize.authenticate();
-    console.log('✓ Database connection verified');
-    
-    console.log('Attempting to query Workout model...');
-    const workouts = await Workout.findAll();
-    console.log('✓ Query successful. Found workouts:', workouts.length);
-    console.log('Workouts data:', JSON.stringify(workouts, null, 2));
-    
+    const workouts = await workoutService.getAllWorkouts();
     res.json(workouts);
   } catch (error) {
-    console.error('❌ WORKOUTS ENDPOINT ERROR:');
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-    console.error('Full error:', error);
-    console.error('Stack trace:', error.stack);
-    
-    res.status(500).json({ 
-      error: 'Internal Server Error', 
-      message: error.message,
-      name: error.name,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
+    next(error);
   }
 };
 
-exports.getWorkout = async (req, res) => {
+/**
+ * Get single workout by ID
+ * @route GET /api/workouts/:workoutId
+ */
+exports.getWorkout = async (req, res, next) => {
   try {
     const { workoutId } = req.params;
-    const workout = await Workout.findByPk(workoutId);
-
-    if (!workout) {
-      return res.status(404).json({ error: 'Workout not found' });
-    }
-
+    const workout = await workoutService.getWorkoutById(workoutId);
     res.json(workout);
   } catch (error) {
-    console.error('Failed to get workout:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.createWorkout = async (req, res) => {
+/**
+ * Create new workout
+ * @route POST /api/workouts
+ */
+exports.createWorkout = async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const newWorkout = await Workout.create({ name, description });
+    const newWorkout = await workoutService.createWorkout({ name, description });
     res.status(201).json(newWorkout);
   } catch (error) {
-    console.error('Failed to create workout:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.updateWorkout = async (req, res) => {
+/**
+ * Update workout
+ * @route PUT /api/workouts/:workoutId
+ */
+exports.updateWorkout = async (req, res, next) => {
   try {
     const { workoutId } = req.params;
     const { name, description } = req.body;
-    const workout = await Workout.findByPk(workoutId);
-
-    if (!workout) {
-      return res.status(404).json({ error: 'Workout not found' });
-    }
-
-    workout.name = name;
-    workout.description = description;
-    await workout.save();
-
-    res.json(workout);
+    const updatedWorkout = await workoutService.updateWorkout(workoutId, { name, description });
+    res.json(updatedWorkout);
   } catch (error) {
-    console.error('Failed to update workout:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.deleteWorkout = async (req, res) => {
+/**
+ * Delete workout
+ * @route DELETE /api/workouts/:workoutId
+ */
+exports.deleteWorkout = async (req, res, next) => {
   try {
     const { workoutId } = req.params;
-    const workout = await Workout.findByPk(workoutId);
-
-    if (!workout) {
-      return res.status(404).json({ error: 'Workout not found' });
-    }
-
-    // Delete all exercises associated with the workout
-    await Exercise.destroy({ where: { workout_id: workoutId } });
-
-    await workout.destroy();
+    await workoutService.deleteWorkout(workoutId);
     res.status(204).send();
   } catch (error) {
-    console.error('Failed to delete workout:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };

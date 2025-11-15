@@ -1,16 +1,33 @@
-const { Exercise } = require('../models/exercises-model');
+/**
+ * Exercises Controller
+ *
+ * Follows Single Responsibility Principle:
+ * - Responsible ONLY for HTTP request/response handling
+ * - Delegates business logic to workoutService
+ * - No database access
+ * - No business logic
+ */
 
-exports.getExercises = async (req, res) => {
+const workoutService = require('../services/workoutService');
+
+/**
+ * Get all exercises
+ * @route GET /api/exercises
+ */
+exports.getExercises = async (req, res, next) => {
   try {
-    const exercises = await Exercise.findAll();
+    const exercises = await workoutService.getAllExercises();
     res.json(exercises);
   } catch (error) {
-    console.error('Failed to get exercises:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.createExercise = async (req, res) => {
+/**
+ * Create exercise
+ * @route POST /api/exercises
+ */
+exports.createExercise = async (req, res, next) => {
   try {
     const {
       name,
@@ -23,7 +40,8 @@ exports.createExercise = async (req, res) => {
       media_URL,
       workout_id,
     } = req.body;
-    const newExercise = await Exercise.create({
+
+    const newExercise = await workoutService.createExercise({
       name,
       description,
       muscle_group,
@@ -34,45 +52,37 @@ exports.createExercise = async (req, res) => {
       media_URL,
       workout_id,
     });
+
     res.status(201).json(newExercise);
   } catch (error) {
-    console.error('Failed to create exercise:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.updateExercises = async (req, res) => {
+/**
+ * Bulk update exercises
+ * @route PUT /api/exercises
+ */
+exports.updateExercises = async (req, res, next) => {
   try {
     const exercises = req.body;
-    const updatedExercises = [];
-
-    for (const exercise of exercises) {
-      const updatedExercise = await Exercise.update(exercise, {
-        where: { exercise_id: exercise.exercise_id },
-      });
-      updatedExercises.push(updatedExercise);
-    }
-
+    const updatedExercises = await workoutService.bulkUpdateExercises(exercises);
     res.status(200).json(updatedExercises);
   } catch (error) {
-    console.error('Failed to update exercises:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
 
-exports.deleteExercise = async (req, res) => {
+/**
+ * Delete exercise
+ * @route DELETE /api/exercises/:exerciseId
+ */
+exports.deleteExercise = async (req, res, next) => {
   try {
     const { exerciseId } = req.params;
-    const exercise = await Exercise.findByPk(exerciseId);
-
-    if (!exercise) {
-      return res.status(404).json({ error: 'Exercise not found' });
-    }
-
-    await exercise.destroy();
+    await workoutService.deleteExercise(exerciseId);
     res.status(204).send();
   } catch (error) {
-    console.error('Failed to delete exercise:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 };
