@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Exercise.css';
 
 const Exercise = ({
@@ -83,6 +84,28 @@ const Exercise = ({
       )}
     </tr>
   );
+};
+
+Exercise.propTypes = {
+  name: PropTypes.string.isRequired,
+  sets: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  reps: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  weight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  media_URL: PropTypes.string,
+  description: PropTypes.string,
+  isEditing: PropTypes.bool.isRequired,
+  onInputChange: PropTypes.func,
+  index: PropTypes.number,
+  onDelete: PropTypes.func,
+};
+
+Exercise.defaultProps = {
+  weight: '',
+  media_URL: '',
+  description: '',
+  onInputChange: null,
+  index: null,
+  onDelete: null,
 };
 
 export default Exercise;

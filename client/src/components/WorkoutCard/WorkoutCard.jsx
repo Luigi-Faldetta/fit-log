@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '../ui/Card/Card';
 import './WorkoutCard.css';
 
@@ -76,6 +77,23 @@ const WorkoutCard = ({ workout, onClick }) => {
       )}
     </Card>
   );
+};
+
+WorkoutCard.propTypes = {
+  workout: PropTypes.shape({
+    workout_id: PropTypes.number.isRequired,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    exercises: PropTypes.arrayOf(PropTypes.object),
+    created_at: PropTypes.string,
+    is_ai_generated: PropTypes.bool,
+  }),
+  onClick: PropTypes.func,
+};
+
+WorkoutCard.defaultProps = {
+  workout: null,
+  onClick: null,
 };
 
 export default WorkoutCard;

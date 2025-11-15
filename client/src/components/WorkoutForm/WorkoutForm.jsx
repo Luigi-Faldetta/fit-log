@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { sanitizeWorkoutName, sanitizeDescription } from '../../utils/sanitize';
 import { validateWorkoutName, validateDescription } from '../../utils/validation';
 import { TEXT_LIMITS } from '../../../../shared/constants/validation';
@@ -73,6 +74,14 @@ const WorkoutForm = ({ workout, onUpdate }) => {
       </label>
     </div>
   );
+};
+
+WorkoutForm.propTypes = {
+  workout: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default WorkoutForm;

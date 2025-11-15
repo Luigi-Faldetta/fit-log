@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import './ExerciseModal.css'; // Import CSS for styling
 
@@ -127,6 +128,26 @@ const ExerciseModal = ({
       </form>
     </Modal>
   );
+};
+
+ExerciseModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  exercise: PropTypes.shape({
+    exercise_id: PropTypes.number,
+    name: PropTypes.string,
+    sets: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    reps: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    weight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    media_URL: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+};
+
+ExerciseModal.defaultProps = {
+  onDelete: null,
 };
 
 export default ExerciseModal;
