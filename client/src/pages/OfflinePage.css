@@ -1,0 +1,153 @@
+.offline-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.offline-page-content {
+  max-width: 500px;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 48px 32px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.offline-page-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+  color: #667eea;
+}
+
+.offline-page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 16px;
+}
+
+.offline-page-description {
+  font-size: 16px;
+  color: #4a5568;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.offline-page-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.offline-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f7fafc;
+  border-radius: 8px;
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.offline-feature svg {
+  flex-shrink: 0;
+  color: #667eea;
+}
+
+.offline-page-button {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: #667eea;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.offline-page-button:hover:not(:disabled) {
+  background: #5a67d8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.offline-page-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.offline-page-button-secondary {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #667eea;
+  background: transparent;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.offline-page-button-secondary:hover {
+  background: #f7fafc;
+  transform: translateY(-1px);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .offline-page-content {
+    padding: 32px 24px;
+  }
+
+  .offline-page-title {
+    font-size: 28px;
+  }
+
+  .offline-page-description {
+    font-size: 15px;
+  }
+
+  .offline-page-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .offline-page-icon svg {
+    width: 100px;
+    height: 100px;
+  }
+}
