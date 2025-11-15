@@ -6,6 +6,10 @@
  */
 
 import DOMPurify from 'dompurify';
+import {
+  TEXT_LIMITS,
+  EXERCISE_LIMITS
+} from '../../../shared/constants/validation';
 
 /**
  * Sanitize HTML content to prevent XSS attacks
@@ -66,10 +70,7 @@ export const sanitizeNumber = (input, options = {}) => {
  */
 export const sanitizeWorkoutName = (name) => {
   const sanitized = sanitizeText(name);
-
-  // Limit length to prevent abuse
-  const maxLength = 255;
-  return sanitized.slice(0, maxLength);
+  return sanitized.slice(0, TEXT_LIMITS.WORKOUT_NAME_MAX);
 };
 
 /**
@@ -79,10 +80,7 @@ export const sanitizeWorkoutName = (name) => {
  */
 export const sanitizeDescription = (description) => {
   const sanitized = sanitizeText(description);
-
-  // Limit length
-  const maxLength = 1000;
-  return sanitized.slice(0, maxLength);
+  return sanitized.slice(0, TEXT_LIMITS.DESCRIPTION_MAX);
 };
 
 /**
@@ -92,10 +90,7 @@ export const sanitizeDescription = (description) => {
  */
 export const sanitizeExerciseName = (name) => {
   const sanitized = sanitizeText(name);
-
-  // Limit length
-  const maxLength = 255;
-  return sanitized.slice(0, maxLength);
+  return sanitized.slice(0, TEXT_LIMITS.EXERCISE_NAME_MAX);
 };
 
 /**
@@ -105,8 +100,8 @@ export const sanitizeExerciseName = (name) => {
  */
 export const sanitizeExerciseValue = (value) => {
   return sanitizeNumber(value, {
-    min: 0,
-    max: 10000,
+    min: EXERCISE_LIMITS.WEIGHT_MIN,
+    max: EXERCISE_LIMITS.WEIGHT_MAX,
     allowDecimals: true
   });
 };

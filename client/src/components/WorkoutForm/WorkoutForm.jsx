@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { sanitizeWorkoutName, sanitizeDescription } from '../../utils/sanitize';
 import { validateWorkoutName, validateDescription } from '../../utils/validation';
+import { TEXT_LIMITS } from '../../../../shared/constants/validation';
 import './WorkoutForm.css';
 
 const WorkoutForm = ({ workout, onUpdate }) => {
@@ -43,7 +44,7 @@ const WorkoutForm = ({ workout, onUpdate }) => {
           type="text"
           value={workout.name || ''}
           onChange={handleNameChange}
-          maxLength={255}
+          maxLength={TEXT_LIMITS.WORKOUT_NAME_MAX}
           required
           aria-invalid={!!nameError}
           aria-describedby={nameError ? 'name-error' : undefined}
@@ -60,7 +61,7 @@ const WorkoutForm = ({ workout, onUpdate }) => {
           type="text"
           value={workout.description || ''}
           onChange={handleDescriptionChange}
-          maxLength={1000}
+          maxLength={TEXT_LIMITS.DESCRIPTION_MAX}
           aria-invalid={!!descError}
           aria-describedby={descError ? 'desc-error' : undefined}
         />

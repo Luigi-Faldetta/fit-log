@@ -11,6 +11,12 @@
 
 const OpenAI = require('openai');
 const { AppError, ValidationError } = require('../middleware/errorHandler');
+const {
+  AGE_LIMITS,
+  DURATION_LIMITS,
+  EXPERIENCE_LEVELS,
+  AI_CONFIG
+} = require('../constants/validation');
 
 class AIService {
   constructor() {
@@ -23,10 +29,10 @@ class AIService {
       apiKey: process.env.OPENAI_API_KEY
     });
 
-    // Configuration constants
-    this.MODEL = 'gpt-3.5-turbo';
-    this.MAX_TOKENS = 500; // Increased for more detailed workouts
-    this.TEMPERATURE = 0.7; // Balance between creativity and consistency
+    // Configuration constants from centralized config
+    this.MODEL = AI_CONFIG.MODEL;
+    this.MAX_TOKENS = AI_CONFIG.MAX_TOKENS;
+    this.TEMPERATURE = AI_CONFIG.TEMPERATURE;
   }
 
   /**
@@ -37,25 +43,24 @@ class AIService {
   validateWorkoutParams(params) {
     const { age, experienceLevel, goal, duration } = params;
 
-    if (!age || isNaN(age) || age < 13 || age > 120) {
-      throw new ValidationError('Age must be between 13 and 120');
+    if (!age || isNaN(age) || age < AGE_LIMITS.MIN || age > AGE_LIMITS.MAX) {
+      throw new ValidationError(`Age must be between ${AGE_LIMITS.MIN} and ${AGE_LIMITS.MAX}`);
     }
 
     if (!experienceLevel || typeof experienceLevel !== 'string') {
       throw new ValidationError('Experience level is required');
     }
 
-    const validExperienceLevels = ['beginner', 'intermediate', 'advanced'];
-    if (!validExperienceLevels.includes(experienceLevel.toLowerCase())) {
-      throw new ValidationError('Experience level must be beginner, intermediate, or advanced');
+    if (!EXPERIENCE_LEVELS.includes(experienceLevel.toLowerCase())) {
+      throw new ValidationError(`Experience level must be one of: ${EXPERIENCE_LEVELS.join(', ')}`);
     }
 
     if (!goal || typeof goal !== 'string' || goal.trim().length === 0) {
       throw new ValidationError('Goal is required');
     }
 
-    if (!duration || isNaN(duration) || duration < 10 || duration > 180) {
-      throw new ValidationError('Duration must be between 10 and 180 minutes');
+    if (!duration || isNaN(duration) || duration < DURATION_LIMITS.MIN || duration > DURATION_LIMITS.MAX) {
+      throw new ValidationError(`Duration must be between ${DURATION_LIMITS.MIN} and ${DURATION_LIMITS.MAX} minutes`);
     }
   }
 
@@ -131,8 +136,8 @@ Please provide a complete workout plan now.`
         max_tokens: this.MAX_TOKENS,
         temperature: this.TEMPERATURE,
         top_p: 1,
-        frequency_penalty: 0.3, // Reduce repetition
-        presence_penalty: 0.3   // Encourage variety
+        frequency_penalty: AI_CONFIG.FREQUENCY_PENALTY,
+        presence_penalty: AI_CONFIG.PRESENCE_PENALTY
       });
 
       const generatedWorkout = response.choices[0].message.content;

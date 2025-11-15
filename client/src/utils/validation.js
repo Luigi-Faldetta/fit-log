@@ -5,6 +5,12 @@
  * Never trust client-side validation alone - always validate on server too.
  */
 
+import {
+  TEXT_LIMITS,
+  EXERCISE_LIMITS,
+  BODY_METRICS
+} from '../../../shared/constants/validation';
+
 /**
  * Validate workout name
  * @param {string} name - Workout name
@@ -21,8 +27,8 @@ export const validateWorkoutName = (name) => {
     return { isValid: false, error: 'Workout name cannot be empty' };
   }
 
-  if (trimmed.length > 255) {
-    return { isValid: false, error: 'Workout name must be 255 characters or less' };
+  if (trimmed.length > TEXT_LIMITS.WORKOUT_NAME_MAX) {
+    return { isValid: false, error: `Workout name must be ${TEXT_LIMITS.WORKOUT_NAME_MAX} characters or less` };
   }
 
   return { isValid: true, error: null };
@@ -42,8 +48,8 @@ export const validateDescription = (description) => {
     return { isValid: false, error: 'Description must be text' };
   }
 
-  if (description.length > 1000) {
-    return { isValid: false, error: 'Description must be 1000 characters or less' };
+  if (description.length > TEXT_LIMITS.DESCRIPTION_MAX) {
+    return { isValid: false, error: `Description must be ${TEXT_LIMITS.DESCRIPTION_MAX} characters or less` };
   }
 
   return { isValid: true, error: null };
@@ -65,8 +71,8 @@ export const validateExerciseName = (name) => {
     return { isValid: false, error: 'Exercise name cannot be empty' };
   }
 
-  if (trimmed.length > 255) {
-    return { isValid: false, error: 'Exercise name must be 255 characters or less' };
+  if (trimmed.length > TEXT_LIMITS.EXERCISE_NAME_MAX) {
+    return { isValid: false, error: `Exercise name must be ${TEXT_LIMITS.EXERCISE_NAME_MAX} characters or less` };
   }
 
   return { isValid: true, error: null };
@@ -84,12 +90,12 @@ export const validateSets = (sets) => {
     return { isValid: false, error: 'Sets must be a number' };
   }
 
-  if (num < 1) {
-    return { isValid: false, error: 'Sets must be at least 1' };
+  if (num < EXERCISE_LIMITS.SETS_MIN) {
+    return { isValid: false, error: `Sets must be at least ${EXERCISE_LIMITS.SETS_MIN}` };
   }
 
-  if (num > 100) {
-    return { isValid: false, error: 'Sets must be 100 or less' };
+  if (num > EXERCISE_LIMITS.SETS_MAX) {
+    return { isValid: false, error: `Sets must be ${EXERCISE_LIMITS.SETS_MAX} or less` };
   }
 
   return { isValid: true, error: null };
@@ -107,12 +113,12 @@ export const validateReps = (reps) => {
     return { isValid: false, error: 'Reps must be a number' };
   }
 
-  if (num < 1) {
-    return { isValid: false, error: 'Reps must be at least 1' };
+  if (num < EXERCISE_LIMITS.REPS_MIN) {
+    return { isValid: false, error: `Reps must be at least ${EXERCISE_LIMITS.REPS_MIN}` };
   }
 
-  if (num > 1000) {
-    return { isValid: false, error: 'Reps must be 1000 or less' };
+  if (num > EXERCISE_LIMITS.REPS_MAX) {
+    return { isValid: false, error: `Reps must be ${EXERCISE_LIMITS.REPS_MAX} or less` };
   }
 
   return { isValid: true, error: null };
@@ -130,12 +136,12 @@ export const validateWeight = (weight) => {
     return { isValid: false, error: 'Weight must be a number' };
   }
 
-  if (num < 0) {
+  if (num < EXERCISE_LIMITS.WEIGHT_MIN) {
     return { isValid: false, error: 'Weight cannot be negative' };
   }
 
-  if (num > 10000) {
-    return { isValid: false, error: 'Weight must be 10000 or less' };
+  if (num > EXERCISE_LIMITS.WEIGHT_MAX) {
+    return { isValid: false, error: `Weight must be ${EXERCISE_LIMITS.WEIGHT_MAX} or less` };
   }
 
   return { isValid: true, error: null };
@@ -153,12 +159,12 @@ export const validateBodyWeight = (weight) => {
     return { isValid: false, error: 'Weight must be a number' };
   }
 
-  if (num < 20) {
-    return { isValid: false, error: 'Weight must be at least 20' };
+  if (num < BODY_METRICS.WEIGHT_MIN) {
+    return { isValid: false, error: `Weight must be at least ${BODY_METRICS.WEIGHT_MIN}` };
   }
 
-  if (num > 500) {
-    return { isValid: false, error: 'Weight must be 500 or less' };
+  if (num > BODY_METRICS.WEIGHT_MAX) {
+    return { isValid: false, error: `Weight must be ${BODY_METRICS.WEIGHT_MAX} or less` };
   }
 
   return { isValid: true, error: null };
@@ -176,12 +182,12 @@ export const validateBodyFatPercentage = (percentage) => {
     return { isValid: false, error: 'Body fat percentage must be a number' };
   }
 
-  if (num < 1) {
-    return { isValid: false, error: 'Body fat percentage must be at least 1%' };
+  if (num < BODY_METRICS.BODYFAT_MIN) {
+    return { isValid: false, error: `Body fat percentage must be at least ${BODY_METRICS.BODYFAT_MIN}%` };
   }
 
-  if (num > 70) {
-    return { isValid: false, error: 'Body fat percentage must be 70% or less' };
+  if (num > BODY_METRICS.BODYFAT_MAX) {
+    return { isValid: false, error: `Body fat percentage must be ${BODY_METRICS.BODYFAT_MAX}% or less` };
   }
 
   return { isValid: true, error: null };
