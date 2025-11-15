@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './WorkoutModal.css';
 
 const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
@@ -67,6 +68,28 @@ const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
       </div>
     </div>
   );
+};
+
+WorkoutModal.propTypes = {
+  workout: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    exercises: PropTypes.shape({
+      exercises: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          sets: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          reps: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          kg: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          video: PropTypes.string,
+          notes: PropTypes.string,
+        })
+      ),
+    }),
+  }).isRequired,
+  onRegenerate: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default WorkoutModal;

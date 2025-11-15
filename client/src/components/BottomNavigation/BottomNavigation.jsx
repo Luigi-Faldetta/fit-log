@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './BottomNavigation.css';
 
@@ -14,6 +15,13 @@ const NavigationItem = ({ icon, label, isActive, onClick }) => (
     <span className="nav-item__label">{label}</span>
   </button>
 );
+
+NavigationItem.propTypes = {
+  icon: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 export default function LabelBottomNavigation({ value, onChange }) {
   const navigate = useNavigate();
@@ -89,3 +97,8 @@ export default function LabelBottomNavigation({ value, onChange }) {
     </nav>
   );
 }
+
+LabelBottomNavigation.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

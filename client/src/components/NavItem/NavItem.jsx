@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './NavItem.css';
 
 function NavItem({ title, imageSrc, onClick }) {
@@ -12,5 +13,15 @@ function NavItem({ title, imageSrc, onClick }) {
     </div>
   );
 }
+
+NavItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
+
+NavItem.defaultProps = {
+  onClick: null,
+};
 
 export default NavItem;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Button.css';
 
 const Button = ({
@@ -65,6 +66,32 @@ const Button = ({
       )}
     </button>
   );
+};
+
+Button.propTypes = {
+  children: PropTypes.node,
+  variant: PropTypes.oneOf(['primary', 'secondary', 'outline', 'danger', 'ghost']),
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+  icon: PropTypes.node,
+  iconPosition: PropTypes.oneOf(['left', 'right']),
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  type: PropTypes.oneOf(['button', 'submit', 'reset']),
+};
+
+Button.defaultProps = {
+  children: null,
+  variant: 'primary',
+  size: 'md',
+  disabled: false,
+  loading: false,
+  icon: null,
+  iconPosition: 'left',
+  className: '',
+  onClick: null,
+  type: 'button',
 };
 
 export default Button;
