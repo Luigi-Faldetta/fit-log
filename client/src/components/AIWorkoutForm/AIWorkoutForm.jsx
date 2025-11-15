@@ -1,5 +1,6 @@
 // AIWorkoutForm.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import Input from '../ui/Input/Input';
 import Card from '../ui/Card/Card';
 import './AIWorkoutForm.css';
@@ -230,6 +231,19 @@ const AIWorkoutForm = ({
       </Card.Body>
     </Card>
   );
+};
+
+AIWorkoutForm.propTypes = {
+  age: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  experienceLevel: PropTypes.string.isRequired,
+  goal: PropTypes.string.isRequired,
+  duration: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  request: PropTypes.string.isRequired,
+  onAgeChange: PropTypes.func.isRequired,
+  onExperienceChange: PropTypes.func.isRequired,
+  onGoalChange: PropTypes.func.isRequired,
+  onDurationChange: PropTypes.func.isRequired,
+  onRequestChange: PropTypes.func.isRequired,
 };
 
 export default AIWorkoutForm;

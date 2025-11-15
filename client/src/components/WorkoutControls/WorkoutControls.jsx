@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../ui/Button/Button';
 import './WorkoutControls.css';
 
@@ -117,6 +118,19 @@ const WorkoutControls = ({
       </Button>
     </div>
   );
+};
+
+WorkoutControls.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onAddExercise: PropTypes.func.isRequired,
+  onDeleteWorkout: PropTypes.func.isRequired,
+  hasPrevious: PropTypes.bool.isRequired,
+  onPreviousWorkout: PropTypes.func.isRequired,
+  hasNext: PropTypes.bool.isRequired,
+  onNextWorkout: PropTypes.func.isRequired,
 };
 
 export default WorkoutControls;

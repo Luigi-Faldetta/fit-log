@@ -1,5 +1,6 @@
 // WorkoutGeneratorControls.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../ui/Button/Button';
 
 const WorkoutGeneratorControls = ({ onGenerateWorkout }) => {
@@ -15,6 +16,10 @@ const WorkoutGeneratorControls = ({ onGenerateWorkout }) => {
       </Button>
     </div>
   );
+};
+
+WorkoutGeneratorControls.propTypes = {
+  onGenerateWorkout: PropTypes.func.isRequired,
 };
 
 export default WorkoutGeneratorControls;

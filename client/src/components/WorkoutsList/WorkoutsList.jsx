@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
 
 const WorkoutsList = ({ workouts, onWorkoutClick }) => {
@@ -13,6 +14,11 @@ const WorkoutsList = ({ workouts, onWorkoutClick }) => {
       ))}
     </div>
   );
+};
+
+WorkoutsList.propTypes = {
+  workouts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onWorkoutClick: PropTypes.func.isRequired,
 };
 
 export default WorkoutsList;

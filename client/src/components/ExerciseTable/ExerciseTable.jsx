@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import './ExerciseTable.css';
@@ -149,6 +150,25 @@ const ExerciseTable = ({
       </tbody>
     </table>
   );
+};
+
+ExerciseTable.propTypes = {
+  exercises: PropTypes.arrayOf(
+    PropTypes.shape({
+      exercise_id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      sets: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      reps: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      weight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      media_URL: PropTypes.string,
+      description: PropTypes.string,
+    })
+  ).isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  setExercises: PropTypes.func.isRequired,
+  setSelectedExercise: PropTypes.func.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
 };
 
 export default ExerciseTable;
