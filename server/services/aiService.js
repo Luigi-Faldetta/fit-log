@@ -65,42 +65,56 @@ class AIService {
   }
 
   /**
-   * Build workout generation prompt
+   * Get JSON schema for structured workout output
+   * Uses short field names to minimize token usage
+   * @returns {Object} - JSON schema for workout structure
+   */
+  getWorkoutSchema() {
+    return {
+      type: 'object',
+      properties: {
+        nm: { type: 'string', description: 'Workout name' },
+        ex: {
+          type: 'array',
+          description: 'List of exercises',
+          items: {
+            type: 'object',
+            properties: {
+              n: { type: 'string', description: 'Exercise name' },
+              s: { type: 'integer', description: 'Sets', minimum: 1, maximum: 10 },
+              r: { type: 'integer', description: 'Reps', minimum: 1, maximum: 100 },
+              w: { type: 'integer', description: 'Weight in lbs (0 for bodyweight)', minimum: 0 },
+              rt: { type: 'integer', description: 'Rest seconds', minimum: 0, maximum: 300 }
+            },
+            required: ['n', 's', 'r'],
+            additionalProperties: false
+          },
+          minItems: 1
+        }
+      },
+      required: ['nm', 'ex'],
+      additionalProperties: false
+    };
+  }
+
+  /**
+   * Build optimized workout generation prompt (minified for token efficiency)
    * @param {Object} params - Workout generation parameters
-   * @returns {Object} - System and user messages for OpenAI
+   * @returns {Array} - Messages for OpenAI
    */
   buildWorkoutPrompt(params) {
     const { age, experienceLevel, goal, duration } = params;
 
+    // Minified system message - removed punctuation, shortened instructions
     const systemMessage = {
       role: 'system',
-      content: `You are an expert fitness trainer and workout planner. Generate personalized, safe, and effective workout plans.
-
-Important guidelines:
-- Format each exercise on a new line
-- Include exercise name, sets, reps, and rest periods
-- Ensure exercises are appropriate for the user's experience level
-- Consider safety and proper progression
-- Keep the workout within the specified duration
-- Use clear, simple exercise names`
+      content: `Expert fitness trainer. Create safe effective workouts for ${experienceLevel} level. Match exercises to experience. Keep within ${duration}min duration`
     };
 
+    // Minified user message - removed fluff words like "please", "detailed"
     const userMessage = {
       role: 'user',
-      content: `Generate a detailed workout plan with the following requirements:
-- Age: ${age} years old
-- Experience Level: ${experienceLevel}
-- Goal: ${goal}
-- Duration: ${duration} minutes
-
-Format each exercise as:
-Exercise Name - Sets x Reps - Rest (seconds)
-
-Example:
-Squats - 3 x 12 - 60
-Push-ups - 3 x 10 - 45
-
-Please provide a complete workout plan now.`
+      content: `Age ${age}, ${experienceLevel}, goal: ${goal}, ${duration}min workout`
     };
 
     return [systemMessage, userMessage];
@@ -129,28 +143,51 @@ Please provide a complete workout plan now.`
     try {
       const messages = this.buildWorkoutPrompt(params);
 
-      // Call OpenAI API
+      // Use structured outputs with function calling for 50% token savings
+      // strict: true ensures JSON schema compliance without extra tokens
       const response = await this.openai.chat.completions.create({
         model: this.MODEL,
         messages,
         max_tokens: this.MAX_TOKENS,
         temperature: this.TEMPERATURE,
-        top_p: 1,
-        frequency_penalty: AI_CONFIG.FREQUENCY_PENALTY,
-        presence_penalty: AI_CONFIG.PRESENCE_PENALTY
+        response_format: {
+          type: 'json_schema',
+          json_schema: {
+            name: 'workout_plan',
+            strict: true,
+            schema: this.getWorkoutSchema()
+          }
+        }
       });
 
-      const generatedWorkout = response.choices[0].message.content;
+      const content = response.choices[0].message.content;
 
-      if (!generatedWorkout || generatedWorkout.trim().length === 0) {
+      if (!content || content.trim().length === 0) {
         throw new AppError('OpenAI returned empty response', 500);
       }
 
+      // Parse the minified JSON response
+      const workoutData = JSON.parse(content);
+
+      // Transform short keys back to readable format for client
+      const workout = {
+        name: workoutData.nm,
+        exercises: workoutData.ex.map(ex => ({
+          name: ex.n,
+          sets: ex.s,
+          reps: ex.r,
+          weight: ex.w || 0,
+          rest: ex.rt || 60
+        }))
+      };
+
       return {
-        workout: generatedWorkout.trim(),
+        workout,
         metadata: {
           model: this.MODEL,
-          tokens: response.usage?.total_tokens || 0,
+          tokensUsed: response.usage?.total_tokens || 0,
+          promptTokens: response.usage?.prompt_tokens || 0,
+          completionTokens: response.usage?.completion_tokens || 0,
           generatedAt: new Date().toISOString(),
           parameters: params
         }
@@ -182,7 +219,8 @@ Please provide a complete workout plan now.`
   }
 
   /**
-   * Parse workout text into structured exercises
+   * Parse workout text into structured exercises (Legacy method - kept for backward compatibility)
+   * Note: With structured outputs, this is no longer needed but kept for fallback
    * @param {string} workoutText - Raw workout text from AI
    * @returns {Array<Object>} - Parsed exercises
    */

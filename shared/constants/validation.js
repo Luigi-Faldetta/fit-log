@@ -53,7 +53,7 @@ export const RATE_LIMITS = {
 
 // AI Configuration
 export const AI_CONFIG = {
-  MODEL: 'gpt-3.5-turbo',
+  MODEL: 'gpt-4o-mini', // 60% cheaper than gpt-3.5-turbo, better performance
   MAX_TOKENS: 500,
   TEMPERATURE: 0.7,
   FREQUENCY_PENALTY: 0.3,
