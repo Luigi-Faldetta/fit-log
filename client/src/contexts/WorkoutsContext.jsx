@@ -1,6 +1,15 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { workoutsOfflineAPI } from '../services/offlineApiService';
-import { workoutsDB } from '../services/dbService';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { workoutDataService } from '../services/workoutDataService';
+
+/**
+ * Workouts Context
+ *
+ * Follows Single Responsibility Principle:
+ * - Responsible ONLY for managing workout state
+ * - Delegates data fetching to workoutDataService
+ * - Delegates caching to workoutDataService
+ * - No business logic, just state management
+ */
 
 const WorkoutsContext = createContext();
 
@@ -21,40 +30,34 @@ export const WorkoutsProvider = ({ children }) => {
   // Fetch workouts only once when the provider mounts
   useEffect(() => {
     const fetchWorkouts = async () => {
-      // Only fetch if not already initialized
       if (isInitialized) return;
 
       try {
         setLoading(true);
+        setError(null);
 
-        // Try to load from IndexedDB first for instant display
-        const cachedData = await workoutsDB.getAll();
-        if (cachedData && cachedData.length > 0) {
-          console.log('Loading workouts from IndexedDB cache');
-          setWorkouts(cachedData);
+        // Use data service to handle fetching and caching
+        const result = await workoutDataService.getAll();
+
+        // Show cached data immediately if available
+        if (result.cachedData) {
+          console.log('Loading workouts from cache');
+          setWorkouts(result.cachedData);
           setLoading(false);
         }
 
-        // Then fetch from API (will use offline-first strategy)
-        const data = await workoutsOfflineAPI.getAll();
-        setWorkouts(data);
+        // Update with fresh data
+        setWorkouts(result.data);
+
+        // Set error if using stale cache
+        if (result.fromCache && result.error) {
+          setError(result.error);
+        }
+
         setIsInitialized(true);
       } catch (error) {
         console.error('Failed to fetch workouts:', error);
-
-        // Try to use cached data as fallback
-        try {
-          const cachedData = await workoutsDB.getAll();
-          if (cachedData && cachedData.length > 0) {
-            console.log('Using cached workouts due to fetch error');
-            setWorkouts(cachedData);
-            setError('Using cached data. Unable to fetch latest workouts.');
-          } else {
-            setError('Failed to load workouts. Please try again later.');
-          }
-        } catch (dbError) {
-          setError('Failed to load workouts. Please try again later.');
-        }
+        setError(error.message || 'Failed to load workouts. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -63,70 +66,63 @@ export const WorkoutsProvider = ({ children }) => {
     fetchWorkouts();
   }, [isInitialized]);
 
-  // Function to manually refresh workouts if needed
-  const refreshWorkouts = async () => {
+  // Manually refresh workouts
+  const refreshWorkouts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await workoutsOfflineAPI.getAll();
-      setWorkouts(data);
-      return data;
-    } catch (error) {
-      console.error('Failed to refresh workouts:', error);
 
-      // Fallback to cached data
-      try {
-        const cachedData = await workoutsDB.getAll();
-        if (cachedData && cachedData.length > 0) {
-          setWorkouts(cachedData);
-          setError('Using cached data. Unable to fetch latest workouts.');
-          return cachedData;
-        }
-      } catch (dbError) {
-        console.error('Failed to read from cache:', dbError);
+      const result = await workoutDataService.getAll();
+      setWorkouts(result.data);
+
+      if (result.fromCache && result.error) {
+        setError(result.error);
       }
 
-      setError('Failed to refresh workouts. Please try again later.');
+      return result.data;
+    } catch (error) {
+      console.error('Failed to refresh workouts:', error);
+      setError(error.message || 'Failed to refresh workouts. Please try again later.');
       throw error;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  // Function to add a workout to the cached list and IndexedDB
-  const addWorkoutToCache = async (workout) => {
+  // Add workout to state and cache (optimistic update)
+  const addWorkoutToCache = useCallback(async (workout) => {
     setWorkouts(prev => [...prev, workout]);
-    // Also persist to IndexedDB
-    try {
-      await workoutsDB.put(workout);
-    } catch (error) {
-      console.error('Failed to save workout to IndexedDB:', error);
-    }
-  };
 
-  // Function to update a workout in the cached list and IndexedDB
-  const updateWorkoutInCache = async (workoutId, updatedWorkout) => {
+    try {
+      await workoutDataService.updateCache(workout);
+    } catch (error) {
+      console.error('Failed to cache workout:', error);
+    }
+  }, []);
+
+  // Update workout in state and cache (optimistic update)
+  const updateWorkoutInCache = useCallback(async (workoutId, updatedWorkout) => {
     setWorkouts(prev =>
       prev.map(w => w.workout_id === workoutId ? updatedWorkout : w)
     );
-    // Also persist to IndexedDB
-    try {
-      await workoutsDB.put(updatedWorkout);
-    } catch (error) {
-      console.error('Failed to update workout in IndexedDB:', error);
-    }
-  };
 
-  // Function to remove a workout from the cached list and IndexedDB
-  const removeWorkoutFromCache = async (workoutId) => {
-    setWorkouts(prev => prev.filter(w => w.workout_id !== workoutId));
-    // Also remove from IndexedDB
     try {
-      await workoutsDB.delete(workoutId);
+      await workoutDataService.updateCache(updatedWorkout);
     } catch (error) {
-      console.error('Failed to remove workout from IndexedDB:', error);
+      console.error('Failed to cache updated workout:', error);
     }
-  };
+  }, []);
+
+  // Remove workout from state and cache (optimistic update)
+  const removeWorkoutFromCache = useCallback(async (workoutId) => {
+    setWorkouts(prev => prev.filter(w => w.workout_id !== workoutId));
+
+    try {
+      await workoutDataService.deleteFromCache(workoutId);
+    } catch (error) {
+      console.error('Failed to remove workout from cache:', error);
+    }
+  }, []);
 
   const value = {
     workouts,
