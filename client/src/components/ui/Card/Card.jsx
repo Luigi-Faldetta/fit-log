@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Card.css';
 
 const Card = ({
@@ -92,6 +93,79 @@ const CardDescription = ({ children, className = '', ...props }) => {
       {children}
     </p>
   );
+};
+
+// PropTypes
+Card.propTypes = {
+  children: PropTypes.node,
+  variant: PropTypes.oneOf(['default', 'outlined', 'elevated', 'glass']),
+  padding: PropTypes.oneOf(['none', 'sm', 'md', 'lg']),
+  hover: PropTypes.bool,
+  gradient: PropTypes.bool,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+Card.defaultProps = {
+  children: null,
+  variant: 'default',
+  padding: 'md',
+  hover: true,
+  gradient: false,
+  className: '',
+  onClick: null,
+};
+
+CardHeader.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+CardHeader.defaultProps = {
+  children: null,
+  className: '',
+};
+
+CardBody.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+CardBody.defaultProps = {
+  children: null,
+  className: '',
+};
+
+CardFooter.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+CardFooter.defaultProps = {
+  children: null,
+  className: '',
+};
+
+CardTitle.propTypes = {
+  children: PropTypes.node,
+  level: PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
+  className: PropTypes.string,
+};
+
+CardTitle.defaultProps = {
+  children: null,
+  level: 3,
+  className: '',
+};
+
+CardDescription.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+CardDescription.defaultProps = {
+  children: null,
+  className: '',
 };
 
 // Export all components

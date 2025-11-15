@@ -1,4 +1,5 @@
 import React, { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
 import './Input.css';
 
 const Input = forwardRef(({
@@ -112,6 +113,44 @@ const Input = forwardRef(({
 });
 
 Input.displayName = 'Input';
+
+Input.propTypes = {
+  type: PropTypes.oneOf(['text', 'email', 'password', 'number', 'tel', 'url', 'search', 'date']),
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  error: PropTypes.string,
+  helperText: PropTypes.string,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  icon: PropTypes.node,
+  iconPosition: PropTypes.oneOf(['left', 'right']),
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  variant: PropTypes.oneOf(['default', 'filled', 'outlined']),
+  className: PropTypes.string,
+};
+
+Input.defaultProps = {
+  type: 'text',
+  label: null,
+  placeholder: '',
+  value: '',
+  onChange: null,
+  onFocus: null,
+  onBlur: null,
+  error: null,
+  helperText: null,
+  disabled: false,
+  required: false,
+  icon: null,
+  iconPosition: 'left',
+  size: 'md',
+  variant: 'default',
+  className: '',
+};
 
 export default Input;
 

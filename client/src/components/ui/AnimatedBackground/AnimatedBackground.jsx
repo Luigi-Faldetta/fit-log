@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import './AnimatedBackground.css';
 
 const AnimatedBackground = ({ 
@@ -119,6 +120,20 @@ const AnimatedBackground = ({
       )}
     </div>
   );
+};
+
+AnimatedBackground.propTypes = {
+  variant: PropTypes.oneOf(['grid', 'dots', 'particles', 'waves']),
+  intensity: PropTypes.oneOf(['low', 'medium', 'high']),
+  animated: PropTypes.bool,
+  className: PropTypes.string,
+};
+
+AnimatedBackground.defaultProps = {
+  variant: 'grid',
+  intensity: 'medium',
+  animated: true,
+  className: '',
 };
 
 export default AnimatedBackground;
