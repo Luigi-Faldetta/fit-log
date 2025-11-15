@@ -10,6 +10,9 @@ const Card = ({
   gradient = false,
   className = '',
   onClick,
+  role,
+  tabIndex,
+  'aria-label': ariaLabel,
   ...props
 }) => {
   const baseClass = 'card';
@@ -18,7 +21,7 @@ const Card = ({
   const hoverClass = hover ? 'card--hover' : '';
   const gradientClass = gradient ? 'card--gradient' : '';
   const clickableClass = onClick ? 'card--clickable' : '';
-  
+
   const classes = [
     baseClass,
     variantClass,
@@ -35,13 +38,29 @@ const Card = ({
     }
   };
 
+  const handleKeyDown = (e) => {
+    // Enable keyboard interaction for clickable cards
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick(e);
+    }
+  };
+
+  // Determine appropriate role and tabIndex
+  const cardRole = role || (onClick ? 'button' : undefined);
+  const cardTabIndex = tabIndex !== undefined ? tabIndex : (onClick ? 0 : undefined);
+
   return (
     <div
       className={classes}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role={cardRole}
+      tabIndex={cardTabIndex}
+      aria-label={ariaLabel}
       {...props}
     >
-      {gradient && <div className="card__gradient-overlay" />}
+      {gradient && <div className="card__gradient-overlay" aria-hidden="true" />}
       <div className="card__content">
         {children}
       </div>
@@ -104,6 +123,9 @@ Card.propTypes = {
   gradient: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  role: PropTypes.string,
+  tabIndex: PropTypes.number,
+  'aria-label': PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -114,6 +136,9 @@ Card.defaultProps = {
   gradient: false,
   className: '',
   onClick: null,
+  role: null,
+  tabIndex: undefined,
+  'aria-label': null,
 };
 
 CardHeader.propTypes = {

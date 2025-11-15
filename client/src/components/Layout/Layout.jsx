@@ -5,12 +5,15 @@ import './Layout.css';
 function Layout() {
   return (
     <div className="layout">
-      <AnimatedBackground 
+      <a href="#main-content" className="skip-to-main">
+        Skip to main content
+      </a>
+      <AnimatedBackground
         variant="grid"
         intensity="medium"
         animated={true}
       />
-      <main className="layout-content">
+      <main id="main-content" className="layout-content">
         <Outlet />
       </main>
     </div>

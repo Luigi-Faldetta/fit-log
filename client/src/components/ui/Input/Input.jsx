@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useId } from 'react';
 import PropTypes from 'prop-types';
 import './Input.css';
 
@@ -19,10 +19,17 @@ const Input = forwardRef(({
   size = 'md',
   variant = 'default',
   className = '',
+  id: providedId,
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
   ...props
 }, ref) => {
   const [focused, setFocused] = useState(false);
   const [hasValue, setHasValue] = useState(Boolean(value));
+  const generatedId = useId();
+  const inputId = providedId || generatedId;
+  const errorId = `${inputId}-error`;
+  const helperId = `${inputId}-helper`;
 
   const handleFocus = (e) => {
     setFocused(true);
@@ -60,24 +67,34 @@ const Input = forwardRef(({
     className
   ].filter(Boolean).join(' ');
 
+  // Build aria-describedby string
+  const getAriaDescribedby = () => {
+    const parts = [];
+    if (error) parts.push(errorId);
+    else if (helperText) parts.push(helperId);
+    if (ariaDescribedby) parts.push(ariaDescribedby);
+    return parts.length > 0 ? parts.join(' ') : undefined;
+  };
+
   return (
     <div className={containerClasses}>
       {label && (
-        <label className="input-field__label">
+        <label className="input-field__label" htmlFor={inputId}>
           {label}
-          {required && <span className="input-field__required">*</span>}
+          {required && <span className="input-field__required" aria-hidden="true">*</span>}
         </label>
       )}
-      
+
       <div className="input-field__container">
         {icon && iconPosition === 'left' && (
-          <div className="input-field__icon input-field__icon--left">
+          <div className="input-field__icon input-field__icon--left" aria-hidden="true">
             {icon}
           </div>
         )}
-        
+
         <input
           ref={ref}
+          id={inputId}
           type={type}
           value={value}
           onChange={handleChange}
@@ -86,25 +103,33 @@ const Input = forwardRef(({
           placeholder={placeholder}
           disabled={disabled}
           required={required}
+          aria-label={!label ? ariaLabel : undefined}
+          aria-invalid={error ? 'true' : 'false'}
+          aria-describedby={getAriaDescribedby()}
+          aria-required={required}
           className="input-field__input"
           {...props}
         />
-        
+
         {icon && iconPosition === 'right' && (
-          <div className="input-field__icon input-field__icon--right">
+          <div className="input-field__icon input-field__icon--right" aria-hidden="true">
             {icon}
           </div>
         )}
-        
+
         <div className="input-field__border" />
       </div>
-      
+
       {(error || helperText) && (
         <div className="input-field__helper">
           {error ? (
-            <span className="input-field__error-text">{error}</span>
+            <span id={errorId} className="input-field__error-text" role="alert">
+              {error}
+            </span>
           ) : (
-            <span className="input-field__helper-text">{helperText}</span>
+            <span id={helperId} className="input-field__helper-text">
+              {helperText}
+            </span>
           )}
         </div>
       )}
@@ -131,6 +156,9 @@ Input.propTypes = {
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
   variant: PropTypes.oneOf(['default', 'filled', 'outlined']),
   className: PropTypes.string,
+  id: PropTypes.string,
+  'aria-label': PropTypes.string,
+  'aria-describedby': PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -150,6 +178,9 @@ Input.defaultProps = {
   size: 'md',
   variant: 'default',
   className: '',
+  id: null,
+  'aria-label': null,
+  'aria-describedby': null,
 };
 
 export default Input;

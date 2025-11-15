@@ -43,8 +43,13 @@ const ExerciseModal = ({
       contentLabel="Edit Exercise"
       className="exercise-modal"
       overlayClassName="exercise-modal-overlay"
+      aria={{
+        labelledby: 'exercise-modal-title',
+        modal: true
+      }}
     >
-      <form onSubmit={handleSubmit} className="exercise-form">
+      <form onSubmit={handleSubmit} className="exercise-form" aria-label="Edit exercise form">
+        <h2 id="exercise-modal-title" className="visually-hidden">Edit Exercise</h2>
         <div className="form-group">
           <label htmlFor="name">Exercise Name:</label>
           <input
@@ -112,7 +117,7 @@ const ExerciseModal = ({
           />
         </div>
         <div className="modal-buttons">
-          <button type="submit" className="save-button">
+          <button type="submit" className="save-button" aria-label="Save exercise changes">
             Save
           </button>
           {onDelete && (
@@ -120,6 +125,7 @@ const ExerciseModal = ({
               type="button"
               className="delete-button"
               onClick={handleDelete}
+              aria-label="Delete this exercise"
             >
               Delete
             </button>

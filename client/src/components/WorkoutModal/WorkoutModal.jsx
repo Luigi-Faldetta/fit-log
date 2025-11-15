@@ -15,19 +15,37 @@ const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
     }, 2000); // Disappearing message after 2 seconds
   };
 
+  // Handle Escape key to close modal
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
+    <div
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="workout-modal-title"
+      onKeyDown={handleKeyDown}
+    >
       <div className="modal-content">
-        <button className="close-button" onClick={onClose}>
+        <button
+          className="close-button"
+          onClick={onClose}
+          aria-label="Close modal"
+        >
           X
         </button>
+        <h2 id="workout-modal-title" className="visually-hidden">Workout Details</h2>
         <p>
           <strong>Workout Name:</strong> {workout.name}
         </p>
         <p>
           <strong>Description:</strong> {workout.description}
         </p>
-        <table className="workout-table">
+        <table className="workout-table" role="table" aria-label="Workout exercises">
           <thead>
             <tr>
               <th>Exercise</th>
@@ -63,7 +81,9 @@ const WorkoutModal = ({ workout, onRegenerate, onSave, onClose }) => {
         </div>
 
         {showConfirmation && (
-          <p className="confirmation-message">Workout saved!</p>
+          <p className="confirmation-message" role="status" aria-live="polite">
+            Workout saved!
+          </p>
         )}
       </div>
     </div>

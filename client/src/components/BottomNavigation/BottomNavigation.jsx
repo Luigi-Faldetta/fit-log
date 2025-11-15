@@ -4,12 +4,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './BottomNavigation.css';
 
 const NavigationItem = ({ icon, label, isActive, onClick }) => (
-  <button 
+  <button
     className={`nav-item ${isActive ? 'nav-item--active' : ''}`}
     onClick={onClick}
     aria-label={label}
+    aria-current={isActive ? 'page' : undefined}
   >
-    <div className="nav-item__icon">
+    <div className="nav-item__icon" aria-hidden="true">
       {icon}
     </div>
     <span className="nav-item__label">{label}</span>
@@ -84,7 +85,7 @@ export default function LabelBottomNavigation({ value, onChange }) {
   ];
 
   return (
-    <nav className="bottom-navigation">
+    <nav className="bottom-navigation" aria-label="Main navigation">
       {navigationItems.map((item) => (
         <NavigationItem
           key={item.value}

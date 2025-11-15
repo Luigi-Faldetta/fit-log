@@ -13,6 +13,7 @@ const Button = ({
   className = '',
   onClick,
   type = 'button',
+  'aria-label': ariaLabel,
   ...props
 }) => {
   const baseClass = 'btn';
@@ -20,7 +21,7 @@ const Button = ({
   const sizeClass = `btn--${size}`;
   const disabledClass = disabled ? 'btn--disabled' : '';
   const loadingClass = loading ? 'btn--loading' : '';
-  
+
   const classes = [
     baseClass,
     variantClass,
@@ -35,12 +36,22 @@ const Button = ({
     onClick?.(e);
   };
 
+  // Generate accessible label
+  const getAriaLabel = () => {
+    if (ariaLabel) return ariaLabel;
+    if (loading) return `Loading: ${children}`;
+    return undefined;
+  };
+
   return (
     <button
       type={type}
       className={classes}
       onClick={handleClick}
       disabled={disabled || loading}
+      aria-label={getAriaLabel()}
+      aria-busy={loading}
+      aria-disabled={disabled || loading}
       {...props}
     >
       {loading && (
