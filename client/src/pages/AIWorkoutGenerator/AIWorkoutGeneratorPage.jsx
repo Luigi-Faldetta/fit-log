@@ -210,7 +210,6 @@ const AIWorkoutGenerator = () => {
       );
 
       await Promise.all(exercisePromises);
-      console.log('AI-generated workout and exercises saved successfully');
     } catch (error) {
       console.error('Error saving AI-generated workout and exercises:', error);
     }

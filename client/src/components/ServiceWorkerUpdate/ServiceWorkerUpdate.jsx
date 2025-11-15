@@ -29,7 +29,6 @@ const ServiceWorkerUpdate = () => {
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         // Service worker has been updated and is now controlling the page
         if (!isUpdating) {
-          console.log('New service worker has taken control');
           window.location.reload();
         }
       });

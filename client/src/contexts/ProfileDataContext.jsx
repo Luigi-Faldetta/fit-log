@@ -46,8 +46,6 @@ export const ProfileDataProvider = ({ children }) => {
 
         // Show cached data immediately if available
         if (weightResult.cachedData || bodyfatResult.cachedData) {
-          console.log('Loading profile data from cache');
-
           if (weightResult.cachedData) {
             setWeightData(transformWeightData(weightResult.cachedData));
           }

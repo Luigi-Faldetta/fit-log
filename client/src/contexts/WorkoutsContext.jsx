@@ -41,7 +41,6 @@ export const WorkoutsProvider = ({ children }) => {
 
         // Show cached data immediately if available
         if (result.cachedData) {
-          console.log('Loading workouts from cache');
           setWorkouts(result.cachedData);
           setLoading(false);
         }
