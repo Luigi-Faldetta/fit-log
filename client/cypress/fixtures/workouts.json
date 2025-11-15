@@ -1,0 +1,23 @@
+[
+  {
+    "workout_id": 1,
+    "name": "Morning Cardio",
+    "description": "30 minute cardio session",
+    "createdAt": "2024-01-15T08:00:00.000Z",
+    "updatedAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "workout_id": 2,
+    "name": "Evening Strength",
+    "description": "Upper body workout",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  },
+  {
+    "workout_id": 3,
+    "name": "Leg Day",
+    "description": "Lower body focus",
+    "createdAt": "2024-01-16T10:00:00.000Z",
+    "updatedAt": "2024-01-16T10:00:00.000Z"
+  }
+]

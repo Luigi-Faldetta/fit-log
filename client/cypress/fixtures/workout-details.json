@@ -1,0 +1,29 @@
+{
+  "workout_id": 1,
+  "name": "Morning Cardio",
+  "description": "30 minute cardio session",
+  "createdAt": "2024-01-15T08:00:00.000Z",
+  "updatedAt": "2024-01-15T08:00:00.000Z",
+  "exercises": [
+    {
+      "exercise_id": 1,
+      "workout_id": 1,
+      "name": "Running",
+      "sets": 1,
+      "reps": 1,
+      "weight": 0,
+      "createdAt": "2024-01-15T08:00:00.000Z",
+      "updatedAt": "2024-01-15T08:00:00.000Z"
+    },
+    {
+      "exercise_id": 2,
+      "workout_id": 1,
+      "name": "Jumping Jacks",
+      "sets": 3,
+      "reps": 20,
+      "weight": 0,
+      "createdAt": "2024-01-15T08:05:00.000Z",
+      "updatedAt": "2024-01-15T08:05:00.000Z"
+    }
+  ]
+}
