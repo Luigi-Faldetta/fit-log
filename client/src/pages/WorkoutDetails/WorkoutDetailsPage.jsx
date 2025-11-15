@@ -11,6 +11,7 @@ import {
   updateExercises,
   deleteWorkout,
 } from '../../services/apiService';
+import { getUserFriendlyMessage } from '../../utils/errorHandling';
 import WorkoutForm from '../../components/WorkoutForm/WorkoutForm';
 import ExerciseTable from '../../components/ExerciseTable/ExerciseTable';
 import WorkoutControls from '../../components/WorkoutControls/WorkoutControls';
@@ -41,6 +42,7 @@ const WorkoutDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -49,6 +51,7 @@ const WorkoutDetails = () => {
         setIsLoading(false);
       } else {
         try {
+          setError(null);
           // No need to fetch workouts - use from context
           const workoutData = await getWorkout(workoutId);
           setWorkout({
@@ -64,7 +67,8 @@ const WorkoutDetails = () => {
           setRealWorkoutId(parseInt(workoutId, 10));
           setIsLoading(false);
         } catch (error) {
-          console.error('Failed to fetch workout or exercises:', error);
+          const errorMessage = getUserFriendlyMessage(error, 'loading workout');
+          setError(errorMessage);
           setIsLoading(false);
         }
       }
@@ -179,7 +183,20 @@ const WorkoutDetails = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="loading-state">Loading workout...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="error-state">
+        <div className="error-icon">⚠️</div>
+        <h2>Unable to Load Workout</h2>
+        <p>{error}</p>
+        <button onClick={() => navigate('/workouts')} className="btn btn--primary">
+          Back to Workouts
+        </button>
+      </div>
+    );
   }
 
   return (

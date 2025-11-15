@@ -37,22 +37,63 @@
   line-height: var(--leading-relaxed);
 }
 
+/* Loading and Error States */
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.loading-state {
+  color: var(--color-text-secondary);
+  font-size: var(--text-lg);
+}
+
+.error-state {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.error-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-4);
+}
+
+.error-state h2 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: white;
+  margin-bottom: var(--space-3);
+}
+
+.error-state p {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .workout-container {
     margin-top: var(--space-8);
     padding: var(--space-3);
   }
-  
+
   .workout-header {
     margin-bottom: var(--space-6);
     padding-bottom: var(--space-4);
   }
-  
+
   .workout-title {
     font-size: var(--text-2xl);
   }
-  
+
   .workout-description {
     font-size: var(--text-base);
   }

@@ -1,81 +1,70 @@
 // src/services/apiService.js
+import { fetchWithErrorHandling, logError } from '../utils/errorHandling';
 
 const API_BASE_URL = (
   import.meta.env.VITE_API_BASE_URL || 'http://localhost'
 ).replace(/\/$/, '');
 
-// Health check function
+/**
+ * Health check endpoint to verify API availability.
+ *
+ * @returns {Promise<Object>} Health check response
+ * @throws {ApiError|NetworkError} When health check fails
+ */
 export const checkHealth = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/health`);
-    if (!response.ok) {
-      throw new Error(`Health check failed: ${response.status}`);
-    }
-    return await response.json();
+    return await fetchWithErrorHandling(`${API_BASE_URL}/health`);
   } catch (error) {
-    console.error('Health check error:', error);
+    logError(error, 'Health check');
     throw error;
   }
 };
 
+/**
+ * Fetches all workouts for the current user.
+ *
+ * @returns {Promise<Array>} Array of workout objects
+ * @throws {ApiError|NetworkError} When fetch fails
+ */
 export const getWorkouts = async () => {
   try {
-    console.log('=== CLIENT: Fetching workouts ===');
-    console.log('API_BASE_URL:', API_BASE_URL);
-    console.log('Full URL:', `${API_BASE_URL}/workouts`);
-    
-    // First test health
-    try {
-      const health = await checkHealth();
-      console.log('✓ Health check passed:', health);
-    } catch (healthError) {
-      console.warn('❌ Health check failed:', healthError);
-    }
-    
-    const response = await fetch(`${API_BASE_URL}/workouts`);
-    console.log('Response status:', response.status);
-    console.log('Response headers:', Object.fromEntries(response.headers));
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Error response body:', errorText);
-      throw new Error(`Failed to fetch workouts: ${response.status} ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    console.log('✓ Workouts data received:', data);
-    return data;
+    return await fetchWithErrorHandling(`${API_BASE_URL}/workouts`);
   } catch (error) {
-    console.error('❌ CLIENT ERROR fetching workouts:', error);
+    logError(error, 'Fetching workouts');
     throw error;
   }
 };
 
+/**
+ * Fetches a single workout by ID.
+ *
+ * @param {number} workoutId - The workout ID
+ * @returns {Promise<Object>} Workout object
+ * @throws {ApiError|NetworkError} When fetch fails
+ */
 export const getWorkout = async (workoutId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/workouts/${workoutId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch workout');
-    }
-    const data = await response.json();
-    console.log(data);
-    return data;
+    return await fetchWithErrorHandling(`${API_BASE_URL}/workouts/${workoutId}`);
   } catch (error) {
-    console.error('Error fetching workout:', error);
+    logError(error, `Fetching workout ${workoutId}`);
     throw error;
   }
 };
 
+/**
+ * Deletes a workout by ID.
+ *
+ * @param {number} workoutId - The workout ID to delete
+ * @returns {Promise<void>}
+ * @throws {ApiError|NetworkError} When deletion fails
+ */
 export const deleteWorkout = async (workoutId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/workouts/${workoutId}`, {
+    return await fetchWithErrorHandling(`${API_BASE_URL}/workouts/${workoutId}`, {
       method: 'DELETE',
     });
-    if (!response.ok) {
-      throw new Error('Failed to delete workout');
-    }
   } catch (error) {
-    console.error('Error deleting workout:', error);
+    logError(error, `Deleting workout ${workoutId}`);
     throw error;
   }
 };
@@ -151,45 +140,47 @@ export const deleteExercise = async (exerciseId) => {
   }
 };
 
+/**
+ * Creates a new workout.
+ *
+ * @param {Object} workout - The workout object to create
+ * @returns {Promise<Object>} Created workout object
+ * @throws {ApiError|NetworkError|ValidationError} When creation fails
+ */
 export const postWorkout = async (workout) => {
   try {
-    console.log(workout);
-    const response = await fetch(`${API_BASE_URL}/workouts`, {
+    return await fetchWithErrorHandling(`${API_BASE_URL}/workouts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(workout),
     });
-    if (!response.ok) {
-      throw new Error('Failed to create workout');
-    }
-    const data = await response.json();
-    return data;
   } catch (error) {
-    console.error('Error creating workout:', error);
+    logError(error, 'Creating workout');
     throw error;
   }
 };
 
-// src/services/apiService.js
-
+/**
+ * Updates an existing workout.
+ *
+ * @param {number} workoutId - The workout ID to update
+ * @param {Object} workout - The updated workout data
+ * @returns {Promise<Object>} Updated workout object
+ * @throws {ApiError|NetworkError|ValidationError} When update fails
+ */
 export const updateWorkout = async (workoutId, workout) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/workouts/${workoutId}`, {
+    return await fetchWithErrorHandling(`${API_BASE_URL}/workouts/${workoutId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(workout),
     });
-    if (!response.ok) {
-      throw new Error('Failed to update workout');
-    }
-    const data = await response.json();
-    return data;
   } catch (error) {
-    console.error('Error updating workout:', error);
+    logError(error, `Updating workout ${workoutId}`);
     throw error;
   }
 };
