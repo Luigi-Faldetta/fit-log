@@ -7,6 +7,12 @@
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Security Headers - Content Security Policy -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <!-- PWA Meta Tags -->
     <meta name="description" content="AI-powered workout and fitness tracker app for logging exercises, tracking progress, and building custom workout plans" />
     <meta name="theme-color" content="#007bff" />
