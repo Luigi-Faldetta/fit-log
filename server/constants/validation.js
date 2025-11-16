@@ -53,7 +53,7 @@ const RATE_LIMITS = {
 
 // AI Configuration
 const AI_CONFIG = {
-  MODEL: 'gpt-3.5-turbo',
+  MODEL: 'gpt-4o-mini-2024-07-18', // Supports structured outputs with json_schema
   MAX_TOKENS: 500,
   TEMPERATURE: 0.7,
   FREQUENCY_PENALTY: 0.3,

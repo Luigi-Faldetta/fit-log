@@ -67,6 +67,7 @@ class AIService {
   /**
    * Get JSON schema for structured workout output
    * Uses short field names to minimize token usage
+   * With strict mode, ALL properties must be required
    * @returns {Object} - JSON schema for workout structure
    */
   getWorkoutSchema() {
@@ -86,7 +87,7 @@ class AIService {
               w: { type: 'integer', description: 'Weight in lbs (0 for bodyweight)', minimum: 0 },
               rt: { type: 'integer', description: 'Rest seconds', minimum: 0, maximum: 300 }
             },
-            required: ['n', 's', 'r'],
+            required: ['n', 's', 'r', 'w', 'rt'],
             additionalProperties: false
           },
           minItems: 1
@@ -106,9 +107,10 @@ class AIService {
     const { age, experienceLevel, goal, duration } = params;
 
     // Minified system message - removed punctuation, shortened instructions
+    // Includes explicit JSON format instructions for json_object mode
     const systemMessage = {
       role: 'system',
-      content: `Expert fitness trainer. Create safe effective workouts for ${experienceLevel} level. Match exercises to experience. Keep within ${duration}min duration`
+      content: `Expert fitness trainer. Create safe effective workouts for ${experienceLevel} level. Match exercises to experience. Keep within ${duration}min duration. Response must be valid JSON with format: {"nm":"workout name","ex":[{"n":"exercise","s":sets,"r":reps,"w":weight,"rt":rest}]}`
     };
 
     // Minified user message - removed fluff words like "please", "detailed"
