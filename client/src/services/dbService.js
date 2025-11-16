@@ -85,7 +85,12 @@ export const workoutsDB = {
 
   async put(workout) {
     const db = await initDB();
-    return db.put(STORES.WORKOUTS, workout);
+    // Ensure workout has an id field (map workout_id to id if needed)
+    const workoutWithId = {
+      ...workout,
+      id: workout.id || workout.workout_id
+    };
+    return db.put(STORES.WORKOUTS, workoutWithId);
   },
 
   async delete(id) {
@@ -102,7 +107,11 @@ export const workoutsDB = {
     const db = await initDB();
     const tx = db.transaction(STORES.WORKOUTS, 'readwrite');
     await tx.store.clear();
-    await Promise.all(workouts.map((workout) => tx.store.put(workout)));
+    // Map workout_id to id for IndexedDB
+    await Promise.all(workouts.map((workout) => tx.store.put({
+      ...workout,
+      id: workout.workout_id || workout.id
+    })));
     await tx.done;
   },
 };
@@ -131,7 +140,12 @@ export const exercisesDB = {
 
   async put(exercise) {
     const db = await initDB();
-    return db.put(STORES.EXERCISES, exercise);
+    // Ensure exercise has an id field (map exercise_id to id if needed)
+    const exerciseWithId = {
+      ...exercise,
+      id: exercise.id || exercise.exercise_id
+    };
+    return db.put(STORES.EXERCISES, exerciseWithId);
   },
 
   async delete(id) {
@@ -184,7 +198,12 @@ export const weightDB = {
 
   async put(weight) {
     const db = await initDB();
-    return db.put(STORES.WEIGHT, weight);
+    // Ensure weight has an id field (map weight_id to id if needed)
+    const weightWithId = {
+      ...weight,
+      id: weight.id || weight.weight_id
+    };
+    return db.put(STORES.WEIGHT, weightWithId);
   },
 
   async delete(id) {
@@ -201,7 +220,11 @@ export const weightDB = {
     const db = await initDB();
     const tx = db.transaction(STORES.WEIGHT, 'readwrite');
     await tx.store.clear();
-    await Promise.all(weights.map((weight) => tx.store.put(weight)));
+    // Map weight_id to id for IndexedDB
+    await Promise.all(weights.map((weight) => tx.store.put({
+      ...weight,
+      id: weight.weight_id || weight.id
+    })));
     await tx.done;
   },
 };
@@ -225,7 +248,12 @@ export const bodyfatDB = {
 
   async put(bodyfat) {
     const db = await initDB();
-    return db.put(STORES.BODYFAT, bodyfat);
+    // Ensure bodyfat has an id field (map bodyfat_id to id if needed)
+    const bodyfatWithId = {
+      ...bodyfat,
+      id: bodyfat.id || bodyfat.bodyfat_id
+    };
+    return db.put(STORES.BODYFAT, bodyfatWithId);
   },
 
   async delete(id) {
@@ -242,7 +270,11 @@ export const bodyfatDB = {
     const db = await initDB();
     const tx = db.transaction(STORES.BODYFAT, 'readwrite');
     await tx.store.clear();
-    await Promise.all(bodyfats.map((bodyfat) => tx.store.put(bodyfat)));
+    // Map bodyfat_id to id for IndexedDB
+    await Promise.all(bodyfats.map((bodyfat) => tx.store.put({
+      ...bodyfat,
+      id: bodyfat.bodyfat_id || bodyfat.id
+    })));
     await tx.done;
   },
 };
