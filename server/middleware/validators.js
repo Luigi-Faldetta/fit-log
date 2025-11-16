@@ -38,7 +38,7 @@ const workoutValidators = {
   ],
 
   update: [
-    param('id').isInt().withMessage('Workout ID must be a valid integer'),
+    param('workoutId').isInt().withMessage('Workout ID must be a valid integer'),
     body('name')
       .optional()
       .trim()
@@ -55,12 +55,12 @@ const workoutValidators = {
   ],
 
   delete: [
-    param('id').isInt().withMessage('Workout ID must be a valid integer'),
+    param('workoutId').isInt().withMessage('Workout ID must be a valid integer'),
     validate
   ],
 
   get: [
-    param('id').isInt().withMessage('Workout ID must be a valid integer'),
+    param('workoutId').isInt().withMessage('Workout ID must be a valid integer'),
     validate
   ]
 };
@@ -114,7 +114,7 @@ const exerciseValidators = {
   ],
 
   delete: [
-    param('id').isInt().withMessage('Exercise ID must be a valid integer'),
+    param('exerciseId').isInt().withMessage('Exercise ID must be a valid integer'),
     validate
   ]
 };
@@ -134,7 +134,7 @@ const weightValidators = {
   ],
 
   delete: [
-    param('id').isInt().withMessage('Weight entry ID must be a valid integer'),
+    param('weightId').isInt().withMessage('Weight entry ID must be a valid integer'),
     validate
   ]
 };
@@ -154,7 +154,7 @@ const bodyfatValidators = {
   ],
 
   delete: [
-    param('id').isInt().withMessage('Body fat entry ID must be a valid integer'),
+    param('bodyFatId').isInt().withMessage('Body fat entry ID must be a valid integer'),
     validate
   ]
 };
