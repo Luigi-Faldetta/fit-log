@@ -35,6 +35,8 @@ const corsOptions = {
     // Different allowed origins based on environment
     const allowedOrigins = process.env.NODE_ENV === 'production'
       ? [
+          'https://www.fitlog.cloud',
+          'https://fitlog.cloud',
           'https://fit-log-production.up.railway.app',
           process.env.FRONTEND_URL
         ].filter(Boolean)
