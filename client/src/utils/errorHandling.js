@@ -5,6 +5,8 @@
  * and proper error logging throughout the application.
  */
 
+import { authFetch } from '../services/authFetch';
+
 /**
  * Custom error class for API-related errors.
  */
@@ -162,7 +164,7 @@ export const handleApiResponse = async (response, endpoint) => {
  */
 export const fetchWithErrorHandling = async (endpoint, options = {}) => {
   try {
-    const response = await fetch(endpoint, options);
+    const response = await authFetch(endpoint, options);
     await handleApiResponse(response, endpoint);
 
     // Parse JSON response
