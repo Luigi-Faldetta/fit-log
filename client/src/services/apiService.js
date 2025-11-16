@@ -1,5 +1,6 @@
 // src/services/apiService.js
 import { fetchWithErrorHandling, logError } from '../utils/errorHandling';
+import { authFetch } from './authFetch';
 
 const API_BASE_URL = (
   import.meta.env.VITE_API_BASE_URL || 'http://localhost'
@@ -71,7 +72,7 @@ export const deleteWorkout = async (workoutId) => {
 
 export const getExercises = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/exercises`);
+    const response = await authFetch(`${API_BASE_URL}/exercises`);
     if (!response.ok) {
       throw new Error('Failed to fetch exercises');
     }
@@ -87,12 +88,24 @@ export const getExercises = async () => {
 export const updateExercises = async (exercises) => {
   console.log(exercises);
   try {
-    const response = await fetch(`${API_BASE_URL}/exercises`, {
+    // Transform exercises to match backend schema (id -> exercise_id)
+    const exercisesPayload = {
+      exercises: exercises.map(exercise => ({
+        exercise_id: exercise.exercise_id || exercise.id,
+        name: exercise.name,
+        sets: exercise.sets,
+        reps: exercise.reps,
+        weight: exercise.weight,
+        rest: exercise.rest
+      }))
+    };
+
+    const response = await authFetch(`${API_BASE_URL}/exercises`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(exercises),
+      body: JSON.stringify(exercisesPayload),
     });
     if (!response.ok) {
       throw new Error('Failed to update exercises');
@@ -107,7 +120,7 @@ export const updateExercises = async (exercises) => {
 
 export const postExercise = async (exercise) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/exercises`, {
+    const response = await authFetch(`${API_BASE_URL}/exercises`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -128,7 +141,7 @@ export const postExercise = async (exercise) => {
 
 export const deleteExercise = async (exerciseId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/exercises/${exerciseId}`, {
+    const response = await authFetch(`${API_BASE_URL}/exercises/${exerciseId}`, {
       method: 'DELETE',
     });
     if (!response.ok) {
@@ -188,7 +201,7 @@ export const updateWorkout = async (workoutId, workout) => {
 // Weight endpoints
 export const getWeightData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/weight`);
+    const response = await authFetch(`${API_BASE_URL}/weight`);
     if (!response.ok) {
       throw new Error('Failed to fetch weight data');
     }
@@ -215,7 +228,7 @@ export const postWeightData = async (weightData) => {
       value: weightData.weight, // Rename `weight` to `value` to match the backend schema
     };
 
-    const response = await fetch(`${API_BASE_URL}/weight`, {
+    const response = await authFetch(`${API_BASE_URL}/weight`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -242,7 +255,7 @@ export const postWeightData = async (weightData) => {
 // Body Fat endpoints
 export const getBodyFatData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/bodyfat`);
+    const response = await authFetch(`${API_BASE_URL}/bodyfat`);
     if (!response.ok) {
       throw new Error('Failed to fetch body fat data');
     }
@@ -268,7 +281,7 @@ export const postBodyFatData = async (bodyFatData) => {
       value: bodyFatData.bodyFat, // Rename `bodyFat` to `value` to match backend schema
     };
 
-    const response = await fetch(`${API_BASE_URL}/bodyfat`, {
+    const response = await authFetch(`${API_BASE_URL}/bodyfat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

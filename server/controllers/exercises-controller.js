@@ -65,7 +65,8 @@ exports.createExercise = async (req, res, next) => {
  */
 exports.updateExercises = async (req, res, next) => {
   try {
-    const exercises = req.body;
+    // Extract exercises array from req.body (validator ensures it exists)
+    const { exercises } = req.body;
     const updatedExercises = await workoutService.bulkUpdateExercises(exercises);
     res.status(200).json(updatedExercises);
   } catch (error) {
