@@ -131,8 +131,8 @@ app.get('/health', (req, res) => {
 // Import error handling middleware
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
-// Routes
-app.use(router);
+// Routes - Mount router at /api
+app.use('/api', router);
 
 // 404 handler - must come after all routes
 app.use(notFound);

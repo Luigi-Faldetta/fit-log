@@ -46,7 +46,7 @@ router.get('/workouts/:workoutId',
   clerkAuth,
   requireAuthentication,
   requireDatabase,
-  workoutValidators.getById,
+  workoutValidators.get,
   asyncHandler(workouts.getWorkout)
 );
 
