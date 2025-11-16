@@ -132,8 +132,7 @@ const AIWorkoutForm = ({
                 resize: 'none',
                 fontFamily: 'var(--font-primary)',
                 boxSizing: 'border-box',
-                display: 'block',
-                minHeight: '2.5rem'
+                display: 'block'
               }}
               value={request}
               onChange={onRequestChange}

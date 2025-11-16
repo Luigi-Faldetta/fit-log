@@ -1,4 +1,5 @@
 import { workoutsDB, exercisesDB, weightDB, bodyfatDB } from './dbService';
+import { authFetch } from './authFetch';
 import { queueRequest } from './offlineQueue';
 
 /**
@@ -66,7 +67,7 @@ export const offlineFirstFetch = async (url, options = {}, dbConfig = {}) => {
 
           // Try to update in the background if online
           if (navigator.onLine) {
-            fetch(url, options)
+            authFetch(url, options)
               .then(async (response) => {
                 if (response.ok) {
                   const data = await response.json();
@@ -92,7 +93,7 @@ export const offlineFirstFetch = async (url, options = {}, dbConfig = {}) => {
   // Try network request with retry
   try {
     const data = await retryWithBackoff(async () => {
-      const response = await fetch(url, options);
+      const response = await authFetch(url, options);
 
       if (!response.ok) {
         const error = new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -191,7 +192,7 @@ export const workoutsOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, {
+      const response = await authFetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(workout),
@@ -225,7 +226,7 @@ export const workoutsOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, {
+      const response = await authFetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(workout),
@@ -258,7 +259,7 @@ export const workoutsOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, { method: 'DELETE' });
+      const response = await authFetch(url, { method: 'DELETE' });
 
       if (!response.ok) throw new Error('Failed to delete workout');
 
@@ -300,7 +301,7 @@ export const exercisesOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, {
+      const response = await authFetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(exercise),
@@ -335,7 +336,7 @@ export const exercisesOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, {
+      const response = await authFetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(exercises),
@@ -366,7 +367,7 @@ export const exercisesOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, { method: 'DELETE' });
+      const response = await authFetch(url, { method: 'DELETE' });
 
       if (!response.ok) throw new Error('Failed to delete exercise');
 
@@ -417,7 +418,7 @@ export const weightOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, {
+      const response = await authFetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody),
@@ -451,7 +452,7 @@ export const weightOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, { method: 'DELETE' });
+      const response = await authFetch(url, { method: 'DELETE' });
 
       if (!response.ok) throw new Error('Failed to delete weight data');
 
@@ -502,7 +503,7 @@ export const bodyfatOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, {
+      const response = await authFetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody),
@@ -536,7 +537,7 @@ export const bodyfatOfflineAPI = {
     }
 
     return retryWithBackoff(async () => {
-      const response = await fetch(url, { method: 'DELETE' });
+      const response = await authFetch(url, { method: 'DELETE' });
 
       if (!response.ok) throw new Error('Failed to delete body fat data');
 
