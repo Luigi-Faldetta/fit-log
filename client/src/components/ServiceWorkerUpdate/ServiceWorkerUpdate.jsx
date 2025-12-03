@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './ServiceWorkerUpdate.css';
 
 const ServiceWorkerUpdate = () => {
   const [showUpdate, setShowUpdate] = useState(false);
   const [registration, setRegistration] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  // Use ref to track updating state synchronously (avoids race condition with controllerchange)
+  const isUpdatingRef = useRef(false);
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -26,21 +28,30 @@ const ServiceWorkerUpdate = () => {
       });
 
       // Listen for controlling service worker changes
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
+      const handleControllerChange = () => {
         // Service worker has been updated and is now controlling the page
-        if (!isUpdating) {
+        // Use ref for synchronous check to avoid race condition
+        if (isUpdatingRef.current) {
           window.location.reload();
         }
-      });
+      };
+      navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange);
 
       // Listen for messages from service worker
-      navigator.serviceWorker.addEventListener('message', (event) => {
+      const handleMessage = (event) => {
         if (event.data && event.data.type === 'NEW_VERSION_AVAILABLE') {
           setShowUpdate(true);
         }
-      });
+      };
+      navigator.serviceWorker.addEventListener('message', handleMessage);
+
+      // Cleanup listeners
+      return () => {
+        navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange);
+        navigator.serviceWorker.removeEventListener('message', handleMessage);
+      };
     }
-  }, [isUpdating]);
+  }, []);
 
   // Check for waiting service worker on mount
   useEffect(() => {
@@ -74,6 +85,8 @@ const ServiceWorkerUpdate = () => {
       return;
     }
 
+    // Set ref synchronously before triggering skip waiting
+    isUpdatingRef.current = true;
     setIsUpdating(true);
 
     // Tell the waiting service worker to skip waiting

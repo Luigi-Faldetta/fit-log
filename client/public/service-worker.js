@@ -61,11 +61,11 @@ if (typeof self.__WB_MANIFEST !== 'undefined') {
   workbox.routing.registerRoute(
     ({ url, request }) =>
       request.method === 'GET' &&
-      (url.pathname.startsWith('/workouts') ||
-        url.pathname.startsWith('/exercises') ||
-        url.pathname.startsWith('/weight') ||
-        url.pathname.startsWith('/bodyfat') ||
-        url.pathname.startsWith('/health')),
+      (url.pathname.startsWith('/api/workouts') ||
+        url.pathname.startsWith('/api/exercises') ||
+        url.pathname.startsWith('/api/weight') ||
+        url.pathname.startsWith('/api/bodyfat') ||
+        url.pathname.startsWith('/api/health')),
     new workbox.strategies.NetworkFirst({
       cacheName: 'api-cache',
       networkTimeoutSeconds: 5,
