@@ -1,105 +1,33 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRegisterSW } from 'virtual:pwa-register/react';
 import './ServiceWorkerUpdate.css';
 
 const ServiceWorkerUpdate = () => {
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [registration, setRegistration] = useState(null);
-  const [isUpdating, setIsUpdating] = useState(false);
-  // Use ref to track updating state synchronously (avoids race condition with controllerchange)
-  const isUpdatingRef = useRef(false);
-
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      // Listen for updates to the service worker
-      navigator.serviceWorker.ready.then((reg) => {
-        setRegistration(reg);
-
-        // Check for updates periodically (every 60 seconds)
-        const checkForUpdates = () => {
-          reg.update().catch((error) => {
-            console.error('Error checking for service worker updates:', error);
-          });
-        };
-
-        const updateInterval = setInterval(checkForUpdates, 60000);
-
-        // Cleanup
-        return () => clearInterval(updateInterval);
-      });
-
-      // Listen for controlling service worker changes
-      const handleControllerChange = () => {
-        // Service worker has been updated and is now controlling the page
-        // Use ref for synchronous check to avoid race condition
-        if (isUpdatingRef.current) {
-          window.location.reload();
-        }
-      };
-      navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange);
-
-      // Listen for messages from service worker
-      const handleMessage = (event) => {
-        if (event.data && event.data.type === 'NEW_VERSION_AVAILABLE') {
-          setShowUpdate(true);
-        }
-      };
-      navigator.serviceWorker.addEventListener('message', handleMessage);
-
-      // Cleanup listeners
-      return () => {
-        navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange);
-        navigator.serviceWorker.removeEventListener('message', handleMessage);
-      };
-    }
-  }, []);
-
-  // Check for waiting service worker on mount
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then((reg) => {
-        if (reg.waiting) {
-          setShowUpdate(true);
-          setRegistration(reg);
-        }
-
-        // Listen for new service worker installing
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // New service worker is installed and waiting
-                setShowUpdate(true);
-                setRegistration(reg);
-              }
-            });
-          }
-        });
-      });
-    }
-  }, []);
+  const {
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker,
+  } = useRegisterSW({
+    onRegistered(registration) {
+      // Check for updates every 60 seconds
+      if (registration) {
+        setInterval(() => {
+          registration.update();
+        }, 60000);
+      }
+    },
+    onRegisterError(error) {
+      console.error('Service worker registration error:', error);
+    },
+  });
 
   const handleUpdate = () => {
-    if (!registration || !registration.waiting) {
-      return;
-    }
-
-    // Set ref synchronously before triggering skip waiting
-    isUpdatingRef.current = true;
-    setIsUpdating(true);
-
-    // Tell the waiting service worker to skip waiting
-    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-
-    // The page will reload automatically when the new service worker takes control
+    updateServiceWorker(true);
   };
 
   const handleDismiss = () => {
-    setShowUpdate(false);
+    setNeedRefresh(false);
   };
 
-  if (!showUpdate) {
+  if (!needRefresh) {
     return null;
   }
 
@@ -129,21 +57,12 @@ const ServiceWorkerUpdate = () => {
           <button
             className="sw-update-button sw-update-button-primary"
             onClick={handleUpdate}
-            disabled={isUpdating}
           >
-            {isUpdating ? (
-              <>
-                <span className="sw-update-spinner"></span>
-                Updating...
-              </>
-            ) : (
-              'Update Now'
-            )}
+            Update Now
           </button>
           <button
             className="sw-update-button sw-update-button-secondary"
             onClick={handleDismiss}
-            disabled={isUpdating}
           >
             Later
           </button>
