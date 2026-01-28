@@ -96,8 +96,8 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // Default to 500 server error
-  const statusCode = error.statusCode || 500;
-  const message = error.isOperational ? error.message : 'Internal Server Error';
+  const statusCode = err.statusCode || error.statusCode || 500;
+  const message = err.isOperational ? err.message : 'Internal Server Error';
 
   res.status(statusCode).json({
     success: false,

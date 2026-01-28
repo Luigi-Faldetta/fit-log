@@ -94,7 +94,8 @@ class ProfileService {
       });
       return entries;
     } catch (error) {
-      throw new AppError('Failed to retrieve weight data', 500);
+      console.error('Database error in getAllWeight:', error.message, error.original?.message || '');
+      throw new AppError(`Failed to retrieve weight data: ${error.message}`, 500);
     }
   }
 
@@ -180,7 +181,8 @@ class ProfileService {
       });
       return entries;
     } catch (error) {
-      throw new AppError('Failed to retrieve body fat data', 500);
+      console.error('Database error in getAllBodyFat:', error.message, error.original?.message || '');
+      throw new AppError(`Failed to retrieve body fat data: ${error.message}`, 500);
     }
   }
 

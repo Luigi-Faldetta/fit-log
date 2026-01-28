@@ -25,7 +25,8 @@ class WorkoutService {
       });
       return workouts;
     } catch (error) {
-      throw new AppError('Failed to retrieve workouts', 500);
+      console.error('Database error in getAllWorkouts:', error.message, error.original?.message || '');
+      throw new AppError(`Failed to retrieve workouts: ${error.message}`, 500);
     }
   }
 
