@@ -30,8 +30,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.1",
     "recharts": "^2.13.0",
-    "styled-components": "^6.1.11",
-    "vercel": "^37.12.1"
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.1.0",
@@ -48,6 +47,7 @@
     "start-server-and-test": "^2.1.2",
     "vite": "^5.2.0",
     "vite-plugin-pwa": "^0.20.5",
+    "vercel": "^37.12.1",
     "vitest": "^2.1.3"
   }
 }
