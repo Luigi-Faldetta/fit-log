@@ -40,7 +40,12 @@ const Card = ({
 
   const handleKeyDown = (e) => {
     // Enable keyboard interaction for clickable cards
-    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+    // But don't intercept keys when typing in input fields
+    const isInputElement = e.target.tagName === 'INPUT' ||
+                           e.target.tagName === 'TEXTAREA' ||
+                           e.target.isContentEditable;
+
+    if (onClick && (e.key === 'Enter' || e.key === ' ') && !isInputElement) {
       e.preventDefault();
       onClick(e);
     }

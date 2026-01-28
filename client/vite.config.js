@@ -9,8 +9,10 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      isProduction &&
-        VitePWA({
+      VitePWA({
+        devOptions: {
+          enabled: !isProduction, // Enable in dev for testing, but don't register SW
+        },
           registerType: 'prompt',
           workbox: {
             globPatterns: ['**/*.{js,css,html,png,svg}'],
@@ -83,6 +85,6 @@ export default defineConfig(({ mode }) => {
             ],
           },
         }),
-    ].filter(Boolean), // Filter out false values when not in production
+    ],
   };
 });
