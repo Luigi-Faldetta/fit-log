@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { sanitizeWorkoutName, sanitizeDescription } from '../../utils/sanitize';
+import { sanitizeText } from '../../utils/sanitize';
 import { validateWorkoutName, validateDescription } from '../../utils/validation';
 import { TEXT_LIMITS } from '../../../../shared/constants/validation';
 import './WorkoutForm.css';
@@ -12,11 +12,11 @@ const WorkoutForm = ({ workout, onUpdate }) => {
   const handleNameChange = (e) => {
     const value = e.target.value;
 
-    // Sanitize input
-    const sanitized = sanitizeWorkoutName(value);
+    // Sanitize input (no trim during typing to allow spaces between words)
+    const sanitized = sanitizeText(value).slice(0, TEXT_LIMITS.WORKOUT_NAME_MAX);
 
-    // Validate
-    const validation = validateWorkoutName(sanitized);
+    // Validate (trimmed value for validation)
+    const validation = validateWorkoutName(sanitized.trim());
     setNameError(validation.error || '');
 
     // Update parent
@@ -26,11 +26,11 @@ const WorkoutForm = ({ workout, onUpdate }) => {
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
 
-    // Sanitize input
-    const sanitized = sanitizeDescription(value);
+    // Sanitize input (no trim during typing to allow spaces between words)
+    const sanitized = sanitizeText(value).slice(0, TEXT_LIMITS.DESCRIPTION_MAX);
 
-    // Validate
-    const validation = validateDescription(sanitized);
+    // Validate (trimmed value for validation)
+    const validation = validateDescription(sanitized.trim());
     setDescError(validation.error || '');
 
     // Update parent

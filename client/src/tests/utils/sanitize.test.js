@@ -24,7 +24,8 @@ vi.mock('dompurify', () => ({
 describe('sanitize utilities', () => {
   describe('sanitize HTML', () => {
     it('should strip HTML tags from input', () => {
-      const result = sanitizeHTML('<script>alert("xss")</script>Hello');
+      // Note: The mock strips tags but keeps content. Real DOMPurify removes script content.
+      const result = sanitizeHTML('<div>Hello</div>');
       expect(result).toBe('Hello');
     });
 
@@ -45,9 +46,10 @@ describe('sanitize utilities', () => {
   });
 
   describe('sanitizeText', () => {
-    it('should trim and sanitize text', () => {
+    it('should preserve whitespace for live typing (no trim)', () => {
+      // sanitizeText does NOT trim to allow typing spaces between words
       const result = sanitizeText('  Normal Text  ');
-      expect(result).toBe('Normal Text');
+      expect(result).toBe('  Normal Text  ');
     });
 
     it('should strip HTML from text', () => {
@@ -63,6 +65,11 @@ describe('sanitize utilities', () => {
     it('should handle complex HTML', () => {
       const result = sanitizeText('<div><span>Text</span></div>');
       expect(result).toBe('Text');
+    });
+
+    it('should preserve spaces between words', () => {
+      const result = sanitizeText('Hello World');
+      expect(result).toBe('Hello World');
     });
   });
 

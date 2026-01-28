@@ -126,10 +126,17 @@ const WorkoutDetails = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
+      // Trim whitespace from name and description before saving
+      const trimmedWorkout = {
+        ...workout,
+        name: workout.name?.trim() || '',
+        description: workout.description?.trim() || '',
+      };
+
       let createdWorkout;
       if (isNewWorkout) {
         // Save the new workout
-        createdWorkout = await postWorkout(workout);
+        createdWorkout = await postWorkout(trimmedWorkout);
         setRealWorkoutId(createdWorkout.workout_id);
         setWorkout({ ...workout, id: createdWorkout.workout_id });
 
@@ -149,10 +156,10 @@ const WorkoutDetails = () => {
         );
       } else {
         // Update the existing workout
-        const updatedWorkout = await updateWorkout(realWorkoutId || workout.id, workout);
+        const updatedWorkout = await updateWorkout(realWorkoutId || workout.id, trimmedWorkout);
 
         // Update the workout in the cache
-        updateWorkoutInCache(realWorkoutId || workout.id, updatedWorkout || workout);
+        updateWorkoutInCache(realWorkoutId || workout.id, updatedWorkout || trimmedWorkout);
 
         // For an existing workout, update exercises
         await updateExercises(exercises);

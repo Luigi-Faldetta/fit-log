@@ -31,27 +31,27 @@ export const sanitizeHTML = (dirty) => {
 };
 
 /**
- * Sanitizes text input by removing all HTML tags and trimming whitespace.
+ * Sanitizes text input by removing all HTML tags.
  * Primary function for cleaning user-submitted text fields.
+ * Note: Does NOT trim whitespace to allow spaces during typing.
+ * Use trimmed versions (sanitizeWorkoutName, etc.) for final values.
  *
  * @param {string} input - User input string that may contain HTML
- * @returns {string} Sanitized and trimmed string with all HTML stripped
+ * @returns {string} Sanitized string with all HTML stripped (whitespace preserved)
  * @example
- * sanitizeText('  <p>Hello</p>  ') // 'Hello'
+ * sanitizeText('<p>Hello World</p>') // 'Hello World'
  * sanitizeText('<img src=x onerror=alert(1)>') // ''
  */
 export const sanitizeText = (input) => {
   if (!input || typeof input !== 'string') return '';
 
   // Remove all HTML tags and decode HTML entities
-  const stripped = DOMPurify.sanitize(input, {
+  // Whitespace is preserved to allow typing spaces between words
+  return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
     KEEP_CONTENT: true
   });
-
-  // Trim whitespace
-  return stripped.trim();
 };
 
 /**
@@ -82,43 +82,46 @@ export const sanitizeNumber = (input, options = {}) => {
 };
 
 /**
- * Sanitizes workout name by removing HTML and enforcing max length.
+ * Sanitizes workout name by removing HTML, trimming, and enforcing max length.
+ * NOTE: For live input during typing, use sanitizeText instead to preserve spaces.
  *
  * @param {string} name - The workout name to sanitize
- * @returns {string} Sanitized workout name truncated to max length
+ * @returns {string} Sanitized and trimmed workout name truncated to max length
  * @example
  * sanitizeWorkoutName('<b>Morning Run</b>') // 'Morning Run'
  * sanitizeWorkoutName('A'.repeat(300)) // Returns string with max 255 chars
  */
 export const sanitizeWorkoutName = (name) => {
-  const sanitized = sanitizeText(name);
+  const sanitized = sanitizeText(name).trim();
   return sanitized.slice(0, TEXT_LIMITS.WORKOUT_NAME_MAX);
 };
 
 /**
- * Sanitizes workout description by removing HTML and enforcing max length.
+ * Sanitizes workout description by removing HTML, trimming, and enforcing max length.
+ * NOTE: For live input during typing, use sanitizeText instead to preserve spaces.
  *
  * @param {string} description - The workout description to sanitize
- * @returns {string} Sanitized description truncated to max length
+ * @returns {string} Sanitized and trimmed description truncated to max length
  * @example
  * sanitizeDescription('Full body <script>bad</script>workout') // 'Full body workout'
  */
 export const sanitizeDescription = (description) => {
-  const sanitized = sanitizeText(description);
+  const sanitized = sanitizeText(description).trim();
   return sanitized.slice(0, TEXT_LIMITS.DESCRIPTION_MAX);
 };
 
 /**
- * Sanitizes exercise name by removing HTML and enforcing max length.
+ * Sanitizes exercise name by removing HTML, trimming, and enforcing max length.
+ * NOTE: For live input during typing, use sanitizeText instead to preserve spaces.
  *
  * @param {string} name - The exercise name to sanitize
- * @returns {string} Sanitized exercise name truncated to max length
+ * @returns {string} Sanitized and trimmed exercise name truncated to max length
  * @example
  * sanitizeExerciseName('Bench Press') // 'Bench Press'
  * sanitizeExerciseName('<i>Squats</i>') // 'Squats'
  */
 export const sanitizeExerciseName = (name) => {
-  const sanitized = sanitizeText(name);
+  const sanitized = sanitizeText(name).trim();
   return sanitized.slice(0, TEXT_LIMITS.EXERCISE_NAME_MAX);
 };
 
