@@ -16,6 +16,7 @@ import WorkoutForm from '../../components/WorkoutForm/WorkoutForm';
 import ExerciseTable from '../../components/ExerciseTable/ExerciseTable';
 import WorkoutControls from '../../components/WorkoutControls/WorkoutControls';
 import ExerciseModal from '../../components/ExerciseModal/ExerciseModal';
+import Toast from '../../components/ui/Toast/Toast';
 import useWindowSize from '../../utils/useWindowSize';
 import generateRandomId from '../../utils/UtilityFunctions';
 import './WorkoutDetailsPage.css';
@@ -43,6 +44,7 @@ const WorkoutDetails = () => {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -166,11 +168,15 @@ const WorkoutDetails = () => {
       }
 
       setIsEditing(false);
-      if (isNewWorkout) {
-        navigate(`/workouts/${createdWorkout.workout_id}`);
-      }
+
+      // Show success toast and navigate back to workouts
+      setToast({ message: 'Workout saved!', type: 'success' });
+      setTimeout(() => {
+        navigate('/workouts');
+      }, 1500);
     } catch (error) {
       console.error('Failed to save workout:', error);
+      setToast({ message: 'Failed to save workout', type: 'error' });
     }
     setIsSaving(false);
   };
@@ -208,6 +214,13 @@ const WorkoutDetails = () => {
 
   return (
     <div className="workout-container">
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       {isEditing ? (
         <WorkoutForm workout={workout} onUpdate={handleWorkoutUpdate} />
       ) : (
