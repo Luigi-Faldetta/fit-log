@@ -17,6 +17,14 @@
   z-index: var(--z-fixed, 300);
 }
 
+/* Desktop adjustments */
+@media (min-width: 769px) {
+  .login-form {
+    right: calc(var(--space-4) + 2rem);
+    top: calc(var(--space-4) + 1rem);
+  }
+}
+
 /* Tablet adjustments */
 @media (max-width: 768px) {
   .login-form {

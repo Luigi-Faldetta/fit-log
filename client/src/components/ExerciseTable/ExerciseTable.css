@@ -64,10 +64,10 @@
 .exercise-table input[type="number"] {
   width: 100%;
   padding: var(--space-2);
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  background: rgba(30, 30, 50, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: var(--radius-md);
-  color: white;
+  color: white !important;
   font-size: var(--text-sm);
   transition: all var(--duration-fast) var(--ease-out);
 }
@@ -75,9 +75,14 @@
 .exercise-table input[type="text"]:focus,
 .exercise-table input[type="number"]:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-  background: var(--color-bg-tertiary);
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  background: rgba(40, 40, 70, 0.95) !important;
+}
+
+.exercise-table input[type="text"]::placeholder,
+.exercise-table input[type="number"]::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Number inputs specific styling */

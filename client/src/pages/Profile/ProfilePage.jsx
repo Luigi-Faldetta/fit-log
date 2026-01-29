@@ -7,17 +7,29 @@ import './ProfilePage.css';
 const Profile = () => {
   const { loading, error } = useProfileData();
 
-  // Adjust app-container margin for profile page
+  // Adjust app-container margin for profile page (mobile only)
   useEffect(() => {
+    const isMobile = () => window.innerWidth <= 768;
     const appContainer = document.querySelector('.app-container');
-    if (appContainer) {
-      appContainer.style.marginTop = '9rem';
-      appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
-    }
+
+    const applyMobileStyles = () => {
+      if (appContainer && isMobile()) {
+        appContainer.style.marginTop = '9rem';
+        appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
+      } else if (appContainer) {
+        appContainer.style.marginTop = '';
+        appContainer.style.height = '';
+      }
+    };
+
+    applyMobileStyles();
+    window.addEventListener('resize', applyMobileStyles);
+
     return () => {
+      window.removeEventListener('resize', applyMobileStyles);
       if (appContainer) {
-        appContainer.style.marginTop = '4.5rem';
-        appContainer.style.height = 'calc(100dvh - 4.5rem - 4.5rem)';
+        appContainer.style.marginTop = '';
+        appContainer.style.height = '';
       }
     };
   }, []);

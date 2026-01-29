@@ -20,29 +20,52 @@ const Workouts = () => {
     navigate(`/workouts/${workoutId}`);
   };
 
-  // Adjust app-container margin for workouts page
+  // Adjust app-container margin for workouts page (mobile only)
   useEffect(() => {
+    const isMobile = () => window.innerWidth <= 768;
     const appContainer = document.querySelector('.app-container');
-    if (appContainer) {
-      appContainer.style.marginTop = '9rem';
-      appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
-    }
+
+    const applyMobileStyles = () => {
+      if (appContainer && isMobile()) {
+        appContainer.style.marginTop = '9rem';
+        appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
+      } else if (appContainer) {
+        appContainer.style.marginTop = '';
+        appContainer.style.height = '';
+      }
+    };
+
+    applyMobileStyles();
+    window.addEventListener('resize', applyMobileStyles);
+
     return () => {
+      window.removeEventListener('resize', applyMobileStyles);
       if (appContainer) {
-        appContainer.style.marginTop = '4.5rem';
-        appContainer.style.height = 'calc(100dvh - 4.5rem - 4.5rem)';
+        appContainer.style.marginTop = '';
+        appContainer.style.height = '';
       }
     };
   }, []);
 
-  // Fade effect for partially visible cards
+  // Fade effect for partially visible cards (mobile only)
   useEffect(() => {
+    const isMobile = () => window.innerWidth <= 768;
+
     const updateCardOpacity = () => {
       const scrollContainer = document.querySelector('.app-container');
       if (!scrollContainer) return;
 
-      const containerRect = scrollContainer.getBoundingClientRect();
       const cards = document.querySelectorAll('.workout-card');
+
+      // Only apply fade effect on mobile
+      if (!isMobile()) {
+        cards.forEach((card) => {
+          card.style.opacity = 1;
+        });
+        return;
+      }
+
+      const containerRect = scrollContainer.getBoundingClientRect();
 
       cards.forEach((card) => {
         const cardRect = card.getBoundingClientRect();
@@ -79,6 +102,7 @@ const Workouts = () => {
       const scrollContainer = document.querySelector('.app-container');
       if (scrollContainer) {
         scrollContainer.addEventListener('scroll', updateCardOpacity);
+        window.addEventListener('resize', updateCardOpacity);
         // Initial check
         updateCardOpacity();
       }
@@ -90,6 +114,7 @@ const Workouts = () => {
       if (scrollContainer) {
         scrollContainer.removeEventListener('scroll', updateCardOpacity);
       }
+      window.removeEventListener('resize', updateCardOpacity);
     };
   }, [workouts]);
 

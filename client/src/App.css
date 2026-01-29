@@ -20,6 +20,14 @@
   position: relative;
 }
 
+/* Desktop: Account for bottom navbar */
+@media (min-width: 769px) {
+  .app-container {
+    height: calc(100vh - 4.5rem - 4.5rem);
+    height: calc(100dvh - 4.5rem - 4.5rem);
+  }
+}
+
 /* Mobile: Scrollable area starts below fixed header */
 @media (max-width: 768px) {
   .app-container {

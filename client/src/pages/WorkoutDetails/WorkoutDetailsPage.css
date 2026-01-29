@@ -10,6 +10,17 @@
   overflow-x: hidden;
 }
 
+/* Desktop: Fit content without unnecessary scrolling */
+@media (min-width: 769px) {
+  .workout-container {
+    padding: var(--space-8) var(--space-4) var(--space-4);
+    min-height: calc(100vh - 5rem);
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    justify-content: flex-start;
+  }
+}
+
 /* Workout Header Section */
 .workout-header {
   width: 100%;
@@ -25,15 +36,11 @@
   font-weight: var(--font-bold);
   color: white;
   margin-bottom: var(--space-3);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .workout-description {
   font-size: var(--text-lg);
-  color: var(--color-text-secondary);
+  color: white;
   line-height: var(--leading-relaxed);
 }
 
