@@ -40,7 +40,7 @@
 
   .welcome-message {
     position: fixed;
-    top: var(--space-3);
+    top: 5rem;
     left: 0;
     right: 0;
     margin-top: 0;

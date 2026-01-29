@@ -17,6 +17,21 @@ export default function DashboardPage({ setSelectedNav }) {
     navigate(path);
   };
 
+  // Adjust app-container margin for dashboard page
+  useEffect(() => {
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+      appContainer.style.marginTop = '9rem';
+      appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
+    }
+    return () => {
+      if (appContainer) {
+        appContainer.style.marginTop = '4.5rem';
+        appContainer.style.height = 'calc(100dvh - 4.5rem - 4.5rem)';
+      }
+    };
+  }, []);
+
   // Fade effect for partially visible cards
   useEffect(() => {
     const updateCardOpacity = () => {

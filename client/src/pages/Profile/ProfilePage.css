@@ -5,11 +5,11 @@
   padding-top: 3rem;
 }
 
-/* Mobile: Fixed header aligned with user button */
+/* Mobile: Fixed header positioned like other pages */
 @media (max-width: 768px) {
   .profile-header {
     position: fixed;
-    top: var(--space-3);
+    top: 5rem;
     left: 0;
     right: 0;
     margin: 0;

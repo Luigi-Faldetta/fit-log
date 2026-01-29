@@ -11,8 +11,8 @@ const Profile = () => {
   useEffect(() => {
     const appContainer = document.querySelector('.app-container');
     if (appContainer) {
-      appContainer.style.marginTop = '7rem';
-      appContainer.style.height = 'calc(100dvh - 7rem - 4.5rem)';
+      appContainer.style.marginTop = '9rem';
+      appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
     }
     return () => {
       if (appContainer) {
