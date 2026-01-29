@@ -39,9 +39,10 @@ const AIWorkoutForm = ({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <label style={{ 
-              display: 'block', 
+            <label style={{
+              display: 'block',
               marginBottom: '0.3rem',
+              paddingLeft: 'var(--space-3)',
               color: 'white',
               fontSize: 'var(--text-sm)',
               fontWeight: 'var(--font-medium)'
@@ -110,9 +111,10 @@ const AIWorkoutForm = ({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <label style={{ 
-              display: 'block', 
+            <label style={{
+              display: 'block',
               marginBottom: '0.3rem',
+              paddingLeft: 'var(--space-3)',
               color: 'white',
               fontSize: 'var(--text-sm)',
               fontWeight: 'var(--font-medium)'
@@ -159,7 +161,7 @@ const AIWorkoutForm = ({
             label {
               display: block !important;
               margin: 0 0 0.3rem 0 !important;
-              padding: 0 !important;
+              padding: 0 0 0 var(--space-3) !important;
               color: white !important;
               font-size: var(--text-sm) !important;
               font-weight: var(--font-medium) !important;
