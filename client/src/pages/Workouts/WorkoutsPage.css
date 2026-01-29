@@ -1,43 +1,16 @@
 body {
-  background-color: #282c34; /* Dark background for contrast */
+  background-color: #282c34;
   color: #ffffff;
 }
 
-.workouts-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem; /* Space between workout cards */
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 1rem auto;
-}
-
-.workout-card {
-  background-color: #44475a; /* Darker card color */
-  color: #ffffff; /* White text */
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-  width: 18rem; /* Set a fixed width */
-  padding: 25px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Strong shadow */
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.workout-card:hover {
-  transform: translateY(-10px) scale(1.05); /* Pop up and scale */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
-  cursor: pointer;
-}
-
-/* Add Workout Button Container */
+/* Add Workout Button Container - Fixed at top on mobile */
 .add-workout-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: var(--space-4);
   padding-top: var(--space-16);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-4);
 }
 
 .add-workout-button {
@@ -49,4 +22,50 @@ body {
 .add-workout-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Workouts container */
+.workouts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.workout-card {
+  background-color: #44475a;
+  color: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  width: 18rem;
+  padding: 25px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.workout-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+/* Mobile: Fixed header with scrollable content */
+@media (max-width: 768px) {
+  .add-workout-container {
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    right: 0;
+    z-index: 299;
+    padding: var(--space-2);
+    margin-bottom: 0;
+  }
+
+  .workouts-container {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
 }

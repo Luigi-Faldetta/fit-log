@@ -1,13 +1,40 @@
+/* Fixed header */
+.profile-header {
+  text-align: center;
+  margin: 0;
+  padding-top: 3rem;
+}
+
+/* Mobile: Fixed header aligned with user button */
+@media (max-width: 768px) {
+  .profile-header {
+    position: fixed;
+    top: var(--space-3);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0 4rem;
+    text-align: center;
+    z-index: 299;
+    font-size: var(--text-lg);
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .profile-container {
   box-sizing: border-box;
   width: 100%;
-  max-width: 1200px; /* Limit the maximum width for larger screens */
-  margin-top: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 1em;
+  padding-top: 1rem;
+  padding-bottom: 6rem; /* Space for bottom navigation */
 }
 
 /* Style the headings */
-.profile-container h2,
 .profile-container h3 {
   text-align: center;
 }
@@ -17,4 +44,12 @@
 .body-fat-chart {
   width: 100%;
   margin: 1.5em auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .profile-container {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
 }

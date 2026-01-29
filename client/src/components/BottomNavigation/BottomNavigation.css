@@ -31,7 +31,7 @@
   padding: var(--space-2);
   background: none;
   border: none;
-  color: var(--color-text-muted);
+  color: white;
   cursor: pointer;
   transition: all var(--duration-normal) var(--ease-out);
   position: relative;
@@ -51,7 +51,8 @@
 }
 
 .nav-item:hover {
-  color: var(--color-text-secondary);
+  color: white;
+  opacity: 0.8;
 }
 
 .nav-item:active {

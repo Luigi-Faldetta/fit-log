@@ -6,8 +6,8 @@
 
 .layout-content {
   flex: 1;
-  overflow: visible; /* Remove scrolling from here */
-  padding-bottom: 8rem; /* Increased space for navigation */
+  overflow: visible;
+  padding-bottom: 0;
   position: relative;
   z-index: 1;
 }

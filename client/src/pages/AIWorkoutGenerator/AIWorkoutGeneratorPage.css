@@ -7,6 +7,18 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  gap: 1rem;
-  min-height: calc(100vh - 4rem); /* Full height minus navigation */
+  gap: 0.5rem;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .ai-workout-generator-container {
+    padding-top: 1rem;
+    padding-bottom: 0;
+    justify-content: flex-start;
+    gap: 0.25rem;
+  }
 }

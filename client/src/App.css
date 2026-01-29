@@ -13,11 +13,22 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  height: calc(100vh - 5.2rem); /* Fine-tuned to prevent any overlap */
+  height: calc(100vh - 4.5rem);
+  height: calc(100dvh - 4.5rem);
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
 }
+
+/* Mobile: Scrollable area starts below fixed header */
+@media (max-width: 768px) {
+  .app-container {
+    margin-top: 4.5rem;
+    height: calc(100vh - 4.5rem - 4.5rem);
+    height: calc(100dvh - 4.5rem - 4.5rem);
+  }
+}
+
 
 .cl-avatarBox {
   height: 3rem;
