@@ -102,19 +102,19 @@ const exerciseValidators = {
       .toInt()
       .isInt().withMessage('Exercise ID must be a valid integer'),
     body('exercises.*.name')
-      .optional()
+      .optional({ nullable: true })
       .trim()
       .isLength({ min: 1, max: 255 }).withMessage('Exercise name must be between 1 and 255 characters'),
     body('exercises.*.sets')
-      .optional()
+      .optional({ nullable: true })
       .toInt()
       .isInt({ min: 0, max: 100 }).withMessage('Sets must be between 0 and 100'),
     body('exercises.*.reps')
-      .optional()
+      .optional({ nullable: true })
       .toInt()
       .isInt({ min: 0, max: 1000 }).withMessage('Reps must be between 0 and 1000'),
     body('exercises.*.weight')
-      .optional()
+      .optional({ nullable: true })
       .toFloat()
       .isFloat({ min: 0, max: 10000 }).withMessage('Weight must be between 0 and 10000'),
     validate
