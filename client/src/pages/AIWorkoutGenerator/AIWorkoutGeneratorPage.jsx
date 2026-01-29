@@ -1,5 +1,5 @@
 // AIWorkoutGeneratorPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WorkoutModal from '../../components/WorkoutModal/WorkoutModal';
 import AIWorkoutForm from '../../components/AIWorkoutForm/AIWorkoutForm';
 import WorkoutGeneratorControls from '../../components/WorkoutGeneratorControls/WorkoutGeneratorControls';
@@ -11,6 +11,19 @@ import './AIWorkoutGeneratorPage.css';
 
 const AIWorkoutGenerator = () => {
   const { refreshWorkouts } = useWorkouts();
+
+  // Disable scrolling on this page
+  useEffect(() => {
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+      appContainer.style.overflowY = 'hidden';
+    }
+    return () => {
+      if (appContainer) {
+        appContainer.style.overflowY = '';
+      }
+    };
+  }, []);
   const [age, setAge] = useState('');
   const [experienceLevel, setExperienceLevel] = useState('');
   const [goal, setGoal] = useState('');

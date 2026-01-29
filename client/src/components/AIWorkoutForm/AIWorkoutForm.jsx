@@ -19,9 +19,9 @@ const AIWorkoutForm = ({
 }) => {
   return (
     <Card variant="default" className="ai-workout-form" style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <Card.Header style={{ paddingBottom: '0.5rem' }}>
-        <Card.Title level={2} style={{ marginBottom: '0.25rem', color: 'white' }}>AI Workout Generator</Card.Title>
-        <Card.Description style={{ fontSize: '0.9rem', marginBottom: '0', color: 'white' }}>
+      <Card.Header style={{ paddingBottom: '0.5rem', textAlign: 'center' }}>
+        <Card.Title level={2} style={{ marginBottom: '0.25rem', color: 'white', textAlign: 'center' }}>AI Workout Generator</Card.Title>
+        <Card.Description style={{ fontSize: '0.9rem', marginBottom: '0', color: 'white', textAlign: 'center' }}>
           Tell us about yourself and we'll create a personalized workout plan
         </Card.Description>
       </Card.Header>
