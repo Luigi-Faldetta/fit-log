@@ -418,9 +418,9 @@ class WorkoutService {
   }
 
   /**
-   * Bulk update exercises
+   * Bulk update exercises (creates new ones if they don't exist)
    * @param {Array<Object>} exercises - Array of exercise objects with IDs
-   * @returns {Promise<Array>} - Updated exercises
+   * @returns {Promise<Array>} - Updated/created exercises
    */
   async bulkUpdateExercises(exercises) {
     if (!Array.isArray(exercises) || exercises.length === 0) {
@@ -434,8 +434,33 @@ class WorkoutService {
         throw new ValidationError('Each exercise must have an exercise_id');
       }
 
-      const updated = await this.updateExercise(exerciseData.exercise_id, exerciseData);
-      updatedExercises.push(updated);
+      // Check if exercise exists in database
+      const existingExercise = await Exercise.findByPk(exerciseData.exercise_id);
+
+      if (existingExercise) {
+        // Update existing exercise
+        const updated = await this.updateExercise(exerciseData.exercise_id, exerciseData);
+        updatedExercises.push(updated);
+      } else {
+        // Create new exercise (it has a client-generated temporary ID)
+        try {
+          const newExercise = await Exercise.create({
+            name: exerciseData.name?.trim() || 'New Exercise',
+            description: exerciseData.description ? exerciseData.description.trim() : null,
+            muscle_group: exerciseData.muscle_group?.trim() || 'other',
+            weight: exerciseData.weight ? parseFloat(exerciseData.weight) : null,
+            sets: parseInt(exerciseData.sets, 10) || 1,
+            reps: parseInt(exerciseData.reps, 10) || 1,
+            rest: exerciseData.rest ? parseInt(exerciseData.rest, 10) : null,
+            media_URL: exerciseData.media_URL || null,
+            workout_id: parseInt(exerciseData.workout_id, 10)
+          });
+          updatedExercises.push(newExercise);
+        } catch (error) {
+          console.error('Failed to create exercise:', error.message);
+          throw new AppError(`Failed to create exercise: ${error.message}`, 500);
+        }
+      }
     }
 
     return updatedExercises;
