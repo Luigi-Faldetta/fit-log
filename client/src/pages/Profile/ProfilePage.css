@@ -1,26 +1,25 @@
 /* Fixed header */
 .profile-header {
-  text-align: center;
+  position: fixed;
+  top: 2rem;
+  left: 0;
+  right: 0;
   margin: 0;
-  padding-top: 3rem;
+  padding: 0 4rem;
+  text-align: center;
+  z-index: 299;
+  font-size: var(--text-xl);
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Mobile: Fixed header positioned like other pages */
 @media (max-width: 768px) {
   .profile-header {
-    position: fixed;
     top: 5rem;
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 0 4rem;
-    text-align: center;
-    z-index: 299;
     font-size: var(--text-lg);
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 

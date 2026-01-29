@@ -17,29 +17,32 @@ export default function DashboardPage({ setSelectedNav }) {
     navigate(path);
   };
 
-  // Adjust app-container margin for dashboard page (mobile only)
+  // Adjust app-container styles for dashboard page
   useEffect(() => {
     const isMobile = () => window.innerWidth <= 768;
     const appContainer = document.querySelector('.app-container');
 
-    const applyMobileStyles = () => {
+    const applyStyles = () => {
       if (appContainer && isMobile()) {
         appContainer.style.marginTop = '9rem';
         appContainer.style.height = 'calc(100dvh - 9rem - 4.5rem)';
+        appContainer.style.overflowY = 'auto';
       } else if (appContainer) {
         appContainer.style.marginTop = '';
         appContainer.style.height = '';
+        appContainer.style.overflowY = 'hidden';
       }
     };
 
-    applyMobileStyles();
-    window.addEventListener('resize', applyMobileStyles);
+    applyStyles();
+    window.addEventListener('resize', applyStyles);
 
     return () => {
-      window.removeEventListener('resize', applyMobileStyles);
+      window.removeEventListener('resize', applyStyles);
       if (appContainer) {
         appContainer.style.marginTop = '';
         appContainer.style.height = '';
+        appContainer.style.overflowY = '';
       }
     };
   }, []);
