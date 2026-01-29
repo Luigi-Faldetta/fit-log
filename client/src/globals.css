@@ -87,6 +87,26 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+  --glass-bg-modal: rgba(30, 30, 50, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-accent: rgba(99, 102, 241, 0.3);
+  --glass-blur: 12px;
+  --glass-blur-strong: 20px;
+
+  /* Z-Index Scale */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-max: 9999;
   
   /* Transition Durations */
   --duration-fast: 150ms;

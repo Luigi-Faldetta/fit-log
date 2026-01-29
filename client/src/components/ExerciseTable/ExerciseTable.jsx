@@ -30,6 +30,7 @@ const ExerciseTable = ({
   };
 
   return (
+    <div className="exercise-table-wrapper">
     <table className="exercise-table">
       <thead>
         <tr>
@@ -149,6 +150,7 @@ const ExerciseTable = ({
         ))}
       </tbody>
     </table>
+    </div>
   );
 };
 

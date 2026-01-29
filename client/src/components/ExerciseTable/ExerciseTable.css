@@ -1,16 +1,28 @@
-/* Exercise Table Container */
+/* Exercise Table Wrapper for horizontal scroll on mobile */
+.exercise-table-wrapper {
+  width: 100%;
+  max-width: min(100%, 1000px);
+  margin: 0 auto var(--space-8) auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-lg);
+}
+
+/* Exercise Table Container - Glassmorphism */
 .exercise-table {
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto var(--space-8) auto;
+  min-width: 600px; /* Ensures table doesn't get too cramped */
   border-collapse: separate;
   border-spacing: 0;
-  background: rgba(26, 26, 46, 0.85);
-  border: 1px solid var(--color-border);
+  background: var(--glass-bg-modal, rgba(30, 30, 50, 0.85));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(var(--glass-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 12px));
 }
 
 /* Table Headers */
@@ -120,6 +132,12 @@
   background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-light) 100%);
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.exercise-table button:focus-visible,
+.delete-exercise-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* Video Icon Styling */

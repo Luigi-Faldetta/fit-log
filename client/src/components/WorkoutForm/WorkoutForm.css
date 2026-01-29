@@ -1,18 +1,53 @@
 .workout-form {
   width: 90%;
   max-width: 800px;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
+  padding-top: var(--space-4);
 }
 
 .workout-form label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-2);
   width: 100%;
+  color: var(--color-accent-orange);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
 }
 
 .workout-form input {
   width: 100%;
-  padding: 8px;
+  padding: var(--space-3);
   box-sizing: border-box;
-  margin-top: 5px;
+  margin-top: var(--space-1);
+  background: rgba(30, 30, 50, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+  font-family: var(--font-primary);
+  transition: all var(--duration-fast) var(--ease-out);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.workout-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  background: rgba(30, 30, 50, 0.95);
+}
+
+.workout-form input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .workout-form {
+    width: 95%;
+  }
+
+  .workout-form label {
+    font-size: var(--text-xs);
+  }
 }

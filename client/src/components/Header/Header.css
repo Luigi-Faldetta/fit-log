@@ -1,5 +1,5 @@
 .logo {
-  margin-bottom: 8rem;
+  margin-bottom: var(--space-16);
   height: 4rem;
   max-width: 100%;
 }
@@ -9,9 +9,20 @@
 }
 
 .login-form {
-  position: absolute;
-  right: 3rem;
-  top: 2rem;
+  position: fixed;
+  right: var(--space-4);
+  top: var(--space-4);
   height: 3rem;
   width: 3rem;
+  z-index: var(--z-fixed, 300);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .login-form {
+    right: var(--space-3);
+    top: var(--space-3);
+    height: 2.5rem;
+    width: 2.5rem;
+  }
 }
