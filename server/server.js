@@ -8,6 +8,9 @@ const compression = require('compression');
 const morgan = require('morgan');
 const port = process.env.PORT || 3000;
 
+// Trust proxy for Railway/Heroku deployment (required for rate limiting)
+app.set('trust proxy', 1);
+
 const { sequelize } = require('./models/db');
 const router = require('./router');
 
