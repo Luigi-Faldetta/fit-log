@@ -96,6 +96,7 @@ const exerciseValidators = {
     body('exercises')
       .isArray({ min: 1 }).withMessage('Exercises must be a non-empty array'),
     body('exercises.*.exercise_id')
+      .toInt()
       .isInt().withMessage('Exercise ID must be a valid integer'),
     body('exercises.*.name')
       .optional()
@@ -103,12 +104,15 @@ const exerciseValidators = {
       .isLength({ min: 1, max: 255 }).withMessage('Exercise name must be between 1 and 255 characters'),
     body('exercises.*.sets')
       .optional()
+      .toInt()
       .isInt({ min: 0, max: 100 }).withMessage('Sets must be between 0 and 100'),
     body('exercises.*.reps')
       .optional()
+      .toInt()
       .isInt({ min: 0, max: 1000 }).withMessage('Reps must be between 0 and 1000'),
     body('exercises.*.weight')
       .optional()
+      .toFloat()
       .isFloat({ min: 0, max: 10000 }).withMessage('Weight must be between 0 and 10000'),
     validate
   ],
