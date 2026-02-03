@@ -93,10 +93,12 @@ export const updateExercises = async (exercises) => {
       exercises: exercises.map(exercise => ({
         exercise_id: exercise.exercise_id || exercise.id,
         name: exercise.name,
+        description: exercise.description,
         sets: exercise.sets,
         reps: exercise.reps,
         weight: exercise.weight,
-        rest: exercise.rest
+        rest: exercise.rest,
+        media_URL: exercise.media_URL
       }))
     };
 
