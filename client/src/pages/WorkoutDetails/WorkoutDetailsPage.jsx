@@ -169,11 +169,8 @@ const WorkoutDetails = () => {
 
       setIsEditing(false);
 
-      // Show success toast and navigate back to workouts
+      // Show success toast
       setToast({ message: 'Workout saved!', type: 'success' });
-      setTimeout(() => {
-        navigate('/workouts');
-      }, 1500);
     } catch (error) {
       console.error('Failed to save workout:', error);
       setToast({ message: 'Failed to save workout', type: 'error' });

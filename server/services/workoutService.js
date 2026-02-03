@@ -384,16 +384,16 @@ class WorkoutService {
 
     if (updateData.sets !== undefined) {
       const sets = parseInt(updateData.sets, 10);
-      if (isNaN(sets) || sets < 1 || sets > 100) {
-        throw new ValidationError('Sets must be between 1 and 100');
+      if (isNaN(sets) || sets < 0 || sets > 100) {
+        throw new ValidationError('Sets must be between 0 and 100');
       }
       exercise.sets = sets;
     }
 
     if (updateData.reps !== undefined) {
       const reps = parseInt(updateData.reps, 10);
-      if (isNaN(reps) || reps < 1 || reps > 1000) {
-        throw new ValidationError('Reps must be between 1 and 1000');
+      if (isNaN(reps) || reps < 0 || reps > 1000) {
+        throw new ValidationError('Reps must be between 0 and 1000');
       }
       exercise.reps = reps;
     }
