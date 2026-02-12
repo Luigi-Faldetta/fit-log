@@ -4,6 +4,13 @@
   max-width: 100%;
 }
 
+/* Desktop: give logo more space so sign-in modal doesn't overlap */
+@media (min-width: 769px) {
+  .logo {
+    height: 10rem;
+  }
+}
+
 .logo-img {
   height: 11rem;
 }
