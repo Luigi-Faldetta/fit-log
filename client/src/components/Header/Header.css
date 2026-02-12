@@ -8,11 +8,18 @@
 @media (min-width: 769px) {
   .logo {
     height: 10rem;
+    margin-top: 3rem;
   }
 }
 
 .logo-img {
-  height: 11rem;
+  height: 7rem;
+}
+
+@media (min-width: 769px) {
+  .logo-img {
+    height: 11rem;
+  }
 }
 
 .login-form {
