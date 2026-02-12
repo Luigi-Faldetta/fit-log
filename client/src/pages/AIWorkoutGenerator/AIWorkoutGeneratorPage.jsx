@@ -31,11 +31,13 @@ const AIWorkoutGenerator = () => {
   const [request, setRequest] = useState('');
   const [workout, setWorkout] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // Function to generate a workout based on user input
   const generateWorkout = async () => {
+    setIsGenerating(true);
     try {
       const response = await authFetch(`${VITE_API_BASE_URL}/ai/generate-workout`, {
         method: 'POST',
@@ -81,6 +83,8 @@ const AIWorkoutGenerator = () => {
       setShowModal(true);
     } catch (error) {
       console.error('Error generating workout:', error);
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -270,7 +274,7 @@ const AIWorkoutGenerator = () => {
         onDurationChange={(e) => setDuration(e.target.value)}
         onRequestChange={(e) => setRequest(e.target.value)}
       />
-      <WorkoutGeneratorControls onGenerateWorkout={generateWorkout} />
+      <WorkoutGeneratorControls onGenerateWorkout={generateWorkout} loading={isGenerating} />
       {showModal && (
         <WorkoutModal
           workout={workout}

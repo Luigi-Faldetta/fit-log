@@ -19,6 +19,7 @@ import ExerciseModal from '../../components/ExerciseModal/ExerciseModal';
 import Toast from '../../components/ui/Toast/Toast';
 import useWindowSize from '../../utils/useWindowSize';
 import generateRandomId from '../../utils/UtilityFunctions';
+import Skeleton from '../../components/ui/Skeleton/Skeleton';
 import './WorkoutDetailsPage.css';
 
 const WorkoutDetails = () => {
@@ -193,7 +194,16 @@ const WorkoutDetails = () => {
   };
 
   if (isLoading) {
-    return <div className="loading-state">Loading workout...</div>;
+    return (
+      <div className="workout-container" role="status" aria-label="Loading workout">
+        <div className="workout-header">
+          <Skeleton variant="title" width="60%" height="2rem" style={{ margin: '0 auto var(--space-3)' }} />
+          <Skeleton width="80%" height="1rem" style={{ margin: '0 auto' }} />
+        </div>
+        <Skeleton.Table rows={4} />
+        <span className="visually-hidden">Loading workout</span>
+      </div>
+    );
   }
 
   if (error) {
