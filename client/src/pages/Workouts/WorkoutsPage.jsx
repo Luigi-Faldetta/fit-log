@@ -4,7 +4,7 @@ import { useWorkouts } from '../../contexts/WorkoutsContext';
 import WorkoutsList from '../../components/WorkoutsList/WorkoutsList';
 import Button from '../../components/ui/Button/Button';
 import generateRandomId from '../../utils/UtilityFunctions';
-import Skeleton from '../../components/ui/Skeleton/Skeleton';
+import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
 import './WorkoutsPage.css';
 
 const Workouts = () => {
@@ -142,7 +142,7 @@ const Workouts = () => {
       </div>
       <div className="workouts-container" ref={containerRef}>
         {loading ? (
-          <Skeleton.Card count={6} />
+          <LoadingSpinner />
         ) : error ? (
           <div className="error">{error}</div>
         ) : (

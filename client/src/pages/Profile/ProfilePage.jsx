@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useProfileData } from '../../contexts/ProfileDataContext';
 import WeightChart from '../../components/WeightChart/WeightChart';
 import BodyFatChart from '../../components/BodyFatChart/BodyFatChart';
-import Skeleton from '../../components/ui/Skeleton/Skeleton';
+import LoadingSpinner from '../../components/ui/LoadingSpinner/LoadingSpinner';
 import './ProfilePage.css';
 
 const Profile = () => {
@@ -41,10 +41,7 @@ const Profile = () => {
       <>
         <h2 className="profile-header">Your latest data</h2>
         <div className="profile-container">
-          <Skeleton variant="title" className="skeleton-heading" style={{ width: '8rem' }} />
-          <Skeleton.Chart />
-          <Skeleton variant="title" className="skeleton-heading" style={{ width: '12rem' }} />
-          <Skeleton.Chart />
+          <LoadingSpinner />
         </div>
       </>
     );
