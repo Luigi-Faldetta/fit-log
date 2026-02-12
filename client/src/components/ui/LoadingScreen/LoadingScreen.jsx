@@ -11,7 +11,7 @@ const LoadingScreen = ({ message = 'Loading' }) => {
         aria-hidden="true"
       />
       <span className="loading-screen__text">{message}</span>
-      <div className="loading-screen__bar" aria-hidden="true" />
+      <div className="loading-screen__spinner" aria-hidden="true" />
       <span className="visually-hidden">Loading, please wait</span>
     </div>
   );
