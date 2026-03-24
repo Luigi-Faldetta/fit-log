@@ -41,6 +41,7 @@
     "cheerio": "0.22.0"
   },
   "overrides": {
-    "serialize-javascript": ">=7.0.3"
+    "serialize-javascript": ">=7.0.3",
+    "undici": ">=6.24.0"
   }
 }
