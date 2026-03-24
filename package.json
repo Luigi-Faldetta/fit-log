@@ -39,5 +39,8 @@
   },
   "resolutions": {
     "cheerio": "0.22.0"
+  },
+  "overrides": {
+    "serialize-javascript": ">=7.0.3"
   }
 }
